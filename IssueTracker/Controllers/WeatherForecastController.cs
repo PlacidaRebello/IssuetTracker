@@ -13,7 +13,7 @@ namespace IssueTracker.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "FreezingPoint", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "HotSoup", "Sweltering", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
