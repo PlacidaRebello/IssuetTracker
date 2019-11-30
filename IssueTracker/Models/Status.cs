@@ -10,5 +10,6 @@ namespace IssueTracker.Models
         public int StatusId { get; set; }
 
         public string StatusName { get; set; }
+        public ICollection<Issue> Issues { get; set; }
     }   
 }
