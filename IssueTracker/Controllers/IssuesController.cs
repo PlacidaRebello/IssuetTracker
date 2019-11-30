@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IssueTracker.Models;
+using ServiceModel.Dto;
 
 namespace IssueTracker.Controllers
 {
@@ -77,12 +78,35 @@ namespace IssueTracker.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Issue>> PostIssue(Issue issue)
+        public async Task<CreateIssueResponse> PostIssue(CreateIssueRequest issue)
         {
-            _context.Issues.Add(issue);
+            var newIssue = new Issue();
+
+            //Use automapper to clean this up
+            newIssue.Subject = issue.Subject;
+            newIssue.Tags = issue.Tags;
+            newIssue.Description = issue.Description;
+            newIssue.CreatedBy = issue.CreatedBy;
+            newIssue.CreatedDate = DateTime.Now;
+
+            //Move this block to BL
+            var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
+            
+            if (status == null)
+            {
+                status = new Status { StatusName = issue.Status };
+                _context.Status.Add(status);
+                await _context.SaveChangesAsync();
+            }
+            newIssue.Status = status;
+
+            _context.Issues.Add(newIssue);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetIssue", new { id = issue.IssueId }, issue);
+            return new CreateIssueResponse { 
+                IssueId = newIssue.IssueId,
+                Message= "Issue Created Successfully"
+            };
         }
 
         // DELETE: api/Issues/5
