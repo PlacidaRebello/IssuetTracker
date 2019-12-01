@@ -73,10 +73,10 @@ namespace IssueTracker.Controllers
                 getIssue.CreatedBy = issue.CreatedBy;
                 getIssue.Tags = issue.Tags;
 
-                //var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
+                var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
                 //need to add code if status doensot exist create one
 
-               // getIssue.Status = status;
+                getIssue.Status = status;
             }
             _context.Entry(getIssue).State = EntityState.Modified;
 
