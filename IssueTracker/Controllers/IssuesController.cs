@@ -30,16 +30,26 @@ namespace IssueTracker.Controllers
 
         // GET: api/Issues/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Issue>> GetIssue(int id)
+        public async Task<GetIssueResponse> GetIssue(int id)
         {
-            var issue = await _context.Issues.FindAsync(id);
+            //var issue = await _context.Issues.FindAsync(id);
+            var issue = await _context.Issues.Include(x => x.Status).Where(x => x.IssueId == id).FirstAsync();
+            //if (issue == null)
+            //{
+            //    return NotFound();
+            //}
 
-            if (issue == null)
+            return new GetIssueResponse
             {
-                return NotFound();
-            }
-
-            return issue;
+                IssueId = issue.IssueId,
+                Subject = issue.Subject,
+                Description = issue.Description,
+                AssignedTo = issue.AssignedTo,
+                Tags = issue.Tags,
+                CreatedBy = issue.CreatedBy,
+                Status = issue.Status.StatusId
+            };
+            //return issue;
         }
 
         // PUT: api/Issues/5
@@ -85,6 +95,7 @@ namespace IssueTracker.Controllers
             //Use automapper to clean this up
             newIssue.Subject = issue.Subject;
             newIssue.Tags = issue.Tags;
+            newIssue.AssignedTo = issue.AssignedTo;
             newIssue.Description = issue.Description;
             newIssue.CreatedBy = issue.CreatedBy;
             newIssue.CreatedDate = DateTime.Now;
