@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IssueTracker.Models;
 using ServiceModel.Dto;
+using AutoMapper;
 
 namespace IssueTracker.Controllers
 {
@@ -16,9 +17,11 @@ namespace IssueTracker.Controllers
     {
         private readonly DataContext _context;
 
-        public IssuesController(DataContext context)
+        private readonly IMapper _mapper;
+        public IssuesController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Issues
@@ -52,18 +55,30 @@ namespace IssueTracker.Controllers
             //return issue;
         }
 
-        // PUT: api/Issues/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIssue(int id, Issue issue)
-        {
-            if (id != issue.IssueId)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(issue).State = EntityState.Modified;
+        [HttpPut("{id}")]
+        public async Task<CreateIssueResponse> PutIssue(int id, CreateIssueRequest issue)
+        {
+            //if (id != issue.IssueId)
+            //{
+            //    return BadRequest();
+            //}
+
+            Issue getIssue = _context.Set<Issue>().SingleOrDefault(c => c.IssueId == id);
+            if (getIssue != null)
+            {
+                getIssue.Subject = issue.Subject;
+                getIssue.Description = issue.Description;
+                getIssue.AssignedTo = issue.AssignedTo;
+                getIssue.CreatedBy = issue.CreatedBy;
+                getIssue.Tags = issue.Tags;
+
+                //var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
+                //need to add code if status doensot exist create one
+
+               // getIssue.Status = status;
+            }
+            _context.Entry(getIssue).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +88,7 @@ namespace IssueTracker.Controllers
             {
                 if (!IssueExists(id))
                 {
-                    return NotFound();
+                    //return NotFound();
                 }
                 else
                 {
@@ -81,35 +96,47 @@ namespace IssueTracker.Controllers
                 }
             }
 
-            return NoContent();
+            return new CreateIssueResponse { 
+                IssueId=getIssue.IssueId,
+                Message="Edited Successfully"
+            };
         }
 
-        // POST: api/Issues
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+
         [HttpPost]
         public async Task<CreateIssueResponse> PostIssue(CreateIssueRequest issue)
         {
-            var newIssue = new Issue();
 
-            //Use automapper to clean this up
-            newIssue.Subject = issue.Subject;
-            newIssue.Tags = issue.Tags;
-            newIssue.AssignedTo = issue.AssignedTo;
-            newIssue.Description = issue.Description;
-            newIssue.CreatedBy = issue.CreatedBy;
-            newIssue.CreatedDate = DateTime.Now;
 
-            //Move this block to BL
-            var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
+            //var config = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<Issue, CreateIssueRequest>()
+            //.ForMember(dest => dest.Status,
+            //opts => opts.MapFrom(src => src.Status.StatusId));
+            //});
+
             
-            if (status == null)
-            {
-                status = new Status { StatusName = issue.Status };
-                _context.Status.Add(status);
-                await _context.SaveChangesAsync();
-            }
-            newIssue.Status = status;
+            var newIssue = _mapper.Map<Issue>(issue);
+            //var newIssue = new Issue();
+
+            ////Use automapper to clean this up
+            //newIssue.Subject = issue.Subject;
+            //newIssue.Tags = issue.Tags;
+            //newIssue.AssignedTo = issue.AssignedTo;
+            //newIssue.Description = issue.Description;
+            //newIssue.CreatedBy = issue.CreatedBy;
+            //newIssue.CreatedDate = DateTime.Now;
+
+            ////Move this block to BL
+            //var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
+
+            //if (status == null)
+            //{
+            //    status = new Status { StatusName = issue.Status };
+            //    _context.Status.Add(status);
+            //    await _context.SaveChangesAsync();
+            //}
+            //newIssue.Status = status;
 
             _context.Issues.Add(newIssue);
             await _context.SaveChangesAsync();
@@ -122,18 +149,33 @@ namespace IssueTracker.Controllers
 
         // DELETE: api/Issues/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Issue>> DeleteIssue(int id)
+        public async Task<CreateIssueResponse> DeleteIssue(int id)
         {
-            var issue = await _context.Issues.FindAsync(id);
-            if (issue == null)
-            {
-                return NotFound();
-            }
+            Issue issues = _context.Set<Issue>().SingleOrDefault(c => c.IssueId == id);
 
-            _context.Issues.Remove(issue);
+            if (issues != null)
+            {
+                _context.Entry(issues).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+
+            }
             await _context.SaveChangesAsync();
 
-            return issue;
+            return new CreateIssueResponse
+            {
+                IssueId = id,
+                Message = "Deleted Succesfully"
+            };
+
+            //var issue = await _context.Issues.FindAsync(id);
+            //if (issue == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //_context.Issues.Remove(issue);
+            //await _context.SaveChangesAsync();
+
+            //return issue;
         }
 
         private bool IssueExists(int id)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using IssueTracker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,8 @@ namespace IssueTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(options => options.OutputFormatters.Add(new XmlSerializerOutputFormatter()));
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers();
 
