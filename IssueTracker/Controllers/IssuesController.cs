@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using IssueTracker.Models;
 using ServiceModel.Dto;
 using AutoMapper;
+using DataAccess;
+using DataAccess.Models;
 
 namespace IssueTracker.Controllers
 {
