@@ -8,5 +8,6 @@ namespace BussinessLogic.Interfaces
     public interface IIssuesLogic
     {
         Task<int> CreateIssue(DataAccess.Models.Issue issue);
+        void RemoveIssue(int id);
     }
 }

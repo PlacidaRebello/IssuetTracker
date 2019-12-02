@@ -9,5 +9,7 @@ namespace DataAccess.Interfaces
     public interface IIssuesEngine
     {
         Task<int> CreateIssue(Issue issue);
+        Issue GetIssue(int id);
+        void RemoveIssue(Issue issue);
     }
 }

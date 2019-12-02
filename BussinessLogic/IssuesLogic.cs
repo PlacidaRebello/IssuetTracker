@@ -32,5 +32,19 @@ namespace BussinessLogic
             issue.Status = status;
             return await _issuesEngine.CreateIssue(issue);
         }
+
+        public void RemoveIssue(int id)
+        {
+            var issue = _issuesEngine.GetIssue(id);
+
+            if (issue == null)
+            {
+                throw new Exception("Issue does not exists");
+            }
+            else
+            {
+                _issuesEngine.RemoveIssue(issue);
+            }
+        }
     }
 }

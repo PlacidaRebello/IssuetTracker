@@ -1,9 +1,12 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
+
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess
 {
@@ -21,6 +24,17 @@ namespace DataAccess
             await _context.SaveChangesAsync();
 
             return issue.IssueId;
+        }
+
+        public Issue GetIssue(int id)
+        {
+            return _context.Issues.FirstOrDefault(i => i.IssueId == id);
+        }
+
+        public void RemoveIssue(Issue issue)
+        {
+            _context.Issues.Remove(issue);
+            _context.SaveChangesAsync();
         }
     }
 }
