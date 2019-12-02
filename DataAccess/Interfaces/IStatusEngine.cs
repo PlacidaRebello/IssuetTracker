@@ -8,7 +8,12 @@ namespace DataAccess.Interfaces
 {
     public interface IStatusEngine
     {
-        int CreateStatus(Status status);
+        Task<int> CreateStatus(Status status);
         Task<Status> GetStatusByName(string statusName);
+        void RemoveStatus(Status status);
+        bool StatusExists(int id);
+
+        Status GetStatus(int id);
+        void EditStatus(Status newStatus);
     }
 }

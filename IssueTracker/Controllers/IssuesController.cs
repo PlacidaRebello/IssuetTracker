@@ -34,73 +34,42 @@ namespace IssueTracker.Controllers
 
         // GET: api/Issues/5
         [HttpGet("{id}")]
-        public async Task<GetIssueResponse> GetIssue(int id)
+        public  GetIssueResponse GetIssue(int id)
         {
-            //var issue = await _context.Issues.FindAsync(id);
-            var issue = await _context.Issues.Include(x => x.Status).Where(x => x.IssueId == id).FirstAsync();
-            //if (issue == null)
-            //{
-            //    return NotFound();
-            //}
+            //var issue =_issuesLogic
+            var issue= _issuesLogic.GetIssue(id);
+
+            GetIssueResponse getIssue = _mapper.Map<Issue, GetIssueResponse>(issue);
+
+            return getIssue;
            
-            return new GetIssueResponse
-            {
-                IssueId = issue.IssueId,
-                Subject = issue.Subject,
-                Description = issue.Description,
-                AssignedTo = issue.AssignedTo,
-                Tags = issue.Tags,
-                CreatedBy = issue.CreatedBy,
-                Status = issue.Status.StatusId
-            };
-            //return issue;
+            //return new GetIssueResponse
+            //{
+            //    IssueId = issue.IssueId,
+            //    Subject = issue.Subject,
+            //    Description = issue.Description,
+            //    AssignedTo = issue.AssignedTo,
+            //    Tags = issue.Tags,
+            //    CreatedBy = issue.CreatedBy,
+            //    Status = issue.Status.StatusId
+            //};
+          
         }
 
 
         [HttpPut("{id}")]
-        public async Task<CreateIssueResponse> PutIssue(int id, CreateIssueRequest issue)
+        public CreateIssueResponse PutIssue(int id, EditIssueRequest issue)
         {
-            //if (id != issue.IssueId)
-            //{
-            //    return BadRequest();
-            //}
+            var newIssue = _mapper.Map<Issue>(issue);
+            newIssue.Status = new Status { StatusName = issue.Status };
+            
+             _issuesLogic.EditIssue(id, newIssue);
 
-            Issue getIssue = _context.Set<Issue>().SingleOrDefault(c => c.IssueId == id);
-            if (getIssue != null)
-            {
-                getIssue.Subject = issue.Subject;
-                getIssue.Description = issue.Description;
-                getIssue.AssignedTo = issue.AssignedTo;
-                getIssue.CreatedBy = issue.CreatedBy;
-                getIssue.Tags = issue.Tags;
-
-                var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
-                //need to add code if status doensot exist create one
-
-                getIssue.Status = status;
-            }
-            _context.Entry(getIssue).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!IssueExists(id))
-                {
-                    //return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new CreateIssueResponse { 
-                IssueId=getIssue.IssueId,
-                Message="Edited Successfully"
+            return new CreateIssueResponse
+            {             
+                Message = "Edited Succesfully"
             };
+
         }
 
 
@@ -131,9 +100,9 @@ namespace IssueTracker.Controllers
             };
         }
 
-        private bool IssueExists(int id)
-        {
-            return _context.Issues.Any(e => e.IssueId == id);
-        }
+        //private bool IssueExists(int id)
+        //{
+        //    return _context.Issues.Any(e => e.IssueId == id);
+        //}
     }
 }

@@ -20,6 +20,11 @@ namespace BussinessLogic
             _statusEngine = statusEngine;
         }
 
+        public Issue GetIssue(int id) 
+        {
+            return _issuesEngine.GetIssue(id);
+        }
+
         public async Task<int> CreateIssue(Issue issue)
         {
             var status = await _statusEngine.GetStatusByName(issue.Status.StatusName);
@@ -45,6 +50,17 @@ namespace BussinessLogic
             {
                 _issuesEngine.RemoveIssue(issue);
             }
+        }
+
+        public void EditIssue(int id, Issue issue)
+        {
+            //var oldIssue = _issuesEngine.GetIssue(id);
+            
+            if (!_issuesEngine.IssueExists(id))
+            {
+                throw new Exception("Issue does not exists");
+            }
+            _issuesEngine.EditIssue(id,issue); 
         }
     }
 }

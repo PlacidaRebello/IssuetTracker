@@ -15,14 +15,41 @@ namespace BussinessLogic
         {
             _statusEngine = statusEngine;
         }
-        public int CreateStatus(Status status)
+        public async Task<int> CreateStatus(Status status)
         {
-            throw new NotImplementedException();
+            return await _statusEngine.CreateStatus(status);
+        }
+
+        public void EditStatus(int id, Status newStatus)
+        {
+            if (!_statusEngine.StatusExists(id))
+            {
+                throw new Exception("Status Doesnot exists ");
+            }
+            _statusEngine.EditStatus(newStatus);
+            
+        }
+
+        public Status GetStatus(int id)
+        {
+            return _statusEngine.GetStatus(id);
         }
 
         public async Task<Status> GetStatusByName(string statusName)
         {
             return await _statusEngine.GetStatusByName(statusName);
+        }
+
+        public void RemoveStatus(int id)
+        {
+            var status = _statusEngine.GetStatus(id);
+            if (status== null)
+            {
+                throw new Exception("Status doesnot exists");
+            }           
+
+            _statusEngine.RemoveStatus(status);            
+
         }
     }
 }
