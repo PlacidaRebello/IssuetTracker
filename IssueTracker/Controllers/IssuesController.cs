@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using IssueTracker.Models;
 using ServiceModel.Dto;
 using AutoMapper;
+using DataAccess.Models;
+using BussinessLogic.Interfaces;
 
 namespace IssueTracker.Controllers
 {
@@ -16,12 +15,14 @@ namespace IssueTracker.Controllers
     public class IssuesController : ControllerBase
     {
         private readonly DataContext _context;
-
         private readonly IMapper _mapper;
-        public IssuesController(DataContext context, IMapper mapper)
+        private readonly IIssuesLogic _issuesLogic;
+
+        public IssuesController(DataContext context, IMapper mapper, IIssuesLogic issuesLogic)
         {
             _context = context;
             _mapper = mapper;
+            _issuesLogic = issuesLogic;
         }
 
         // GET: api/Issues
@@ -41,7 +42,7 @@ namespace IssueTracker.Controllers
             //{
             //    return NotFound();
             //}
-
+           
             return new GetIssueResponse
             {
                 IssueId = issue.IssueId,
@@ -106,43 +107,13 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public async Task<CreateIssueResponse> PostIssue(CreateIssueRequest issue)
         {
-
-
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<Issue, CreateIssueRequest>()
-            //.ForMember(dest => dest.Status,
-            //opts => opts.MapFrom(src => src.Status.StatusId));
-            //});
-
-            
             var newIssue = _mapper.Map<Issue>(issue);
-            //var newIssue = new Issue();
+            newIssue.Status = new Status { StatusName = issue.Status };
 
-            ////Use automapper to clean this up
-            //newIssue.Subject = issue.Subject;
-            //newIssue.Tags = issue.Tags;
-            //newIssue.AssignedTo = issue.AssignedTo;
-            //newIssue.Description = issue.Description;
-            //newIssue.CreatedBy = issue.CreatedBy;
-            //newIssue.CreatedDate = DateTime.Now;
-
-            ////Move this block to BL
-            //var status = _context.Status.FirstOrDefault(s => s.StatusName == issue.Status);
-
-            //if (status == null)
-            //{
-            //    status = new Status { StatusName = issue.Status };
-            //    _context.Status.Add(status);
-            //    await _context.SaveChangesAsync();
-            //}
-            //newIssue.Status = status;
-
-            _context.Issues.Add(newIssue);
-            await _context.SaveChangesAsync();
+            var issueId = await _issuesLogic.CreateIssue(newIssue);
 
             return new CreateIssueResponse { 
-                IssueId = newIssue.IssueId,
+                IssueId = issueId,
                 Message= "Issue Created Successfully"
             };
         }
