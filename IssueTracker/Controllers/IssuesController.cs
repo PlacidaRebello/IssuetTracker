@@ -122,14 +122,9 @@ namespace IssueTracker.Controllers
         [HttpDelete("{id}")]
         public async Task<CreateIssueResponse> DeleteIssue(int id)
         {
-            Issue issues = _context.Set<Issue>().SingleOrDefault(c => c.IssueId == id);
+            //create businen logic method
 
-            if (issues != null)
-            {
-                _context.Entry(issues).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-
-            }
-            await _context.SaveChangesAsync();
+            _issuesLogic.RemoveIssue(id);
 
             return new CreateIssueResponse
             {
