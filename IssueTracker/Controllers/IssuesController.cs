@@ -120,10 +120,8 @@ namespace IssueTracker.Controllers
 
         // DELETE: api/Issues/5
         [HttpDelete("{id}")]
-        public async Task<CreateIssueResponse> DeleteIssue(int id)
+        public CreateIssueResponse DeleteIssue(int id)
         {
-            //create businen logic method
-
             _issuesLogic.RemoveIssue(id);
 
             return new CreateIssueResponse
@@ -131,17 +129,6 @@ namespace IssueTracker.Controllers
                 IssueId = id,
                 Message = "Deleted Succesfully"
             };
-
-            //var issue = await _context.Issues.FindAsync(id);
-            //if (issue == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //_context.Issues.Remove(issue);
-            //await _context.SaveChangesAsync();
-
-            //return issue;
         }
 
         private bool IssueExists(int id)
