@@ -13,4 +13,4 @@ RestAPI -> BusinessLogic: DTO Mapped to Model and sent to BusinessLogic
 BusinessLogic -> DataAccess: Request Data/Create Data
 DataAccess -> BusinessLogic: Success/values
 BusinessLogic -> RestAPI: Returns Model to API
-RestAPI -> AngularUi: Returns Dto
+RestAPI -> AngularUI: Returns Dto
