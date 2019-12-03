@@ -24,6 +24,11 @@ namespace IssueTracker.ApiConfig
             CreateMap<CreateStatusRequest, Status>(MemberList.Source);
             CreateMap<EditStatusRequest, Status>(MemberList.Source);
             CreateMap<Status, GetStatusData>();
+
+
+            CreateMap<CreateIssueTypeRequest, IssueType>();
+            CreateMap<EditIssueTypeRequest, IssueType>();
+            CreateMap<IssueType, GetIssueTypeData>();
         }
     }
 }

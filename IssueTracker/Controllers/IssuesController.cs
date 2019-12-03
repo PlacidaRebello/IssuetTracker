@@ -42,17 +42,6 @@ namespace IssueTracker.Controllers
             GetIssueResponse getIssue = _mapper.Map<Issue, GetIssueResponse>(issue);
 
             return getIssue;
-           
-            //return new GetIssueResponse
-            //{
-            //    IssueId = issue.IssueId,
-            //    Subject = issue.Subject,
-            //    Description = issue.Description,
-            //    AssignedTo = issue.AssignedTo,
-            //    Tags = issue.Tags,
-            //    CreatedBy = issue.CreatedBy,
-            //    Status = issue.Status.StatusId
-            //};
           
         }
 
@@ -100,9 +89,6 @@ namespace IssueTracker.Controllers
             };
         }
 
-        //private bool IssueExists(int id)
-        //{
-        //    return _context.Issues.Any(e => e.IssueId == id);
-        //}
+    
     }
 }
