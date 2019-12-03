@@ -26,6 +26,12 @@ namespace DataAccess
             return issue.IssueId;
         }
 
+        public void EditIssue(int id, Issue issue)
+        {
+             _context.Issues.Update(issue);
+            _context.SaveChangesAsync();
+        }
+
         public Issue GetIssue(int id)
         {
             return _context.Issues.FirstOrDefault(i => i.IssueId == id);
@@ -35,6 +41,11 @@ namespace DataAccess
         {
             _context.Issues.Remove(issue);
             _context.SaveChangesAsync();
+        }
+
+        public bool IssueExists(int id)
+        {
+            return _context.Issues.Any(e => e.IssueId == id);
         }
     }
 }

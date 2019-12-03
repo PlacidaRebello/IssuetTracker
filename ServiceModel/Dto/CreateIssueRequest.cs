@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using ServiceModel.Type;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueRequest
+    public class CreateIssueRequest : IssueRequest
     {
-        public string Subject { get; set; }
-        public string Description { get; set; }
-        public string AssignedTo { get; set; }
-        public string Tags { get; set; }
-        public string Status { get; set; }
-        public string CreatedBy { get; set; }
+       
+    }
+
+    public class EditIssueRequest: IssueRequest
+    {
+        public int IssueId { get; set; }    
+        
     }
 }
