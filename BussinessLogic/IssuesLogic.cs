@@ -11,13 +11,13 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IStatusLogic _statusEngine;
+        private readonly IStatusLogic _statusLogic;
 
 
-        public IssuesLogic(IIssuesEngine issuesEngine, IStatusLogic statusEngine)
+        public IssuesLogic(IIssuesEngine issuesEngine, IStatusLogic statusLogic)
         {
             _issuesEngine = issuesEngine;
-            _statusEngine = statusEngine;
+            _statusLogic = statusLogic;
         }
 
         public Issue GetIssue(int id) 
