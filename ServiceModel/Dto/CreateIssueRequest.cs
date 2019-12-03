@@ -2,37 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using ServiceModel.Type;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueRequest
+    public class CreateIssueRequest : IssueRequest
     {
-        [Required]
-        public string Subject { get; set; }
-        [Required]
-        public string Description { get; set; }
-        [Required]
-        public string AssignedTo { get; set; }
-        [Required]
-        public string Tags { get; set; }
-        [Required]
-        public string Status { get; set; }
-        public string CreatedBy { get; set; }
+       
     }
 
-    public class EditIssueRequest
+    public class EditIssueRequest: IssueRequest
     {
         public int IssueId { get; set; }    
-        [Required]
-        public string Subject { get; set; }
-        [Required]
-        public string Description { get; set; }
-        [Required]
-        public string AssignedTo { get; set; }
-        [Required]
-        public string Tags { get; set; }
-        [Required]
-        public string Status { get; set; }
-        public string CreatedBy { get; set; }
+        
     }
 }
