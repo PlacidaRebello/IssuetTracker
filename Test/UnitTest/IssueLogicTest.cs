@@ -20,7 +20,7 @@ namespace Test.UnitTest
         }
 
         [Test]
-        public void CreateIssueStatusDoesNotExistsThrowsException()
+        public async Task<int> CreateIssueStatusDoesNotExistsThrowsException()
         {
             //setup
             var statusLogicMock = new Mock<IStatusLogic>();
