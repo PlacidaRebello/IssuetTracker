@@ -19,5 +19,7 @@ namespace DataAccess.Models
 
         public DbSet<Status> Status { get; set; }
 
+        public DbSet<IssueType> IssueType { get; set; }
+
     }
 }

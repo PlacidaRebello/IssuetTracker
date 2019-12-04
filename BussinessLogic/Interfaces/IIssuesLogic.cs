@@ -11,6 +11,6 @@ namespace BussinessLogic.Interfaces
         Task<int> CreateIssue(Issue issue);
         void RemoveIssue(int id);
         Issue GetIssue(int id);
-        void EditIssue(int id,Issue issue);
+        void EditIssue(Issue issue);
     }
 }

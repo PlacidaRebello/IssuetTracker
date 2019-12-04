@@ -33,8 +33,14 @@ namespace IssueTracker
 
             services.AddTransient<IIssuesLogic, IssuesLogic>();
             services.AddTransient<IIssuesEngine, IssuesEngine>();
+
             services.AddTransient<IStatusLogic, StatusLogic>();
             services.AddTransient<IStatusEngine, StatusEngine>();
+
+            services.AddTransient<IIssueTypeLogic, IssueTypeLogic>();
+            services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();
+
+
             //difference between transient, singelton, scoped
             //https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
 

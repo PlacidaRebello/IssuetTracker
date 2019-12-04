@@ -42,28 +42,17 @@ namespace IssueTracker.Controllers
             GetIssueResponse getIssue = _mapper.Map<Issue, GetIssueResponse>(issue);
 
             return getIssue;
-           
-            //return new GetIssueResponse
-            //{
-            //    IssueId = issue.IssueId,
-            //    Subject = issue.Subject,
-            //    Description = issue.Description,
-            //    AssignedTo = issue.AssignedTo,
-            //    Tags = issue.Tags,
-            //    CreatedBy = issue.CreatedBy,
-            //    Status = issue.Status.StatusId
-            //};
           
         }
 
 
         [HttpPut("{id}")]
-        public CreateIssueResponse PutIssue(int id, EditIssueRequest issue)
+        public CreateIssueResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
             newIssue.Status = new Status { StatusName = issue.Status };
             
-             _issuesLogic.EditIssue(id, newIssue);
+             _issuesLogic.EditIssue(newIssue);
 
             return new CreateIssueResponse
             {             
@@ -100,9 +89,6 @@ namespace IssueTracker.Controllers
             };
         }
 
-        //private bool IssueExists(int id)
-        //{
-        //    return _context.Issues.Any(e => e.IssueId == id);
-        //}
+    
     }
 }
