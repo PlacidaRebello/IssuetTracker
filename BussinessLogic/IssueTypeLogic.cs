@@ -10,7 +10,7 @@ namespace BussinessLogic
 {
     public class IssueTypeLogic : IIssueTypeLogic
     {
-        public readonly IIssueTypeEngine _issueTypeEngine;
+        private readonly IIssueTypeEngine _issueTypeEngine;
         public IssueTypeLogic(IIssueTypeEngine issueTypeEngine)
         {
             _issueTypeEngine = issueTypeEngine;
@@ -21,11 +21,11 @@ namespace BussinessLogic
             return await _issueTypeEngine.CreateIssueType(newIssueType);
         }
 
-        public void EditIssueType(int id, IssueType newIssueType)
+        public void EditIssueType(IssueType newIssueType)
         {
-            if (!_issueTypeEngine.IssueTypeExists(id))
+            if (!_issueTypeEngine.IssueTypeExists(newIssueType.IssueTypeId))
             {
-                throw new Exception("IssueType Doesnot exists");
+                throw new Exception("IssueType Does not exists");
             }
             _issueTypeEngine.EditIssueType(newIssueType);
         }
@@ -40,7 +40,7 @@ namespace BussinessLogic
             var issueType = _issueTypeEngine.GetIssueType(id);
             if (issueType==null)
             {
-                throw new Exception("IssueType Doesnot exists");
+                throw new Exception("IssueType Does not exists");
             }
             _issueTypeEngine.RemoveIssueType(issueType);
         }

@@ -46,14 +46,14 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPut("{id}")]
-        public CreateStatusResponse PutStatus(int id, EditStatusRequest status)
+        public CreateStatusResponse PutStatus(EditStatusRequest status)
         {
             var newStatus = _mapper.Map<Status>(status);
 
-            _statusLogic.EditStatus(id,newStatus);
+            _statusLogic.EditStatus(newStatus);
 
             return new CreateStatusResponse
-            { StatusId = id,
+            { StatusId = newStatus.StatusId,
               Message="Edited"
             };
         }

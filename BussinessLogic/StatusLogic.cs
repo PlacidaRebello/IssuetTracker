@@ -20,9 +20,9 @@ namespace BussinessLogic
             return await _statusEngine.CreateStatus(status);
         }
 
-        public void EditStatus(int id, Status newStatus)
+        public void EditStatus(Status newStatus)
         {
-            if (!_statusEngine.StatusExists(id))
+            if (!_statusEngine.StatusExists(newStatus.StatusId))
             {
                 throw new Exception("Status Doesnot exists ");
             }

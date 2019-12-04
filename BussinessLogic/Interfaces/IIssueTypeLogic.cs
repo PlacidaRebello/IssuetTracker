@@ -9,7 +9,7 @@ namespace BussinessLogic.Interfaces
     public interface IIssueTypeLogic
     {
         IssueType GetIssueType(int id);
-        void EditIssueType(int id, IssueType newIssueType);
+        void EditIssueType(IssueType newIssueType);
         Task<int> CreateIssueType(IssueType newIssueType);
         void RemoveIssueType(int id);
     }

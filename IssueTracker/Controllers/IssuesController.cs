@@ -47,12 +47,12 @@ namespace IssueTracker.Controllers
 
 
         [HttpPut("{id}")]
-        public CreateIssueResponse PutIssue(int id, EditIssueRequest issue)
+        public CreateIssueResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
             newIssue.Status = new Status { StatusName = issue.Status };
             
-             _issuesLogic.EditIssue(id, newIssue);
+             _issuesLogic.EditIssue(newIssue);
 
             return new CreateIssueResponse
             {             

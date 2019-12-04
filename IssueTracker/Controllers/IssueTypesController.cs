@@ -48,15 +48,15 @@ namespace IssueTracker.Controllers
 
 
         [HttpPut("{id}")]
-        public CreateIssueTypeResponse PutIssueType(int id, EditIssueTypeRequest issueType)
+        public CreateIssueTypeResponse PutIssueType( EditIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
 
-            _issueTypeLogic.EditIssueType(id, newIssueType);
+            _issueTypeLogic.EditIssueType(newIssueType);
 
             return new CreateIssueTypeResponse
             {
-                IssueTypeId = id,
+                IssueTypeId = newIssueType.IssueTypeId,
                 Message = "Edited successfully"
             };
         }
@@ -89,9 +89,6 @@ namespace IssueTracker.Controllers
             };
         }
 
-        //private bool IssueTypeExists(int id)
-        //{
-        //    return _context.IssueType.Any(e => e.IssueTypeId == id);
-        //}
+       
     }
 }

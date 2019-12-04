@@ -52,15 +52,15 @@ namespace BussinessLogic
             }
         }
 
-        public void EditIssue(int id, Issue issue)
+        public void EditIssue(Issue issue)
         {
-            //var oldIssue = _issuesEngine.GetIssue(id);
+           
             
-            if (!_issuesEngine.IssueExists(id))
+            if (!_issuesEngine.IssueExists(issue.IssueId))
             {
                 throw new Exception("Issue does not exists");
             }
-            _issuesEngine.EditIssue(id,issue); 
+            _issuesEngine.EditIssue(issue.IssueId, issue); 
         }
     }
 }
