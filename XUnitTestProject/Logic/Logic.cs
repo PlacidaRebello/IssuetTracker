@@ -8,6 +8,7 @@ using Moq;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using DataAccess.Interfaces;
+using BussinessLogic;
 
 namespace XUnitTestProject.Logic
 {
@@ -39,44 +40,56 @@ namespace XUnitTestProject.Logic
         [Fact]
         public void GetIssueById_ValidData() 
         {
-            using (var mock= AutoMock.GetLoose())
-            {
-                mock.Mock<IIssuesEngine>()
-                   .Setup(x => x.GetIssue(1))
+            var mock = new Mock<IIssuesEngine>();
+                mock.Setup(x => x.GetIssue(1))
                    .Returns(GetSampleIssue());
 
-                var expected = GetSampleIssue();
-                
-            //    var actual= 
-            }
+            var mock2 = new Mock<IStatusLogic>();           
+
+            var expected = GetSampleIssue();                
+            
+            IssuesLogic issuesLogic = new IssuesLogic(mock.Object, mock2.Object);
+
+            var actual = issuesLogic.GetIssue(1);
+
+            Assert.True(actual!=null);
+            Assert.Equal(expected.Subject,actual.Subject);
+            //Assert.Equal(expected.Status, actual.Status);
+            Assert.Equal(expected.AssignedTo, actual.AssignedTo); 
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.Tags, actual.Tags);
         }
 
 
-        //[Fact]
-        //public void SaveIssue_ValidCall() 
-        //{
-        //    using (var mock= AutoMock.GetLoose())
-        //    {
-               
-        //        var issue = new Issue()
-        //        {
-        //            IssueId = 1,
-        //            Subject = "abc",
-        //            Description = "do it",
-        //            AssignedTo = "placi",
-        //            Tags = "to be done",
-        //            Status = new Status
-        //            {
-        //                StatusId = 1,
-        //                StatusName = "nt done",
-        //                CreatedBy = ""
-        //            },
-        //            CreatedBy = "jason"
-        //        };              
-                    
-                    
-        //    }
-        //}
+        [Fact]
+        public void SaveIssue_ValidCall()
+        {
+            Status objStatus = new Status()
+            {
+                StatusId=1,
+                StatusName="nt done",
+                CreatedBy="",
+                CreatedDate=DateTime.Now
+            };
+
+            var mock = new Mock<IIssuesEngine>();
+            mock.Setup(x => x.GetIssue(1))
+               .Returns(GetSampleIssue());
+
+            var mock2 =  new Mock<IStatusLogic>();
+            mock2.Setup(x => x.GetStatusByName("nt done"))
+            .ReturnsAsync(objStatus);
+
+            var expected = GetSampleIssue().IssueId;
+
+            IssuesLogic issuesLogic = new IssuesLogic(mock.Object, mock2.Object);
+
+            var actual = issuesLogic.CreateIssue(GetSampleIssue());
+
+            Assert.True(actual!=null);
+            Assert.Equal(expected,actual.Id);
+
+        }
 
         private Issue GetSampleIssue()
         {
@@ -91,7 +104,8 @@ namespace XUnitTestProject.Logic
                 {
                     StatusId = 1,
                     StatusName = "nt done",
-                    CreatedBy = ""
+                    CreatedBy = "",
+                    CreatedDate=DateTime.Now
                 },
                 CreatedBy = "jason"
             };
