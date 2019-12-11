@@ -63,12 +63,12 @@ namespace IssueTracker.Controllers
 
 
         [HttpPost]
-        public async Task<CreateIssueResponse> PostIssue(CreateIssueRequest issue)
+        public CreateIssueResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
             newIssue.Status = new Status { StatusName = issue.Status };
 
-            var issueId = await _issuesLogic.CreateIssue(newIssue);
+            var issueId =  _issuesLogic.CreateIssue(newIssue);
 
             return new CreateIssueResponse { 
                 IssueId = issueId,

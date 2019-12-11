@@ -16,18 +16,19 @@ namespace BussinessLogic
             _issueTypeEngine = issueTypeEngine;
         }
 
-        public async Task<int> CreateIssueType(IssueType newIssueType)
+        public int CreateIssueType(IssueType newIssueType)
         {
-            return await _issueTypeEngine.CreateIssueType(newIssueType);
+            return  _issueTypeEngine.CreateIssueType(newIssueType);
         }
 
-        public void EditIssueType(IssueType newIssueType)
+        public bool EditIssueType(IssueType newIssueType)
         {
             if (!_issueTypeEngine.IssueTypeExists(newIssueType.IssueTypeId))
             {
                 throw new Exception("IssueType Does not exists");
             }
             _issueTypeEngine.EditIssueType(newIssueType);
+            return true;
         }
 
         public IssueType GetIssueType(int id)
@@ -35,7 +36,7 @@ namespace BussinessLogic
             return _issueTypeEngine.GetIssueType(id);   
         }
 
-        public void RemoveIssueType(int id)
+        public bool RemoveIssueType(int id)
         {
             var issueType = _issueTypeEngine.GetIssueType(id);
             if (issueType==null)
@@ -43,6 +44,7 @@ namespace BussinessLogic
                 throw new Exception("IssueType Does not exists");
             }
             _issueTypeEngine.RemoveIssueType(issueType);
+            return true;
         }
     }
 }

@@ -17,36 +17,38 @@ namespace DataAccess
             _context = context;
         }
 
-        public async Task<int> CreateStatus(Status status)
+        public int CreateStatus(Status status)
         {
-           _context.Status.Add(status);
-           await  _context.SaveChangesAsync();
-           return status.StatusId;
+            _context.Status.Add(status);
+            _context.SaveChanges();
+            return status.StatusId;
         }
 
-        public void EditStatus(Status newStatus)
+        public bool EditStatus(Status newStatus)
         {
-           
+
             _context.Status.Update(newStatus);
             _context.SaveChanges();
+            return true;
         }
 
         public Status GetStatus(int id)
         {
-            return _context.Status.FirstOrDefault(s=>s.StatusId==id);
+            return _context.Status.FirstOrDefault(s => s.StatusId == id);
         }
 
-        public async Task<Status> GetStatusByName(string statusName)
+        public Status GetStatusByName(string statusName)
         {
-            return await _context.Status.FirstOrDefaultAsync(s => s.StatusName == statusName);
+            return _context.Status.FirstOrDefault(s => s.StatusName == statusName);
         }
 
-        public void RemoveStatus(Status status)
+        public bool RemoveStatus(Status status)
         {
             //var status = _context.Status.Find(id);
-          
+
             _context.Status.Remove(status);
             _context.SaveChanges();
+            return true;
         }
 
         public bool StatusExists(int id)
