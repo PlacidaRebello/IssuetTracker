@@ -9,6 +9,8 @@ using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using DataAccess.Interfaces;
 using BussinessLogic;
+using FluentAssertions;
+using System.Threading.Tasks;
 
 namespace XUnitTestProject.Logic
 {
@@ -52,15 +54,19 @@ namespace XUnitTestProject.Logic
 
             var actual = issuesLogic.GetIssue(1);
 
-            Assert.True(actual!=null);
-            Assert.Equal(expected.Subject,actual.Subject);
-            //Assert.Equal(expected.Status, actual.Status);
-            Assert.Equal(expected.AssignedTo, actual.AssignedTo); 
-            Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.Tags, actual.Tags);
+            //expected.Status.StatusName = "asfasdf";
+
+            actual.Should().BeEquivalentTo(expected);
+
+            //Assert.True(actual!=null);
+            //Assert.Equal(expected.Subject,actual.Subject);
+            //Assert.Equal(expected.Status.GetType(), actual.Status.GetType());
+            //Assert.Equal(expected.AssignedTo, actual.AssignedTo); 
+            //Assert.Equal(expected.Description, actual.Description);
+            //Assert.Equal(expected.Tags, actual.Tags);
         }
 
-
+        //Unit test methods should be like this "MethodBeingTested_TestCase_ExpectedOutcome"
         [Fact]
         public void SaveIssue_ValidCall()
         {
@@ -68,8 +74,7 @@ namespace XUnitTestProject.Logic
             {
                 StatusId=1,
                 StatusName="nt done",
-                CreatedBy="",
-                CreatedDate=DateTime.Now
+                CreatedBy=""
             };
 
             var mock = new Mock<IIssuesEngine>();
@@ -91,6 +96,30 @@ namespace XUnitTestProject.Logic
 
         }
 
+        [Fact]
+        public void SaveIssue_Null_Status_Throws_ExceptionAsync()        {
+
+            var mock = new Mock<IIssuesEngine>();
+            mock.Setup(x => x.GetIssue(1))
+               .Returns(GetSampleIssue());
+
+            var mock2 = new Mock<IStatusLogic>();
+            mock2.Setup(x => x.GetStatusByName("nt done"))
+                .ReturnsAsync((Status)null);
+
+            var expected = GetSampleIssue().IssueId;
+
+            IssuesLogic issuesLogic = new IssuesLogic(mock.Object, mock2.Object);
+
+
+            Func<Task> act = async () => { await issuesLogic.CreateIssue(GetSampleIssue()); };
+
+            act.Should().Throw<Exception>()
+             .And.Message
+             .Should().Be("Status doesn't exist. Please create a status and then add Issues");
+
+        }
+
         private Issue GetSampleIssue()
         {
             Issue issue = new Issue()
@@ -104,8 +133,7 @@ namespace XUnitTestProject.Logic
                 {
                     StatusId = 1,
                     StatusName = "nt done",
-                    CreatedBy = "",
-                    CreatedDate=DateTime.Now
+                    CreatedBy = ""
                 },
                 CreatedBy = "jason"
             };

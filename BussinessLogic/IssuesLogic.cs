@@ -38,29 +38,27 @@ namespace BussinessLogic
             return await _issuesEngine.CreateIssue(issue);
         }
 
-        public void RemoveIssue(int id)
+        public bool RemoveIssue(int id)
         {
             var issue = _issuesEngine.GetIssue(id);
 
             if (issue == null)
             {
-                throw new Exception("Issue does not exists");
+                throw new Exception("Issue does not exists");                
             }
             else
             {
-                _issuesEngine.RemoveIssue(issue);
+                return _issuesEngine.RemoveIssue(issue);
             }
         }
 
-        public void EditIssue(Issue issue)
-        {
-           
-            
+        public bool EditIssue(Issue issue)
+        { 
             if (!_issuesEngine.IssueExists(issue.IssueId))
             {
                 throw new Exception("Issue does not exists");
             }
-            _issuesEngine.EditIssue(issue.IssueId, issue); 
+            return _issuesEngine.EditIssue(issue.IssueId, issue); 
         }
     }
 }

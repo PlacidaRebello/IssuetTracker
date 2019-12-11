@@ -9,8 +9,8 @@ namespace BussinessLogic.Interfaces
     public interface IIssuesLogic
     {
         Task<int> CreateIssue(Issue issue);
-        void RemoveIssue(int id);
+        bool RemoveIssue(int id);
         Issue GetIssue(int id);
-        void EditIssue(Issue issue);
+        bool EditIssue(Issue issue);
     }
 }
