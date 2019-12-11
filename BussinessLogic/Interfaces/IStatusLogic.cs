@@ -8,10 +8,10 @@ namespace BussinessLogic.Interfaces
 {
     public interface IStatusLogic
     {
-        Task<int> CreateStatus(Status status);
-        Task<Status> GetStatusByName(string statusName);
-        void RemoveStatus(int id);
+        int CreateStatus(Status status);
+        Status GetStatusByName(string statusName);
+        bool RemoveStatus(int id);
         Status GetStatus(int id);
-        void EditStatus(Status newStatus);
+        bool EditStatus(Status newStatus);
     }
 }

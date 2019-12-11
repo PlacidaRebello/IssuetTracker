@@ -8,10 +8,10 @@ namespace DataAccess.Interfaces
 {
     public interface IIssuesEngine
     {
-        Task<int> CreateIssue(Issue issue);
+        int CreateIssue(Issue issue);
         Issue GetIssue(int id);
         bool RemoveIssue(Issue issue);
-        bool EditIssue(int id, Issue issue);
+        bool EditIssue(Issue issue);
 
         bool IssueExists(int id);
     }

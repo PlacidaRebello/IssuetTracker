@@ -63,11 +63,11 @@ namespace IssueTracker.Controllers
 
 
         [HttpPost]
-        public async Task<CreateIssueTypeResponse> PostIssueType(CreateIssueTypeRequest issueType)
+        public CreateIssueTypeResponse PostIssueType(CreateIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
             newIssueType.CreatedDate = DateTime.Now;
-            var issueTypeId = await _issueTypeLogic.CreateIssueType(newIssueType);
+            var issueTypeId =  _issueTypeLogic.CreateIssueType(newIssueType);
 
             return new CreateIssueTypeResponse
             {

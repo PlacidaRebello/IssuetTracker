@@ -15,19 +15,19 @@ namespace BussinessLogic
         {
             _statusEngine = statusEngine;
         }
-        public async Task<int> CreateStatus(Status status)
+        public int CreateStatus(Status status)
         {
-            return await _statusEngine.CreateStatus(status);
+            return  _statusEngine.CreateStatus(status);
         }
 
-        public void EditStatus(Status newStatus)
+        public bool EditStatus(Status newStatus)
         {
             if (!_statusEngine.StatusExists(newStatus.StatusId))
             {
                 throw new Exception("Status Doesnot exists ");
             }
             _statusEngine.EditStatus(newStatus);
-            
+            return true; 
         }
 
         public Status GetStatus(int id)
@@ -35,12 +35,12 @@ namespace BussinessLogic
             return _statusEngine.GetStatus(id);
         }
 
-        public async Task<Status> GetStatusByName(string statusName)
+        public Status GetStatusByName(string statusName)
         {
-            return await _statusEngine.GetStatusByName(statusName);
+            return  _statusEngine.GetStatusByName(statusName);
         }
 
-        public void RemoveStatus(int id)
+        public bool RemoveStatus(int id)
         {
             var status = _statusEngine.GetStatus(id);
             if (status== null)
@@ -48,8 +48,8 @@ namespace BussinessLogic
                 throw new Exception("Status doesnot exists");
             }           
 
-            _statusEngine.RemoveStatus(status);            
-
+            _statusEngine.RemoveStatus(status);
+            return true;
         }
     }
 }

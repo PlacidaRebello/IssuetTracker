@@ -60,11 +60,11 @@ namespace IssueTracker.Controllers
 
     
         [HttpPost]
-        public async Task<CreateStatusResponse> PostStatus(CreateStatusRequest status)
+        public CreateStatusResponse PostStatus(CreateStatusRequest status)
         {
              var newStatus = _mapper.Map<Status>(status);
 
-            var statusId = await _statusLogic.CreateStatus(newStatus);
+            var statusId =  _statusLogic.CreateStatus(newStatus);
 
             return new CreateStatusResponse
             {

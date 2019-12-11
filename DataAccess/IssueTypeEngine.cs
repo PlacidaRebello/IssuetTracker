@@ -16,17 +16,18 @@ namespace DataAccess
             _context = context;
         }
 
-        public async Task<int> CreateIssueType(IssueType newIssueType)
+        public int CreateIssueType(IssueType newIssueType)
         {
             _context.IssueType.Add(newIssueType);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return newIssueType.IssueTypeId;
         }
 
-        public void EditIssueType(IssueType newIssueType)
+        public bool EditIssueType(IssueType newIssueType)
         {
             _context.IssueType.Update(newIssueType);
             _context.SaveChanges();
+            return true;
         }
 
         public IssueType GetIssueType(int id)
@@ -39,10 +40,11 @@ namespace DataAccess
             return _context.IssueType.Any(e => e.IssueTypeId == id);
         }
 
-        public void RemoveIssueType(IssueType issueType)
+        public bool RemoveIssueType(IssueType issueType)
         {
             _context.IssueType.Remove(issueType);
             _context.SaveChanges();
+            return true;
         }
     }
 }

@@ -11,13 +11,13 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IStatusLogic _statusEngine;
+        private readonly IStatusLogic _statusLogic;
 
 
         public IssuesLogic(IIssuesEngine issuesEngine, IStatusLogic statusEngine)
         {
             _issuesEngine = issuesEngine;
-            _statusEngine = statusEngine;
+            _statusLogic = statusEngine;
         }
 
         public Issue GetIssue(int id) 
@@ -25,9 +25,9 @@ namespace BussinessLogic
             return _issuesEngine.GetIssue(id);
         }
 
-        public async Task<int> CreateIssue(Issue issue)
+        public int CreateIssue(Issue issue)
         {
-            var status = await _statusEngine.GetStatusByName(issue.Status.StatusName);
+            var status =  _statusLogic.GetStatusByName(issue.Status.StatusName);
 
             if (status == null)
             {
@@ -35,7 +35,7 @@ namespace BussinessLogic
             }
 
             issue.Status = status;
-            return await _issuesEngine.CreateIssue(issue);
+            return  _issuesEngine.CreateIssue(issue);
         }
 
         public bool RemoveIssue(int id)
@@ -58,7 +58,7 @@ namespace BussinessLogic
             {
                 throw new Exception("Issue does not exists");
             }
-            return _issuesEngine.EditIssue(issue.IssueId, issue); 
+            return _issuesEngine.EditIssue(issue); 
         }
     }
 }

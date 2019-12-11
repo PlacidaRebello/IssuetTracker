@@ -10,8 +10,8 @@ namespace DataAccess.Interfaces
     {
         IssueType GetIssueType(int id);
         bool IssueTypeExists(int id);
-        void EditIssueType(IssueType newIssueType);
-        Task<int> CreateIssueType(IssueType newIssueType);
-        void RemoveIssueType(IssueType issueType);
+        bool EditIssueType(IssueType newIssueType);
+        int CreateIssueType(IssueType newIssueType);
+        bool RemoveIssueType(IssueType issueType);
     }
 }
