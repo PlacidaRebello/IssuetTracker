@@ -12,6 +12,7 @@ using DataAccess.Interfaces;
 using DataAccess;
 using BussinessLogic.Interfaces;
 using BussinessLogic;
+using Microsoft.AspNetCore.Identity;
 
 namespace IssueTracker
 {
@@ -27,6 +28,9 @@ namespace IssueTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>();
+
             services.AddMvcCore(options => options.OutputFormatters.Add(new XmlSerializerOutputFormatter()));
 
             services.AddAutoMapper(typeof(Startup));
@@ -70,6 +74,7 @@ namespace IssueTracker
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
