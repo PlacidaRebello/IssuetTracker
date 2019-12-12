@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IssueTracker.ApiConfig
 {
@@ -29,6 +30,8 @@ namespace IssueTracker.ApiConfig
             CreateMap<CreateIssueTypeRequest, IssueType>();
             CreateMap<EditIssueTypeRequest, IssueType>();
             CreateMap<IssueType, GetIssueTypeData>();
+
+            CreateMap<RegisterUserRequest, IdentityUser>();
         }
     }
 }
