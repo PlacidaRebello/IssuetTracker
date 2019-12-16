@@ -14,6 +14,10 @@ using BussinessLogic.Interfaces;
 using BussinessLogic;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ServiceModel.Type;
 
 namespace IssueTracker
 {
@@ -46,10 +50,34 @@ namespace IssueTracker
             services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();
 
             services.AddTransient<IRegisterLogic, RegisterLogic>();
-          //  services.AddTransient<IRegisterEngine, RegisterEngine>();
+            //  services.AddTransient<IRegisterEngine, RegisterEngine>();
 
             //difference between transient, singelton, scoped
             //https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
+
+            
+
+            services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
+
+            var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    ValidIssuer = authOptions.Issuer,
+                    ValidAudience = authOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
+                };
+            });
 
             services.AddControllers();
 

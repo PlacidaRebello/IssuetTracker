@@ -19,6 +19,7 @@ namespace IssueTracker.Controllers
     {
         public UserManager<IdentityUser> UserManager { get; }
         private SignInManager<IdentityUser> _signInManager { get; }
+
         private readonly IRegisterLogic _registerLogic;
 
         private readonly IMapper _mapper;

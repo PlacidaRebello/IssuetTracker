@@ -7,9 +7,10 @@ using ServiceModel.Dto;
 using AutoMapper;
 using DataAccess.Models;
 using BussinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IssueTracker.Controllers
-{
+{   [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class IssuesController : ControllerBase

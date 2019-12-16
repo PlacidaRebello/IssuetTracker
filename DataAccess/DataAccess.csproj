@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Interfaces\IRegisterEngine.cs" />
+    <Compile Remove="Models\User.cs" />
     <Compile Remove="RegisterEngine.cs" />
   </ItemGroup>
 
