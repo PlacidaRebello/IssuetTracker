@@ -19,8 +19,6 @@ namespace BussinessLogic
 
         public async Task<bool> RegisterUser(AppUser user, string password)
         {
-            //bool result= await  _registerEngine.RegisterUser(identityUser, password);
-            // return result;
             var result = await _userManager.CreateAsync(user, password);
             return result.Succeeded;
         }
