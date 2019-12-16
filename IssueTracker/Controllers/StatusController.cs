@@ -19,70 +19,60 @@ namespace IssueTracker.Controllers
         private readonly IMapper _mapper;
         private readonly IStatusLogic _statusLogic;
 
-        public StatusController(DataContext context,IMapper mapper,IStatusLogic statusLogic)
+        public StatusController(DataContext context, IMapper mapper, IStatusLogic statusLogic)
         {
             _context = context;
             _mapper = mapper;
             _statusLogic = statusLogic;
         }
 
-        // GET: api/Status
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatus()
         {
             return await _context.Status.ToListAsync();
         }
 
-       
         [HttpGet("{id}")]
-        public  GetStatusData  GetStatus(int id)
+        public GetStatusData GetStatus(int id)
         {
             var status = _statusLogic.GetStatus(id);
-            // _mapper.Map<Status, GetStatusData>(status);
             GetStatusData getStatus = _mapper.Map<Status, GetStatusData>(status);
-           
             return getStatus;
-         
         }
 
         [HttpPut("{id}")]
-        public CreateStatusResponse PutStatus(EditStatusRequest status)
+        public CreateResponse PutStatus(EditStatusRequest status)
         {
             var newStatus = _mapper.Map<Status>(status);
-
             _statusLogic.EditStatus(newStatus);
-
-            return new CreateStatusResponse
-            { StatusId = newStatus.StatusId,
-              Message="Edited"
+            return new CreateResponse
+            {
+                Id = newStatus.StatusId,
+                Message = "Edited successfully"
             };
         }
 
-    
         [HttpPost]
-        public CreateStatusResponse PostStatus(CreateStatusRequest status)
+        public CreateResponse PostStatus(CreateStatusRequest status)
         {
-             var newStatus = _mapper.Map<Status>(status);
-
-            var statusId =  _statusLogic.CreateStatus(newStatus);
-
-            return new CreateStatusResponse
+            var newStatus = _mapper.Map<Status>(status);
+            var statusId = _statusLogic.CreateStatus(newStatus);
+            return new CreateResponse
             {
-                StatusId = statusId,
+                Id = statusId,
                 Message = "Issue Created Successfully"
-            };            
+            };
         }
 
-        // DELETE: api/Status/5
         [HttpDelete("{id}")]
-        public CreateStatusResponse DeleteStatus(int id)
+        public CreateResponse DeleteStatus(int id)
         {
             _statusLogic.RemoveStatus(id);
-            return new CreateStatusResponse
+            return new CreateResponse
             {
-                StatusId = id,
+                Id = id,
                 Message = "Deleted Succesfully"
-            };           
+            };
         }
 
         private bool StatusExists(int id)

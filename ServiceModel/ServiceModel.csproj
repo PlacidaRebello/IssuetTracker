@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\CreateIssueResponse.cs" />
+    <Compile Remove="Dto\CreateIssueTypeResponse.cs" />
+    <Compile Remove="Dto\CreateStatusResponse.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0" />
   </ItemGroup>

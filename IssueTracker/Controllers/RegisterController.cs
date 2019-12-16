@@ -19,11 +19,9 @@ namespace IssueTracker.Controllers
     {
         public UserManager<IdentityUser> UserManager { get; }
         private SignInManager<IdentityUser> _signInManager { get; }
-
         private readonly IRegisterLogic _registerLogic;
-
         private readonly IMapper _mapper;
-        public RegisterController(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager, IMapper mapper,IRegisterLogic registerLogic)
+        public RegisterController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
         {
             this.UserManager = userManager;
             _signInManager = signInManager;
@@ -31,20 +29,17 @@ namespace IssueTracker.Controllers
             _registerLogic = registerLogic;
         }
 
-
-        //not created a response class yet
         [HttpPost]
-        public async Task<CreateIssueResponse> CreateUserAsync(RegisterUserRequest userRequest) 
+        public async Task<CreateResponse> CreateUserAsync(RegisterUserRequest userRequest)
         {
             var newuser = _mapper.Map<AppUser>(userRequest);
-            bool result=await _registerLogic.RegisterUser(newuser,userRequest.Password);
-
+            bool result = await _registerLogic.RegisterUser(newuser, userRequest.Password);
             if (result)
             {
                 await _signInManager.SignInAsync(newuser, isPersistent: false);//cookies shoulnot persist after browser is closed
-                 return  new CreateIssueResponse{Message="registered",IssueId=1};
+                return new CreateResponse { Message = "registered", Id = 1 };
             }
-            return  new CreateIssueResponse{Message="try again"};
+            return new CreateResponse { Message = "try again" };
         }
     }
 }

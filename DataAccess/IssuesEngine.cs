@@ -21,14 +21,13 @@ namespace DataAccess
         public int CreateIssue(Issue issue)
         {
             _context.Issues.Add(issue);
-             _context.SaveChanges();
-
+            _context.SaveChanges();
             return issue.IssueId;
         }
 
         public bool EditIssue(Issue issue)
         {
-             _context.Issues.Update(issue);
+            _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
         }

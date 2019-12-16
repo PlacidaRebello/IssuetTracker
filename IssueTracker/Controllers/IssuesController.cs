@@ -10,7 +10,8 @@ using BussinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace IssueTracker.Controllers
-{   [Authorize]
+{
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class IssuesController : ControllerBase
@@ -18,7 +19,6 @@ namespace IssueTracker.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IIssuesLogic _issuesLogic;
-
         public IssuesController(DataContext context, IMapper mapper, IIssuesLogic issuesLogic)
         {
             _context = context;
@@ -26,70 +26,54 @@ namespace IssueTracker.Controllers
             _issuesLogic = issuesLogic;
         }
 
-        // GET: api/Issues
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Issue>>> GetIssues()
         {
             return await _context.Issues.ToListAsync();
         }
 
-        // GET: api/Issues/5
         [HttpGet("{id}")]
-        public  GetIssueData GetIssue(int id)
+        public GetIssueData GetIssue(int id)
         {
-            //var issue =_issuesLogic
-            var issue= _issuesLogic.GetIssue(id);
-
+            var issue = _issuesLogic.GetIssue(id);
             GetIssueData getIssue = _mapper.Map<Issue, GetIssueData>(issue);
-
             return getIssue;
-          
         }
-
 
         [HttpPut("{id}")]
-        public CreateIssueResponse PutIssue(EditIssueRequest issue)
+        public CreateResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
             newIssue.Status = new Status { StatusName = issue.Status };
-            
-             _issuesLogic.EditIssue(newIssue);
-
-            return new CreateIssueResponse
-            {             
+            _issuesLogic.EditIssue(newIssue);
+            return new CreateResponse
+            {
                 Message = "Edited Succesfully"
             };
-
         }
 
-
         [HttpPost]
-        public CreateIssueResponse PostIssue(CreateIssueRequest issue)
+        public CreateResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
             newIssue.Status = new Status { StatusName = issue.Status };
-
-            var issueId =  _issuesLogic.CreateIssue(newIssue);
-
-            return new CreateIssueResponse { 
-                IssueId = issueId,
-                Message= "Issue Created Successfully"
+            var issueId = _issuesLogic.CreateIssue(newIssue);
+            return new CreateResponse
+            {
+                Id = issueId,
+                Message = "Issue Created Successfully"
             };
         }
 
-        // DELETE: api/Issues/5
         [HttpDelete("{id}")]
-        public CreateIssueResponse DeleteIssue(int id)
+        public CreateResponse DeleteIssue(int id)
         {
             _issuesLogic.RemoveIssue(id);
-
-            return new CreateIssueResponse
+            return new CreateResponse
             {
-                IssueId = id,
+                Id = id,
                 Message = "Deleted Succesfully"
             };
         }
-
-    
     }
 }

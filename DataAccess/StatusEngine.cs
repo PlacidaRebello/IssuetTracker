@@ -44,8 +44,6 @@ namespace DataAccess
 
         public bool RemoveStatus(Status status)
         {
-            //var status = _context.Status.Find(id);
-
             _context.Status.Remove(status);
             _context.SaveChanges();
             return true;

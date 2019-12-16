@@ -19,7 +19,7 @@ namespace DataAccess
         public int CreateIssueType(IssueType newIssueType)
         {
             _context.IssueType.Add(newIssueType);
-             _context.SaveChanges();
+            _context.SaveChanges();
             return newIssueType.IssueTypeId;
         }
 
