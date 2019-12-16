@@ -72,7 +72,7 @@ namespace IssueTracker.Controllers
             return new CreateIssueTypeResponse
             {
                 IssueTypeId = issueTypeId,
-                Message = "Issue Created Successfully"
+                Message = "IssueType Created Successfully"
             };
         }
 

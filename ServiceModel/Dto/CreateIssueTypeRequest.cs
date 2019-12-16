@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueTypeRequest: IssueTypeRequest
+    public class CreateIssueTypeRequest: IssueType
     {
 
     }

@@ -19,7 +19,7 @@ namespace IssueTracker.ApiConfig
             //opts => opts.MapFrom(src => src.Status));            
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.Status, opt => opt.Ignore());
-            CreateMap<Issue, GetIssueResponse>();
+            CreateMap<Issue, GetIssueData>();
 
 
             CreateMap<CreateStatusRequest, Status>(MemberList.Source);

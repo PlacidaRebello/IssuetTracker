@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceModel.Type
 {
-   public  class IssueRequest
+   public  class Issue
     {
         [Required]
         public string Subject { get; set; }

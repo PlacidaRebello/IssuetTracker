@@ -6,12 +6,12 @@ using System.Text;
 
 namespace ServiceModel.Dto
 {
-    public class CreateStatusRequest: StatusRequest
+    public class CreateStatusRequest: Status
     {
      
     }
 
-    public class EditStatusRequest : StatusRequest
+    public class EditStatusRequest : Status
     {
         public int StatusId { get; set; }
         

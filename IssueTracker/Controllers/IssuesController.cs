@@ -34,12 +34,12 @@ namespace IssueTracker.Controllers
 
         // GET: api/Issues/5
         [HttpGet("{id}")]
-        public  GetIssueResponse GetIssue(int id)
+        public  GetIssueData GetIssue(int id)
         {
             //var issue =_issuesLogic
             var issue= _issuesLogic.GetIssue(id);
 
-            GetIssueResponse getIssue = _mapper.Map<Issue, GetIssueResponse>(issue);
+            GetIssueData getIssue = _mapper.Map<Issue, GetIssueData>(issue);
 
             return getIssue;
           
