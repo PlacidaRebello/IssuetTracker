@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace BussinessLogic.Interfaces
 {
     public interface IRegisterLogic
     {
-        Task<bool> RegisterUser(IdentityUser identityUser,string password);
+        Task<bool> RegisterUser(AppUser user,string password);
     }
 }

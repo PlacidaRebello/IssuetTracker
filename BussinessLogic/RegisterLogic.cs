@@ -1,5 +1,6 @@
 ﻿using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,18 @@ namespace BussinessLogic
 {
     public class RegisterLogic : IRegisterLogic
     {
-        private readonly IRegisterEngine _registerEngine;
-        public RegisterLogic(IRegisterEngine registerEngine)
+        private UserManager<IdentityUser> _userManager { get; }
+        public RegisterLogic(UserManager<IdentityUser> userManager)
         {
-            _registerEngine = registerEngine;
+            _userManager = userManager;
         }
-        public async Task<bool> RegisterUser(IdentityUser identityUser,string password)
+
+        public async Task<bool> RegisterUser(AppUser user,string password)
         {
-           bool result= await  _registerEngine.RegisterUser(identityUser, password);
-            return result;  
+           //bool result= await  _registerEngine.RegisterUser(identityUser, password);
+           // return result;
+            var result = await _userManager.CreateAsync(user, password);
+            return result.Succeeded;
         }
     }
 }

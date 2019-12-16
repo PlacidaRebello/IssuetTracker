@@ -31,7 +31,7 @@ namespace IssueTracker.ApiConfig
             CreateMap<EditIssueTypeRequest, IssueType>();
             CreateMap<IssueType, GetIssueTypeData>();
 
-            CreateMap<RegisterUserRequest, IdentityUser>();
+            CreateMap<RegisterUserRequest, AppUser>();
         }
     }
 }
