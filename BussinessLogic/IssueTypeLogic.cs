@@ -18,7 +18,7 @@ namespace BussinessLogic
 
         public int CreateIssueType(IssueType newIssueType)
         {
-            return  _issueTypeEngine.CreateIssueType(newIssueType);
+            return _issueTypeEngine.CreateIssueType(newIssueType);
         }
 
         public bool EditIssueType(IssueType newIssueType)
@@ -33,13 +33,13 @@ namespace BussinessLogic
 
         public IssueType GetIssueType(int id)
         {
-            return _issueTypeEngine.GetIssueType(id);   
+            return _issueTypeEngine.GetIssueType(id);
         }
 
         public bool RemoveIssueType(int id)
         {
             var issueType = _issueTypeEngine.GetIssueType(id);
-            if (issueType==null)
+            if (issueType == null)
             {
                 throw new Exception("IssueType Does not exists");
             }

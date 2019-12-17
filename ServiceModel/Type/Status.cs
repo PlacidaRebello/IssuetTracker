@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceModel.Type
 {
-    public class StatusRequest
+    public class Status
     {
         [Required]
         public string StatusName { get; set; }

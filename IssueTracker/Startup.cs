@@ -12,6 +12,12 @@ using DataAccess.Interfaces;
 using DataAccess;
 using BussinessLogic.Interfaces;
 using BussinessLogic;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ServiceModel.Type;
 
 namespace IssueTracker
 {
@@ -27,6 +33,9 @@ namespace IssueTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>();
+
             services.AddMvcCore(options => options.OutputFormatters.Add(new XmlSerializerOutputFormatter()));
 
             services.AddAutoMapper(typeof(Startup));
@@ -40,9 +49,29 @@ namespace IssueTracker
             services.AddTransient<IIssueTypeLogic, IssueTypeLogic>();
             services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();
 
+            services.AddTransient<IRegisterLogic, RegisterLogic>();
 
-            //difference between transient, singelton, scoped
-            //https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
+            services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
+
+            var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    ValidIssuer = authOptions.Issuer,
+                    ValidAudience = authOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
+                };
+            });
 
             services.AddControllers();
 
@@ -50,7 +79,33 @@ namespace IssueTracker
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Issue Tracker", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description =
+                    "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                   {
+                       new OpenApiSecurityScheme
+                       {
+                           Reference = new OpenApiReference
+                           {
+                               Type = ReferenceType.SecurityScheme,
+                               Id = "Bearer"
+                           },
+                           Scheme = "oauth2",
+                           Name = "Bearer",
+                           In = ParameterLocation.Header,
+                       },
+                       new List<string>()
+                   }
+               });
             });
         }
 
@@ -69,6 +124,8 @@ namespace IssueTracker
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

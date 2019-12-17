@@ -19,7 +19,6 @@ namespace IssueTracker.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IIssueTypeLogic _issueTypeLogic;
-
         public IssueTypesController(DataContext context, IMapper mapper, IIssueTypeLogic issueTypeLogic)
         {
             _context = context;
@@ -27,68 +26,54 @@ namespace IssueTracker.Controllers
             _issueTypeLogic = issueTypeLogic;
         }
 
-        // GET: api/IssueTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IssueType>>> GetIssueType()
         {
             return await _context.IssueType.ToListAsync();
         }
 
-
         [HttpGet("{id}")]
         public GetIssueTypeData GetIssueType(int id)
         {
-
             var issueType = _issueTypeLogic.GetIssueType(id);
-
             GetIssueTypeData issueTypeData = _mapper.Map<IssueType, GetIssueTypeData>(issueType);
-
             return issueTypeData;
         }
 
-
         [HttpPut("{id}")]
-        public CreateIssueTypeResponse PutIssueType( EditIssueTypeRequest issueType)
+        public CreateResponse PutIssueType(EditIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
-
             _issueTypeLogic.EditIssueType(newIssueType);
-
-            return new CreateIssueTypeResponse
+            return new CreateResponse
             {
-                IssueTypeId = newIssueType.IssueTypeId,
-                Message = "Edited successfully"
+                Id = newIssueType.IssueTypeId,
+                Message = "Edited Successfully"
             };
         }
 
-
         [HttpPost]
-        public CreateIssueTypeResponse PostIssueType(CreateIssueTypeRequest issueType)
+        public CreateResponse PostIssueType(CreateIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
             newIssueType.CreatedDate = DateTime.Now;
-            var issueTypeId =  _issueTypeLogic.CreateIssueType(newIssueType);
-
-            return new CreateIssueTypeResponse
+            var issueTypeId = _issueTypeLogic.CreateIssueType(newIssueType);
+            return new CreateResponse
             {
-                IssueTypeId = issueTypeId,
-                Message = "Issue Created Successfully"
+                Id = issueTypeId,
+                Message = "IssueType Created Successfully"
             };
         }
-
 
         [HttpDelete("{id}")]
-        public CreateIssueTypeResponse DeleteIssueType(int id)
+        public CreateResponse DeleteIssueType(int id)
         {
             _issueTypeLogic.RemoveIssueType(id);
-
-            return new CreateIssueTypeResponse
+            return new CreateResponse
             {
-                IssueTypeId = id,
-                Message = "Deleted successfully"
+                Id = id,
+                Message = "Deleted Successfully"
             };
         }
-
-       
     }
 }

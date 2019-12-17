@@ -1,12 +1,12 @@
-﻿using System;
+﻿using ServiceModel.Type;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueResponse
+    public class EditIssueRequest : Issue
     {
-        public string Message { get; set; }
         public int IssueId { get; set; }
     }
 }

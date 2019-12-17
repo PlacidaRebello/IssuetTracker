@@ -6,14 +6,7 @@ using ServiceModel.Type;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueRequest : IssueRequest
+    public class CreateIssueRequest : Issue
     {
-       
-    }
-
-    public class EditIssueRequest: IssueRequest
-    {
-        public int IssueId { get; set; }    
-        
     }
 }

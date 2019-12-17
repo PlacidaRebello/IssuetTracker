@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ServiceModel.Dto
 {
-    public class CreateIssueTypeResponse
+  public  class CreateResponse
     {
+        public int Id { get; set; }
         public string Message { get; set; }
-        public int IssueTypeId { get; set; }
     }
 }

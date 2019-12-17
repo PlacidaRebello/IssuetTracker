@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ServiceModel.Type
 {
-    public class IssueTypeRequest
+    public class IssueType
     {
         [Required]
         public string IssueTypeName { get; set; }
