@@ -58,7 +58,6 @@ namespace IssueTracker.Controllers
                 );
             return Ok(new
             {
-                //token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token),
                 token= $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}" ,
                 expiration = token.ValidTo
             });

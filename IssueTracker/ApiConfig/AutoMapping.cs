@@ -14,9 +14,7 @@ namespace IssueTracker.ApiConfig
         public AutoMapping()
         {
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.Status, opt => opt.Ignore());
-            //.ForMember(dest => dest.Status,
-            //opts => opts.MapFrom(src => src.Status));            
+                .ForMember(x => x.Status, opt => opt.Ignore());        
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.Status, opt => opt.Ignore());
             CreateMap<Issue, GetIssueData>();

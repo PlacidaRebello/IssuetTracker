@@ -51,9 +51,6 @@ namespace IssueTracker
 
             services.AddTransient<IRegisterLogic, RegisterLogic>();
 
-            //difference between transient, singelton, scoped
-            //https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
-
             services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
 
             var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
