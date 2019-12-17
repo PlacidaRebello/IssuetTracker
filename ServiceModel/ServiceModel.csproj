@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dto\CreateIssueResponse.cs" />
-    <Compile Remove="Dto\CreateIssueTypeResponse.cs" />
-    <Compile Remove="Dto\CreateStatusResponse.cs" />
   </ItemGroup>
 
   <ItemGroup>

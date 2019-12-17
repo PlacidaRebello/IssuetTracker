@@ -48,7 +48,7 @@ namespace IssueTracker.Controllers
             return new CreateResponse
             {
                 Id = newStatus.StatusId,
-                Message = "Edited successfully"
+                Message = "Edited Successfully"
             };
         }
 

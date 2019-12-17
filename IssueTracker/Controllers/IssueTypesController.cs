@@ -48,7 +48,7 @@ namespace IssueTracker.Controllers
             return new CreateResponse
             {
                 Id = newIssueType.IssueTypeId,
-                Message = "Edited successfully"
+                Message = "Edited Successfully"
             };
         }
 
@@ -72,7 +72,7 @@ namespace IssueTracker.Controllers
             return new CreateResponse
             {
                 Id = id,
-                Message = "Deleted successfully"
+                Message = "Deleted Successfully"
             };
         }
     }

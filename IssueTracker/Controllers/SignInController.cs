@@ -45,8 +45,8 @@ namespace IssueTracker.Controllers
         {
             var authClaims = new[]
             {
-                    new Claim(JwtRegisteredClaimNames.Sub, userName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
             var token = new JwtSecurityToken(
                 issuer: _authOptions.Issuer,
@@ -58,7 +58,8 @@ namespace IssueTracker.Controllers
                 );
             return Ok(new
             {
-                token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token),
+                //token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(token),
+                token= $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}" ,
                 expiration = token.ValidTo
             });
         }

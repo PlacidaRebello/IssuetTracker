@@ -17,13 +17,11 @@ namespace IssueTracker.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        public UserManager<IdentityUser> UserManager { get; }
         private SignInManager<IdentityUser> _signInManager { get; }
         private readonly IRegisterLogic _registerLogic;
         private readonly IMapper _mapper;
-        public RegisterController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
+        public RegisterController( SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
         {
-            this.UserManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _registerLogic = registerLogic;
@@ -32,11 +30,11 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public async Task<CreateResponse> CreateUserAsync(RegisterUserRequest userRequest)
         {
-            var newuser = _mapper.Map<AppUser>(userRequest);
-            bool result = await _registerLogic.RegisterUser(newuser, userRequest.Password);
+            var newUser = _mapper.Map<AppUser>(userRequest);
+            bool result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
             if (result)
             {
-                await _signInManager.SignInAsync(newuser, isPersistent: false);//cookies shoulnot persist after browser is closed
+                await _signInManager.SignInAsync(newUser, isPersistent: false);//cookies shoulnot persist after browser is closed
                 return new CreateResponse { Message = "registered", Id = 1 };
             }
             return new CreateResponse { Message = "try again" };

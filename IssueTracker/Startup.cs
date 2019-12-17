@@ -50,12 +50,9 @@ namespace IssueTracker
             services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();
 
             services.AddTransient<IRegisterLogic, RegisterLogic>();
-            //  services.AddTransient<IRegisterEngine, RegisterEngine>();
 
             //difference between transient, singelton, scoped
             //https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
-
-            
 
             services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
 
@@ -89,15 +86,14 @@ namespace IssueTracker
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
-                        "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-               {
+                {
                    {
                        new OpenApiSecurityScheme
                        {
@@ -114,8 +110,6 @@ namespace IssueTracker
                    }
                });
             });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,6 +129,7 @@ namespace IssueTracker
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
