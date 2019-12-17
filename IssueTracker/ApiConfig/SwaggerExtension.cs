@@ -44,7 +44,7 @@ namespace IssueTracker.ApiConfig
             });
         }
 
-        public static void UseCustomSwagger(this IApplicationBuilder app) 
+        public static void UseCustomSwagger(this IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });

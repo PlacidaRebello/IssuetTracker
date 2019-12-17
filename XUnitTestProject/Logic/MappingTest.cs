@@ -8,7 +8,7 @@ using Xunit;
 
 namespace XUnitTestProject.Logic
 {
-    public class MappingTest:IClassFixture<MappingTestsFixture>
+    public class MappingTest : IClassFixture<MappingTestsFixture>
     {
         private readonly IConfigurationProvider _configuration;
         private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ namespace XUnitTestProject.Logic
         }
 
         [Fact]
-        public void ShoulHaveValidConfiguration() 
+        public void ShoulHaveValidConfiguration()
         {
             _configuration.AssertConfigurationIsValid();
         }
@@ -33,7 +33,7 @@ namespace XUnitTestProject.Logic
         public void ShouldSupportMappingFromSouceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);
-            _mapper.Map(instance,source,destination);
+            _mapper.Map(instance, source, destination);
         }
     }
 }

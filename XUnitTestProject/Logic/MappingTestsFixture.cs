@@ -13,9 +13,9 @@ namespace XUnitTestProject.Logic
         public IMapper Mapper { get; }
         public MappingTestsFixture()
         {
-            ConfigurationProvider = new MapperConfiguration(cfg => 
+            ConfigurationProvider = new MapperConfiguration(cfg =>
             {
-                  cfg.AddProfile<AutoMapping>();
+                cfg.AddProfile<AutoMapping>();
             });
             Mapper = ConfigurationProvider.CreateMapper();
         }

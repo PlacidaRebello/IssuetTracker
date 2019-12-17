@@ -11,10 +11,9 @@ using System.Text;
 namespace IssueTracker.ApiConfig
 {
     public static class AuthenticationExtension
-    {        
-        public static void AddCustomAuthentication(this IServiceCollection services,AuthOptions authOptions) 
+    {
+        public static void AddCustomAuthentication(this IServiceCollection services, AuthOptions authOptions)
         {
-           
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

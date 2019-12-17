@@ -12,7 +12,7 @@ namespace IssueTracker.ApiConfig
 {
     public static class TransientExtension
     {
-        public static void AddCustomTransientServices(this IServiceCollection services) 
+        public static void AddCustomTransientServices(this IServiceCollection services)
         {
             services.AddTransient<IIssuesLogic, IssuesLogic>();
             services.AddTransient<IIssuesEngine, IssuesEngine>();
