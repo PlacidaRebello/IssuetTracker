@@ -23,11 +23,18 @@ namespace IssueTracker.ApiConfig
             CreateMap<EditStatusRequest, Status>(MemberList.Source);
             CreateMap<Status, GetStatusData>();
 
-            CreateMap<CreateIssueTypeRequest, IssueType>();
-            CreateMap<EditIssueTypeRequest, IssueType>();
+            CreateMap<CreateIssueTypeRequest, IssueType>(MemberList.Source);
+            CreateMap<EditIssueTypeRequest, IssueType>(MemberList.Source);
             CreateMap<IssueType, GetIssueTypeData>();
 
-            CreateMap<RegisterUserRequest, AppUser>();
+            //CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
+            //    .ForSourceMember(x=>x.Password,opt=>opt.DoNotValidate())
+            //    .ForSourceMember(x=>x.ConfirmPassword,opt=>opt.DoNotValidate());
+
+
+            CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
+                .ForSourceMember(x=>x.Password,opt=>opt.DoNotValidate())
+                .ForSourceMember(x=>x.ConfirmPassword,cp=>cp.DoNotValidate());
         }
     }
 }
