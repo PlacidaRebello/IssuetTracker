@@ -2,11 +2,9 @@
 using DataAccess.Models;
 using ServiceModel.Dto;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace XUnitTestProject.Logic
+namespace UnitTest.Logic
 {
     public class MappingTest : IClassFixture<MappingTestsFixture>
     {

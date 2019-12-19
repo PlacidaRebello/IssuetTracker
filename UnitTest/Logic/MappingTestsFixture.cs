@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using IssueTracker.ApiConfig;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace XUnitTestProject.Logic
+namespace UnitTest.Logic
 {
     public class MappingTestsFixture
     {

@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
-using ServiceModel.Dto;
-using Autofac.Extras.Moq;
 using Moq;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using DataAccess.Interfaces;
 using BussinessLogic;
 using FluentAssertions;
-using System.Threading.Tasks;
 
-namespace XUnitTestProject.Logic
+namespace UnitTest.Logic
 {
     public class IssueLogicTest
     {
@@ -24,7 +19,6 @@ namespace XUnitTestProject.Logic
             mockStatusLogic = new Mock<IStatusLogic>();
         }
 
-        //Unit test methods should be like this "MethodBeingTested_TestCase_ExpectedOutcome"
         [Fact]
         public void GetIssueById_ValidData()
         {
@@ -87,17 +81,11 @@ namespace XUnitTestProject.Logic
         [Fact]
         public void CreateIssue_Null_Status_Throws_ExceptionAsync()
         {
-
-            //mockIssuesEngine.Setup(x => x.GetIssue(1))
-            //   .Returns(GetSampleIssue());
-
             mockIssuesEngine.Setup(x => x.CreateIssue(GetSampleIssue()))
                 .Returns(1);
 
             mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
                 .Returns((Status)null);
-
-            //  var expected = GetSampleIssue().IssueId;
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
 
@@ -110,7 +98,6 @@ namespace XUnitTestProject.Logic
             mockIssuesEngine.Verify(x => x.CreateIssue(GetSampleIssue()), Times.Never);
 
         }
-
 
         [Fact]
         public void EditIssue_IssueDoesNotExists_ThrowsException()
@@ -132,7 +119,6 @@ namespace XUnitTestProject.Logic
 
             mockIssuesEngine.Verify(x => x.EditIssue(issue), Times.Never);
         }
-
 
         [Fact]
         public void EditIssue_IssueEdited_ValidCall()
@@ -214,7 +200,5 @@ namespace XUnitTestProject.Logic
             };
             return issue;
         }
-
-
     }
 }
