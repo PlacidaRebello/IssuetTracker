@@ -31,13 +31,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: '**/XUnitTestProject.csproj'
+    projects: '**/UnitTest.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
-    publishWebProjects: false
+    publishWebProjects: False
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
