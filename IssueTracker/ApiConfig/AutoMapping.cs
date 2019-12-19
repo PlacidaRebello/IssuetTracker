@@ -27,11 +27,6 @@ namespace IssueTracker.ApiConfig
             CreateMap<EditIssueTypeRequest, IssueType>(MemberList.Source);
             CreateMap<IssueType, GetIssueTypeData>();
 
-            //CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
-            //    .ForSourceMember(x=>x.Password,opt=>opt.DoNotValidate())
-            //    .ForSourceMember(x=>x.ConfirmPassword,opt=>opt.DoNotValidate());
-
-
             CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
                 .ForSourceMember(x=>x.Password,opt=>opt.DoNotValidate())
                 .ForSourceMember(x=>x.ConfirmPassword,cp=>cp.DoNotValidate());
