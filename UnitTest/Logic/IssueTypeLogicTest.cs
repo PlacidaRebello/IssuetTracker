@@ -1,7 +1,4 @@
-﻿using BussinessLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using Moq;
 using DataAccess.Interfaces;
 using Xunit;
@@ -9,11 +6,11 @@ using DataAccess.Models;
 using BussinessLogic;
 using FluentAssertions;
 
-namespace XUnitTestProject.Logic
+namespace UnitTest.Logic
 {
     public class IssueTypeLogicTest
     {
-        Mock<IIssueTypeEngine> mockIssueTypeEngine;
+        readonly Mock<IIssueTypeEngine> mockIssueTypeEngine;
 
         public IssueTypeLogicTest()
         {

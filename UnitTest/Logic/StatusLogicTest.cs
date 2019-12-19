@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac.Extras.Moq;
 using Moq;
 using DataAccess.Models;
 using DataAccess.Interfaces;
@@ -9,11 +6,11 @@ using BussinessLogic;
 using FluentAssertions;
 using Xunit;
 
-namespace XUnitTestProject.Logic
+namespace UnitTest.Logic
 {
     public class StatusLogicTest
     {
-        Mock<IStatusEngine> mockStatusEngine;
+        readonly Mock<IStatusEngine> mockStatusEngine;
 
         public StatusLogicTest()
         {
