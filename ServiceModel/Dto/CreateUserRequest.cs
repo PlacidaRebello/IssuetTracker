@@ -1,11 +1,8 @@
 ﻿using ServiceModel.Type;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ServiceModel.Dto
 {
-    public class CreateUserRequest:User
+    public class CreateUserRequest : User
     {
     }
 }

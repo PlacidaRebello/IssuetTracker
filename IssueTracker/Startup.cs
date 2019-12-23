@@ -1,24 +1,15 @@
 using AutoMapper;
+using DataAccess.Models;
+using IssueTracker.ApiConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using DataAccess.Models;
-using DataAccess.Interfaces;
-using DataAccess;
-using BussinessLogic.Interfaces;
-using BussinessLogic;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using ServiceModel.Type;
-using IssueTracker.ApiConfig;
 
 namespace IssueTracker
 {
@@ -63,6 +54,11 @@ namespace IssueTracker
             {
                 app.UseDeveloperExceptionPage();
             }
+            if (env.IsProduction() || env.IsStaging())
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
 
             app.UseHttpsRedirection();
 

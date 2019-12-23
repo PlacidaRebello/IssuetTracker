@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ServiceModel.Dto;
 using ServiceModel.Type;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
@@ -33,7 +30,12 @@ namespace IssueTracker.Controllers
         public async Task<IActionResult> SignIn(CreateUserRequest userRequest)
         {
             var user = await _userManager.FindByNameAsync(userRequest.Username);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
             var result = await _signInManager.PasswordSignInAsync(user, userRequest.Password, false, false);
+
             if (result.Succeeded)
             {
                 return Ok(Createtoken(user.UserName));
@@ -58,7 +60,7 @@ namespace IssueTracker.Controllers
                 );
             return Ok(new
             {
-                token= $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}" ,
+                token = $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}",
                 expiration = token.ValidTo
             });
         }

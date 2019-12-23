@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using ServiceModel.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DataAccess.Models;
-using Microsoft.AspNetCore.Identity;
+using ServiceModel.Dto;
 
 namespace IssueTracker.ApiConfig
 {
@@ -14,7 +9,7 @@ namespace IssueTracker.ApiConfig
         public AutoMapping()
         {
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.Status, opt => opt.Ignore());        
+                .ForMember(x => x.Status, opt => opt.Ignore());
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.Status, opt => opt.Ignore());
             CreateMap<Issue, GetIssueData>();
@@ -28,8 +23,8 @@ namespace IssueTracker.ApiConfig
             CreateMap<IssueType, GetIssueTypeData>();
 
             CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
-                .ForSourceMember(x=>x.Password,opt=>opt.DoNotValidate())
-                .ForSourceMember(x=>x.ConfirmPassword,cp=>cp.DoNotValidate());
+                .ForSourceMember(x => x.Password, opt => opt.DoNotValidate())
+                .ForSourceMember(x => x.ConfirmPassword, cp => cp.DoNotValidate());
         }
     }
 }

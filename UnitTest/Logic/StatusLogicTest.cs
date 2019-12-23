@@ -1,9 +1,9 @@
-﻿using System;
-using Moq;
-using DataAccess.Models;
+﻿using BussinessLogic;
 using DataAccess.Interfaces;
-using BussinessLogic;
+using DataAccess.Models;
 using FluentAssertions;
+using Moq;
+using System;
 using Xunit;
 
 namespace UnitTest.Logic

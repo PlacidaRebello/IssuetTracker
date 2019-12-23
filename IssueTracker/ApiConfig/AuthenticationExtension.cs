@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ServiceModel.Type;
 using Microsoft.IdentityModel.Tokens;
+using ServiceModel.Type;
 using System.Text;
 
 namespace IssueTracker.ApiConfig

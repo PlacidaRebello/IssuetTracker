@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ServiceModel.Dto
 {
-   public class RegisterUserRequest
+    public class RegisterUserRequest
     {
         [Required]
         public string UserName { get; set; }
@@ -20,8 +17,8 @@ namespace ServiceModel.Dto
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name ="ConfirmPassword")]
-        [Compare("Password",ErrorMessage ="Password and confirm password do not match")]
+        [Display(Name = "ConfirmPassword")]
+        [Compare("Password", ErrorMessage = "Password and confirm password do not match")]
         public string ConfirmPassword { get; set; }
 
     }

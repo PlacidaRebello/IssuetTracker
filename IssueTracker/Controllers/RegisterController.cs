@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ServiceModel.Dto;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using ServiceModel.Dto;
+using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase
@@ -20,7 +17,7 @@ namespace IssueTracker.Controllers
         private SignInManager<IdentityUser> _signInManager { get; }
         private readonly IRegisterLogic _registerLogic;
         private readonly IMapper _mapper;
-        public RegisterController( SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
+        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
         {
             _signInManager = signInManager;
             _mapper = mapper;
