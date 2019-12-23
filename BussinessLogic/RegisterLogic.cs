@@ -1,10 +1,6 @@
 ﻿using BussinessLogic.Interfaces;
-using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BussinessLogic

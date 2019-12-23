@@ -1,10 +1,10 @@
-﻿using System;
-using Moq;
+﻿using BussinessLogic;
 using DataAccess.Interfaces;
-using Xunit;
 using DataAccess.Models;
-using BussinessLogic;
 using FluentAssertions;
+using Moq;
+using System;
+using Xunit;
 
 namespace UnitTest.Logic
 {
@@ -23,7 +23,7 @@ namespace UnitTest.Logic
             IssueType issueType = new IssueType()
             {
                 IssueTypeName = "WebApi",
-                CreatedBy = "Placida"                
+                CreatedBy = "Placida"
             };
 
 
@@ -44,7 +44,7 @@ namespace UnitTest.Logic
         public void GetIssueTypeById_ReturnsSuccessfull()
         {
             var issueType = CreateSampleIssueType();
-           
+
             mockIssueTypeEngine.Setup(x => x.GetIssueType(1))
                .Returns(issueType);
 

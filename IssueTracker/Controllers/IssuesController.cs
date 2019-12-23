@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using BussinessLogic.Interfaces;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceModel.Dto;
-using AutoMapper;
-using DataAccess.Models;
-using BussinessLogic.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {

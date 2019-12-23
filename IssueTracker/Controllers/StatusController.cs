@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using BussinessLogic.Interfaces;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceModel.Dto;
-using DataAccess.Models;
-using AutoMapper;
-using BussinessLogic.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StatusController : ControllerBase

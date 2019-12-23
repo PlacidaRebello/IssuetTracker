@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
-using ServiceModel.Type;
+﻿using ServiceModel.Type;
 
 namespace ServiceModel.Dto
 {
