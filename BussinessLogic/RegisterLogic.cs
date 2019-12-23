@@ -1,5 +1,5 @@
 ﻿using BussinessLogic.Interfaces;
-using DataAccess.Models;
+using DataAccess.DataModels;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 

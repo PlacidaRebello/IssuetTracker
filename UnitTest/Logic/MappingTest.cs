@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Models;
+using DataAccess.DataModels;
 using ServiceModel.Dto;
 using System;
 using Xunit;

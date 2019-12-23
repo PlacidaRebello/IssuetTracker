@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Models;
+using DataAccess.DataModels;
 using ServiceModel.Dto;
 
 namespace IssueTracker.ApiConfig
@@ -25,6 +26,8 @@ namespace IssueTracker.ApiConfig
             CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
                 .ForSourceMember(x => x.Password, opt => opt.DoNotValidate())
                 .ForSourceMember(x => x.ConfirmPassword, cp => cp.DoNotValidate());
+
+            //CreateMap<CreateUserRequest, AppUser>(MemberList.Source);
         }
     }
 }

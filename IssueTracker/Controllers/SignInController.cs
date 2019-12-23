@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using BussinessLogic.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -38,12 +40,12 @@ namespace IssueTracker.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(Createtoken(user.UserName));
+                return Ok(CreateToken(user.UserName));
             }
             return Unauthorized();
         }
 
-        private object Createtoken(string userName)
+        private object CreateToken(string userName)
         {
             var authClaims = new[]
             {
@@ -58,11 +60,11 @@ namespace IssueTracker.Controllers
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authOptions.SecureKey)),
                     SecurityAlgorithms.HmacSha256Signature)
                 );
-            return Ok(new
+            return new
             {
                 token = $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}",
                 expiration = token.ValidTo
-            });
+            };
         }
     }
 }
