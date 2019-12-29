@@ -39,7 +39,7 @@ namespace IssueTracker.Controllers
             return getIssue;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public CreateResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);

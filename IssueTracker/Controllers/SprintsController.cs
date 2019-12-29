@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DataAccess.Models;
 using ServiceModel.Dto;
 using AutoMapper;
 using BussinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SprintTracker.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SprintsController : ControllerBase
@@ -40,7 +37,7 @@ namespace SprintTracker.Controllers
             return getSprint;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public CreateResponse PutSprint(EditSprintRequest sprint)
         {
             var newSprint = _mapper.Map<Sprint>(sprint);
