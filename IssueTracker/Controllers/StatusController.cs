@@ -41,7 +41,7 @@ namespace IssueTracker.Controllers
             return getStatus;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public CreateResponse PutStatus(EditStatusRequest status)
         {
             var newStatus = _mapper.Map<Status>(status);

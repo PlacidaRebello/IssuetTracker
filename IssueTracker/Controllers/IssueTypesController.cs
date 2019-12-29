@@ -40,7 +40,7 @@ namespace IssueTracker.Controllers
             return issueTypeData;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public CreateResponse PutIssueType(EditIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);

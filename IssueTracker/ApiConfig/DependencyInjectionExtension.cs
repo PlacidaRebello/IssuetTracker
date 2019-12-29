@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IssueTracker.ApiConfig
 {
-    public static class TransientExtension
+    public static class DependencyInjectionExtension
     {
         public static void AddCustomTransientServices(this IServiceCollection services)
         {
