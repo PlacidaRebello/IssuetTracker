@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20191228060825_SprintStatusRemoved")]
+    partial class SprintStatusRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,15 +104,10 @@ namespace DataAccess.Migrations
                     b.Property<decimal>("SprintPoints")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SprintStatusId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("SprintId");
-
-                    b.HasIndex("SprintStatusId");
 
                     b.ToTable("Sprints");
                 });
@@ -356,15 +353,6 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Sprint", b =>
-                {
-                    b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
-                        .WithMany("Sprint")
-                        .HasForeignKey("SprintStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

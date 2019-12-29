@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20191226140704_InsertSprintStatus")]
+    partial class InsertSprintStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +40,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SprintId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
@@ -51,8 +50,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IssueId");
-
-                    b.HasIndex("SprintId");
 
                     b.HasIndex("StatusId");
 
@@ -87,12 +84,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -109,8 +100,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("SprintId");
-
-                    b.HasIndex("SprintStatusId");
 
                     b.ToTable("Sprints");
                 });
@@ -349,22 +338,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Issue", b =>
                 {
-                    b.HasOne("DataAccess.Models.Sprint", "Sprint")
-                        .WithMany("Issues")
-                        .HasForeignKey("SprintId");
-
                     b.HasOne("DataAccess.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Sprint", b =>
-                {
-                    b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
-                        .WithMany("Sprint")
-                        .HasForeignKey("SprintStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

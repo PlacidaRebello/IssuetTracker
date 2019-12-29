@@ -8,7 +8,6 @@ namespace DataAccess.Interfaces
         Issue GetIssue(int id);
         bool RemoveIssue(Issue issue);
         bool EditIssue(Issue issue);
-
         bool IssueExists(int id);
     }
 }
