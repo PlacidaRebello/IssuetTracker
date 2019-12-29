@@ -55,6 +55,7 @@ namespace SprintTracker.Controllers
         public CreateResponse PostSprint(CreateSprintRequest sprint)
         {
             var newSprint = _mapper.Map<Sprint>(sprint);
+            //newSprint.SprintStatusId = 1;
             var SprintId = _sprintLogic.CreateSprint(newSprint);
             return new CreateResponse
             {

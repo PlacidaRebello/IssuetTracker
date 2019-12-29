@@ -22,6 +22,7 @@ namespace BussinessLogic
             //    throw new Exception("Status doesn't exist. Please create a status and then add Sprints");
             //}
             //Sprint.Status = status;
+            sprint.SprintStatusId = 1;
             return _sprintEngine.CreateSprint(sprint);
         }
 
