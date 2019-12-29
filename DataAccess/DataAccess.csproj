@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191226120903_SprintModelChanges.cs" />
+    <Compile Remove="Migrations\20191226120903_SprintModelChanges.Designer.cs" />
+    <Compile Remove="Migrations\20191228055831_SprintStatusFK.cs" />
+    <Compile Remove="Migrations\20191228055831_SprintStatusFK.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">

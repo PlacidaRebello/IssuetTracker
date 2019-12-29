@@ -49,5 +49,10 @@ namespace BussinessLogic
             }
             return _issuesEngine.EditIssue(issue);
         }
-    }
+
+        //public Issue GetIssueByName(string issueName)
+        //{
+        //    return _issuesEngine.GetIssueByName(issueName);
+        //}
+    }   
 }

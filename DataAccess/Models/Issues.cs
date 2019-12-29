@@ -10,6 +10,7 @@ namespace DataAccess.Models
         public string AssignedTo { get; set; }
         public string Tags { get; set; }
         public Status Status { get; set; }
+        public virtual Sprint Sprint { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
     }

@@ -27,6 +27,10 @@ namespace IssueTracker.ApiConfig
                 .ForSourceMember(x => x.Password, opt => opt.DoNotValidate())
                 .ForSourceMember(x => x.ConfirmPassword, cp => cp.DoNotValidate());
 
+            CreateMap<CreateSprintRequest, Sprint>(MemberList.Source);
+            CreateMap<EditSprintRequest, Sprint>(MemberList.Source);
+            CreateMap<Sprint, GetSprintData>();
+
             //CreateMap<CreateUserRequest, AppUser>(MemberList.Source);
         }
     }
