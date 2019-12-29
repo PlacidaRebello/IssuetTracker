@@ -43,10 +43,6 @@ namespace DataAccess
         {
             return _context.Issues.Any(e => e.IssueId == id);
         }
-
-        //public Issue GetIssueByName(string issueName)
-        //{
-        //    return _context.Issues.FirstOrDefault(s => s.Tags == issueName);
-        //}
+                
     }
 }

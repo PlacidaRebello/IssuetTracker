@@ -34,6 +34,11 @@ namespace DataAccess
             return _context.Sprints.FirstOrDefault(i => i.SprintId == id);
         }
 
+        public List<Sprint> GetSprints()
+        {
+            return _context.Sprints.ToList<Sprint>();
+        }
+
         public bool RemoveSprint(Sprint sprint)
         {
             _context.Sprints.Remove(sprint);

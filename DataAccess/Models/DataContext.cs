@@ -16,11 +16,7 @@ namespace DataAccess.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<Sprint>()
-            //    .Property(b => b.SprintStatus)
-            //    .HasDefaultValue<>
-            
+            base.OnModelCreating(modelBuilder);            
         }
     }
 }

@@ -9,6 +9,5 @@ namespace DataAccess.Interfaces
         bool RemoveIssue(Issue issue);
         bool EditIssue(Issue issue);
         bool IssueExists(int id);
-        //Issue GetIssueByName(string issueName);
     }
 }

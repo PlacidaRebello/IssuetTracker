@@ -11,5 +11,6 @@ namespace BussinessLogic.Interfaces
         bool RemoveSprint(int id);
         Sprint GetSprint(int id);
         bool EditSprint(Sprint sprint);
+        List<Sprint> GetSprints();
     }
 }

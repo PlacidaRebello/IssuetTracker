@@ -12,5 +12,6 @@ namespace DataAccess.Interfaces
         bool RemoveSprint(Sprint sprint);
         bool EditSprint(Sprint sprint);
         bool SprintExists(int id);
+        List<Sprint> GetSprints();
     }
 }

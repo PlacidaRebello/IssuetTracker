@@ -15,13 +15,7 @@ namespace BussinessLogic
             _sprintEngine = sprintEngine;
         }
         public int CreateSprint(Sprint sprint)
-        {
-            //var status = .GetIssueByName(Sprint.Status.StatusName);
-            //if (status == null)
-            //{
-            //    throw new Exception("Status doesn't exist. Please create a status and then add Sprints");
-            //}
-            //Sprint.Status = status;
+        {            
             sprint.SprintStatusId = 1;
             return _sprintEngine.CreateSprint(sprint);
         }
@@ -38,6 +32,11 @@ namespace BussinessLogic
         public Sprint GetSprint(int id)
         {
             return _sprintEngine.GetSprint(id);
+        }
+
+        public List<Sprint> GetSprints()
+        {
+            return _sprintEngine.GetSprints();
         }
 
         public bool RemoveSprint(int id)

@@ -10,7 +10,6 @@ namespace ServiceModel.Type
         public decimal SprintPoints { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        // public int SprintStatus { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
     }

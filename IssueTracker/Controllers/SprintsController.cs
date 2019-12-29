@@ -24,12 +24,13 @@ namespace SprintTracker.Controllers
             _sprintLogic = sprintLogic;
         }
 
-        // GET: api/Sprints
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints()
-        //{
-        //    return await _context.Sprints.ToListAsync();
-        //}
+        public IEnumerable<GetSprintData> GetSprints()
+        {
+            List<Sprint> Sprints = _sprintLogic.GetSprints();
+            List<GetSprintData> list = _mapper.Map<List<Sprint>, List<GetSprintData>>(Sprints);
+            return list;
+        }
 
         [HttpGet("{id}")]
         public GetSprintData GetSprint(int id)
@@ -43,7 +44,6 @@ namespace SprintTracker.Controllers
         public CreateResponse PutSprint(EditSprintRequest sprint)
         {
             var newSprint = _mapper.Map<Sprint>(sprint);
-            //newSprint.Status = new Status { StatusName = Sprint.Status };
             _sprintLogic.EditSprint(newSprint);
             return new CreateResponse
             {
