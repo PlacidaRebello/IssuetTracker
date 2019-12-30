@@ -144,17 +144,7 @@ namespace UnitTest.Logic
         public void GetSprints_ReturnsSuccessfull()
         {
             var sprint1 = CreateSampleSprint();
-            Sprint sprint2 = new Sprint()
-            {
-                SprintId = 2,
-                SprintName = "test2",
-                SprintPoints = 2.0m,
-                StartDate = new DateTime(2019, 6, 1),
-                EndDate = new DateTime(2019, 12, 1),
-                SprintStatusId = 1,
-                CreatedBy = "user",
-                CreatedDate = new DateTime(2019, 12, 30)
-            };
+            var sprint2 = CreateSampleSprint(2);          
             List<Sprint> sprintobj = new List<Sprint>();
             sprintobj.Add(sprint1);
             sprintobj.Add(sprint2);
@@ -172,11 +162,11 @@ namespace UnitTest.Logic
             actual.Should().BeEquivalentTo(expected);
         }
 
-        private Sprint CreateSampleSprint()
+        private Sprint CreateSampleSprint(int sprintId=1)
         {
             Sprint sprint = new Sprint()
             {
-                SprintId = 1,
+                SprintId = sprintId,
                 SprintName = "test1",
                 SprintPoints = 2.0m,
                 StartDate = new DateTime(2019, 6, 1),
