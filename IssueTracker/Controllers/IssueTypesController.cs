@@ -3,11 +3,9 @@ using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ServiceModel.Dto;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
@@ -16,20 +14,20 @@ namespace IssueTracker.Controllers
     [ApiController]
     public class IssueTypesController : ControllerBase
     {
-        private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IIssueTypeLogic _issueTypeLogic;
-        public IssueTypesController(DataContext context, IMapper mapper, IIssueTypeLogic issueTypeLogic)
+        public IssueTypesController(IMapper mapper, IIssueTypeLogic issueTypeLogic)
         {
-            _context = context;
             _mapper = mapper;
             _issueTypeLogic = issueTypeLogic;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IssueType>>> GetIssueType()
+        public IEnumerable<GetIssueTypeData> GetIssueType()
         {
-            return await _context.IssueType.ToListAsync();
+            List<IssueType> issueType = _issueTypeLogic.GetIssueTypeList();
+            List<GetIssueTypeData> issueTypeList = _mapper.Map<List<IssueType>, List<GetIssueTypeData>>(issueType);
+            return issueTypeList;
         }
 
         [HttpGet("{id}")]

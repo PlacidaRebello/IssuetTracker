@@ -2,6 +2,7 @@
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BussinessLogic
 {
@@ -35,6 +36,11 @@ namespace BussinessLogic
         public Status GetStatusByName(string statusName)
         {
             return _statusEngine.GetStatusByName(statusName);
+        }
+
+        public List<Status> GetStatusList()
+        {
+            return _statusEngine.GetStatusList();
         }
 
         public bool RemoveStatus(int id)

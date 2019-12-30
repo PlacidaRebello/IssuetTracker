@@ -1,5 +1,4 @@
 using DataAccess.DataModels;
-using DataAccess.Models;
 using System.Threading.Tasks;
 
 namespace BussinessLogic.Interfaces

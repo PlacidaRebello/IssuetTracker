@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using DataAccess.Models;
-using ServiceModel.Dto;
-using AutoMapper;
+﻿using AutoMapper;
 using BussinessLogic.Interfaces;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ServiceModel.Dto;
+using System.Collections.Generic;
 
 namespace SprintTracker.Controllers
 {
@@ -15,7 +15,7 @@ namespace SprintTracker.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISprintLogic _sprintLogic;
-        public SprintsController(IMapper mapper,ISprintLogic sprintLogic)
+        public SprintsController(IMapper mapper, ISprintLogic sprintLogic)
         {
             _mapper = mapper;
             _sprintLogic = sprintLogic;

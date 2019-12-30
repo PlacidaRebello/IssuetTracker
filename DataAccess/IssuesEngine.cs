@@ -1,6 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
-
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAccess
@@ -43,6 +43,10 @@ namespace DataAccess
         {
             return _context.Issues.Any(e => e.IssueId == id);
         }
-                
+
+        public List<Issue> GetIssueList()
+        {
+            return _context.Issues.ToList<Issue>();
+        }
     }
 }

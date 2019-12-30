@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
@@ -9,5 +10,6 @@ namespace DataAccess.Interfaces
         bool RemoveIssue(Issue issue);
         bool EditIssue(Issue issue);
         bool IssueExists(int id);
+        List<Issue> GetIssueList();
     }
 }

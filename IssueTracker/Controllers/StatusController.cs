@@ -3,11 +3,8 @@ using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ServiceModel.Dto;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
@@ -16,21 +13,21 @@ namespace IssueTracker.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
-        private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IStatusLogic _statusLogic;
 
-        public StatusController(DataContext context, IMapper mapper, IStatusLogic statusLogic)
+        public StatusController(IMapper mapper, IStatusLogic statusLogic)
         {
-            _context = context;
             _mapper = mapper;
             _statusLogic = statusLogic;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Status>>> GetStatus()
+        public IEnumerable<GetStatusData> GetStatusList()
         {
-            return await _context.Status.ToListAsync();
+            List<Status> status = _statusLogic.GetStatusList();
+            List<GetStatusData> statusList = _mapper.Map<List<Status>, List<GetStatusData>>(status);
+            return statusList;
         }
 
         [HttpGet("{id}")]
@@ -74,11 +71,6 @@ namespace IssueTracker.Controllers
                 Id = id,
                 Message = "Deleted Succesfully"
             };
-        }
-
-        private bool StatusExists(int id)
-        {
-            return _context.Status.Any(e => e.StatusId == id);
         }
     }
 }

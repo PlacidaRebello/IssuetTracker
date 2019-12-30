@@ -1,5 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAccess
@@ -35,6 +36,11 @@ namespace DataAccess
         public Status GetStatusByName(string statusName)
         {
             return _context.Status.FirstOrDefault(s => s.StatusName == statusName);
+        }
+
+        public List<Status> GetStatusList()
+        {
+            return _context.Status.ToList<Status>();
         }
 
         public bool RemoveStatus(Status status)
