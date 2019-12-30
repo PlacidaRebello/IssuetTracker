@@ -2,6 +2,7 @@
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BussinessLogic
 {
@@ -31,6 +32,11 @@ namespace BussinessLogic
         public IssueType GetIssueType(int id)
         {
             return _issueTypeEngine.GetIssueType(id);
+        }
+
+        public List<IssueType> GetIssueTypeList()
+        {
+            return _issueTypeEngine.GetIssueTypeList();
         }
 
         public bool RemoveIssueType(int id)

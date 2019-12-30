@@ -26,7 +26,6 @@ namespace UnitTest.Logic
                 CreatedBy = "Placida"
             };
 
-
             mockStatusEngine.Setup(x => x.CreateStatus(status))
                 .Returns(1);
 
@@ -80,8 +79,7 @@ namespace UnitTest.Logic
 
             mockStatusEngine.Verify(x => x.EditStatus(status), Times.Never);
         }
-
-
+        
         [Fact]
         public void GetStatusById_ReturnsSuccessfull()
         {
@@ -138,12 +136,10 @@ namespace UnitTest.Logic
             mockStatusEngine.Verify(x => x.RemoveStatus(status), Times.Once);
         }
 
-
         [Fact]
         public void GetStatusByName_ReturnsSuccessful()
         {
             var status = CreateSampleStatus();
-
 
             mockStatusEngine.Setup(x => x.GetStatusByName("In progress"))
                 .Returns(status);
@@ -154,9 +150,7 @@ namespace UnitTest.Logic
             var actual = statusLogic.GetStatusByName("In progress");
 
             Assert.Equal(expected, actual);
-
             actual.Should().BeEquivalentTo(expected);
-            //mockStatusEngine.Verify(x => x.GetStatusByName(status), Times.Once);
         }
 
         private Status CreateSampleStatus()
@@ -167,7 +161,6 @@ namespace UnitTest.Logic
                 StatusName = "In progress",
                 CreatedBy = "Placida"
             };
-
             return status;
         }
     }

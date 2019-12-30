@@ -3,7 +3,6 @@ using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BussinessLogic
 {
@@ -15,7 +14,7 @@ namespace BussinessLogic
             _sprintEngine = sprintEngine;
         }
         public int CreateSprint(Sprint sprint)
-        {            
+        {
             sprint.SprintStatusId = 1;
             return _sprintEngine.CreateSprint(sprint);
         }

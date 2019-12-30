@@ -1,5 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAccess
@@ -29,6 +30,11 @@ namespace DataAccess
         public IssueType GetIssueType(int id)
         {
             return _context.IssueType.FirstOrDefault(i => i.IssueTypeId == id);
+        }
+
+        public List<IssueType> GetIssueTypeList()
+        {
+            return _context.IssueType.ToList<IssueType>();
         }
 
         public bool IssueTypeExists(int id)

@@ -74,12 +74,6 @@ namespace IssueTracker
             {
                 endpoints.MapControllers();
             });
-
-            if (env.IsDevelopment())
-            {
-                //uncomment this to validate automapper
-                //mapper.ConfigurationProvider.AssertConfigurationIsValid();
-            }
         }
     }
 }

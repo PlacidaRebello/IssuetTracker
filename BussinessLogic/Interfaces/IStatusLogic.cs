@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using System.Collections.Generic;
 
 namespace BussinessLogic.Interfaces
 {
@@ -9,5 +10,6 @@ namespace BussinessLogic.Interfaces
         bool RemoveStatus(int id);
         Status GetStatus(int id);
         bool EditStatus(Status newStatus);
+        List<Status> GetStatusList();
     }
 }

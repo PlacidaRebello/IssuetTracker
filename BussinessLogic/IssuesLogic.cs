@@ -2,6 +2,7 @@
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BussinessLogic
 {
@@ -49,6 +50,10 @@ namespace BussinessLogic
             }
             return _issuesEngine.EditIssue(issue);
         }
-           
-    }   
+
+        public List<Issue> GetIssueList()
+        {
+            return _issuesEngine.GetIssueList();
+        }
+    }
 }
