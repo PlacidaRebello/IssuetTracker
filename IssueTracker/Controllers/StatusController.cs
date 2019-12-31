@@ -61,7 +61,7 @@ namespace IssueTracker.Controllers
             return new CreateResponse
             {
                 Id = statusId,
-                Message = "Issue Created Successfully"
+                Message = "Status Created Successfully"
             };
         }
 
