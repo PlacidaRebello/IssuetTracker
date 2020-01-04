@@ -9,6 +9,7 @@ namespace DataAccess.Interfaces
         Status GetStatusByName(string statusName);
         bool RemoveStatus(Status status);
         bool StatusExists(string status);
+        bool StatusExists(int id);
         Status GetStatus(int id);
         bool EditStatus(Status newStatus);
         List<Status> GetStatusList();

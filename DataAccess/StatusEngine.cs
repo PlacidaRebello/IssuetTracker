@@ -53,7 +53,11 @@ namespace DataAccess
         public bool StatusExists(string status)
         {
             return _context.Status.Any(e => e.StatusName == status);
-            // return _context.Status.Any(e => e.StatusId == id);
+        }
+
+        public bool StatusExists(int id)
+        {
+            return _context.Status.Any(e => e.StatusId == id);
         }
     }
 }

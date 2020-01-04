@@ -25,7 +25,7 @@ namespace BussinessLogic
 
         public bool EditStatus(Status newStatus)
         {
-            if (!_statusEngine.StatusExists(newStatus.StatusName))
+            if (!_statusEngine.StatusExists(newStatus.StatusId))
             {
                 throw new Exception("Status Doesnot exists ");
             }
