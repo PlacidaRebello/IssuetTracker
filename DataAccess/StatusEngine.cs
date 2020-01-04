@@ -50,9 +50,10 @@ namespace DataAccess
             return true;
         }
 
-        public bool StatusExists(int id)
+        public bool StatusExists(string status)
         {
-            return _context.Status.Any(e => e.StatusId == id);
+            return _context.Status.Any(e => e.StatusName == status);
+            // return _context.Status.Any(e => e.StatusId == id);
         }
     }
 }

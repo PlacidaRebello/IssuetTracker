@@ -1,6 +1,6 @@
 ﻿namespace ServiceModel.Dto
 {
-    public class CreateResponse
+    public class SuccessResponse
     {
         public int Id { get; set; }
         public string Message { get; set; }

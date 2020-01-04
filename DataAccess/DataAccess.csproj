@@ -9,6 +9,12 @@
     <Compile Remove="Migrations\20191226120903_SprintModelChanges.Designer.cs" />
     <Compile Remove="Migrations\20191228055831_SprintStatusFK.cs" />
     <Compile Remove="Migrations\20191228055831_SprintStatusFK.Designer.cs" />
+    <Compile Remove="Migrations\20200102121404_CreatingReleaseModel.cs" />
+    <Compile Remove="Migrations\20200102121404_CreatingReleaseModel.Designer.cs" />
+    <Compile Remove="Migrations\20200104183716_FkToRelease.cs" />
+    <Compile Remove="Migrations\20200104183716_FkToRelease.Designer.cs" />
+    <Compile Remove="Migrations\20200104184039_FkToRelease.cs" />
+    <Compile Remove="Migrations\20200104184039_FkToRelease.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

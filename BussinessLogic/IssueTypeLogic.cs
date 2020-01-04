@@ -16,6 +16,7 @@ namespace BussinessLogic
 
         public int CreateIssueType(IssueType newIssueType)
         {
+            newIssueType.CreatedDate = DateTime.Now;
             return _issueTypeEngine.CreateIssueType(newIssueType);
         }
 
@@ -25,6 +26,7 @@ namespace BussinessLogic
             {
                 throw new Exception("IssueType Does not exists");
             }
+            newIssueType.CreatedDate = DateTime.Now;
             _issueTypeEngine.EditIssueType(newIssueType);
             return true;
         }

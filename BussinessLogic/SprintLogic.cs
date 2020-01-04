@@ -16,6 +16,7 @@ namespace BussinessLogic
         public int CreateSprint(Sprint sprint)
         {
             sprint.SprintStatusId = 1;
+            sprint.CreatedDate = DateTime.Now;
             return _sprintEngine.CreateSprint(sprint);
         }
 
@@ -25,6 +26,7 @@ namespace BussinessLogic
             {
                 throw new Exception("Sprint does not exists");
             }
+            sprint.CreatedDate = DateTime.Now;
             return _sprintEngine.EditSprint(sprint);
         }
 

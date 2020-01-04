@@ -15,15 +15,21 @@ namespace BussinessLogic
         }
         public int CreateStatus(Status status)
         {
+            if (_statusEngine.StatusExists(status.StatusName))
+            {
+                throw new Exception("Status already exists ");
+            }
+            status.CreatedDate = DateTime.Now;
             return _statusEngine.CreateStatus(status);
         }
 
         public bool EditStatus(Status newStatus)
         {
-            if (!_statusEngine.StatusExists(newStatus.StatusId))
+            if (!_statusEngine.StatusExists(newStatus.StatusName))
             {
                 throw new Exception("Status Doesnot exists ");
             }
+            newStatus.CreatedDate = DateTime.Now;
             _statusEngine.EditStatus(newStatus);
             return true;
         }

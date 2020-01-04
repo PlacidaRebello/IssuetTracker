@@ -23,6 +23,9 @@ namespace IssueTracker.ApiConfig
 
             services.AddTransient<ISprintLogic, SprintLogic>();
             services.AddTransient<ISprintEngine, SprintEngine>();
+
+            services.AddTransient<IReleaseLogic, ReleaseLogic>();
+            services.AddTransient<IReleaseEngine, ReleaseEngine>();
         }
     }
 }

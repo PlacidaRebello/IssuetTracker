@@ -46,7 +46,7 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.EditStatus(status))
                 .Returns(true);
 
-            mockStatusEngine.Setup(x => x.StatusExists(status.StatusId))
+            mockStatusEngine.Setup(x => x.StatusExists(status.StatusName))
                .Returns(true);
 
             StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
@@ -66,7 +66,7 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.EditStatus(status))
                 .Returns(true);
 
-            mockStatusEngine.Setup(x => x.StatusExists(status.StatusId))
+            mockStatusEngine.Setup(x => x.StatusExists(status.StatusName))
                 .Returns(false);
 
             StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
@@ -79,7 +79,7 @@ namespace UnitTest.Logic
 
             mockStatusEngine.Verify(x => x.EditStatus(status), Times.Never);
         }
-        
+
         [Fact]
         public void GetStatusById_ReturnsSuccessfull()
         {

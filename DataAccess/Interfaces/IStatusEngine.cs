@@ -8,7 +8,7 @@ namespace DataAccess.Interfaces
         int CreateStatus(Status status);
         Status GetStatusByName(string statusName);
         bool RemoveStatus(Status status);
-        bool StatusExists(int id);
+        bool StatusExists(string status);
         Status GetStatus(int id);
         bool EditStatus(Status newStatus);
         List<Status> GetStatusList();

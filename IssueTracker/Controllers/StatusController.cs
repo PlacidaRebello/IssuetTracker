@@ -39,11 +39,11 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPut]
-        public CreateResponse PutStatus(EditStatusRequest status)
+        public SuccessResponse PutStatus(EditStatusRequest status)
         {
             var newStatus = _mapper.Map<Status>(status);
             _statusLogic.EditStatus(newStatus);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = newStatus.StatusId,
                 Message = "Edited Successfully"
@@ -51,22 +51,22 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public CreateResponse PostStatus(CreateStatusRequest status)
+        public SuccessResponse PostStatus(CreateStatusRequest status)
         {
             var newStatus = _mapper.Map<Status>(status);
             var statusId = _statusLogic.CreateStatus(newStatus);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = statusId,
-                Message = "Issue Created Successfully"
+                Message = "Status Created Successfully"
             };
         }
 
         [HttpDelete("{id}")]
-        public CreateResponse DeleteStatus(int id)
+        public SuccessResponse DeleteStatus(int id)
         {
             _statusLogic.RemoveStatus(id);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = id,
                 Message = "Deleted Succesfully"
