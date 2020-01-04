@@ -46,7 +46,7 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.EditStatus(status))
                 .Returns(true);
 
-            mockStatusEngine.Setup(x => x.StatusExists(status.StatusName))
+            mockStatusEngine.Setup(x => x.StatusExists(status.StatusId))
                .Returns(true);
 
             StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
