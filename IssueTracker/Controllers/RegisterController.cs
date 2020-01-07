@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase
