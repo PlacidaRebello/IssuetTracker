@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase
@@ -25,16 +25,16 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<CreateResponse> CreateUserAsync(RegisterUserRequest userRequest)
+        public async Task<SuccessResponse> CreateUserAsync(RegisterUserRequest userRequest)
         {
             var newUser = _mapper.Map<AppUser>(userRequest);
             bool result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
             if (result)
             {
                 await _signInManager.SignInAsync(newUser, isPersistent: false);//cookies shoulnot persist after browser is closed
-                return new CreateResponse { Message = "registered", Id = 1 };
+                return new SuccessResponse { Message = "registered", Id = 1 };
             }
-            return new CreateResponse { Message = "try again" };
+            return new SuccessResponse { Message = "try again" };
         }
     }
 }

@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200102121919_CreatingReleaseModel")]
+    partial class CreatingReleaseModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -398,7 +400,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Release", b =>
                 {
                     b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
-                        .WithMany("Release")
+                        .WithMany()
                         .HasForeignKey("SprintStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

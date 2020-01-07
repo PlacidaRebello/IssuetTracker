@@ -38,23 +38,23 @@ namespace SprintTracker.Controllers
         }
 
         [HttpPut]
-        public CreateResponse PutSprint(EditSprintRequest sprint)
+        public SuccessResponse PutSprint(EditSprintRequest sprint)
         {
             var newSprint = _mapper.Map<Sprint>(sprint);
             _sprintLogic.EditSprint(newSprint);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Message = "Edited Succesfully"
             };
         }
 
         [HttpPost]
-        public CreateResponse PostSprint(CreateSprintRequest sprint)
+        public SuccessResponse PostSprint(CreateSprintRequest sprint)
         {
             var newSprint = _mapper.Map<Sprint>(sprint);
             //newSprint.SprintStatusId = 1;
             var SprintId = _sprintLogic.CreateSprint(newSprint);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = SprintId,
                 Message = "Sprint Created Successfully"
@@ -62,10 +62,10 @@ namespace SprintTracker.Controllers
         }
 
         [HttpDelete("{id}")]
-        public CreateResponse DeleteSprint(int id)
+        public SuccessResponse DeleteSprint(int id)
         {
             _sprintLogic.RemoveSprint(id);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = id,
                 Message = "Deleted Succesfully"
