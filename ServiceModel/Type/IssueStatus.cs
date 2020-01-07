@@ -2,7 +2,7 @@
 
 namespace ServiceModel.Type
 {
-    public class Status
+    public class IssueStatus
     {
         [Required]
         public string StatusName { get; set; }

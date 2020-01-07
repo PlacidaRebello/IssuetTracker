@@ -9,7 +9,7 @@ namespace DataAccess.Models
         {
         }
         public DbSet<Issue> Issues { get; set; }
-        public DbSet<Status> Status { get; set; }
+        public DbSet<IssueStatus> IssueStatus { get; set; }
         public DbSet<IssueType> IssueType { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
         public DbSet<SprintStatus> SprintStatuses { get; set; }

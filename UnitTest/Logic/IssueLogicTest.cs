@@ -12,11 +12,11 @@ namespace UnitTest.Logic
     public class IssueLogicTest
     {
         readonly Mock<IIssuesEngine> mockIssuesEngine;
-        readonly Mock<IStatusLogic> mockStatusLogic;
+        readonly Mock<IIssueStatusLogic> mockStatusLogic;
         public IssueLogicTest()
         {
             mockIssuesEngine = new Mock<IIssuesEngine>();
-            mockStatusLogic = new Mock<IStatusLogic>();
+            mockStatusLogic = new Mock<IIssueStatusLogic>();
         }
 
         [Fact]
@@ -37,9 +37,9 @@ namespace UnitTest.Logic
         [Fact]
         public void SaveIssue_ValidCall()
         {
-            Status objStatus = new Status()
+            IssueStatus objStatus = new IssueStatus()
             {
-                StatusId = 1,
+                IssueStatusId = 1,
                 StatusName = "nt done",
                 CreatedBy = ""
             };
@@ -50,9 +50,9 @@ namespace UnitTest.Logic
                 Description = "do it",
                 AssignedTo = "placi",
                 Tags = "to be done",
-                Status = new Status
+                IssueStatus = new IssueStatus
                 {
-                    StatusId = 1,
+                    IssueStatusId = 1,
                     StatusName = "nt done",
                     CreatedBy = ""
                 },
@@ -85,7 +85,7 @@ namespace UnitTest.Logic
                 .Returns(1);
 
             mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
-                .Returns((Status)null);
+                .Returns((IssueStatus)null);
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
 
@@ -190,9 +190,9 @@ namespace UnitTest.Logic
                 Description = "do it",
                 AssignedTo = "placi",
                 Tags = "to be done",
-                Status = new Status
+                IssueStatus = new IssueStatus
                 {
-                    StatusId = 1,
+                    IssueStatusId = 1,
                     StatusName = "nt done",
                     CreatedBy = ""
                 },

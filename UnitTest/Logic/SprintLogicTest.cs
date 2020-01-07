@@ -144,7 +144,7 @@ namespace UnitTest.Logic
         public void GetSprints_ReturnsSuccessfull()
         {
             var sprint1 = CreateSampleSprint();
-            var sprint2 = CreateSampleSprint(2);          
+            var sprint2 = CreateSampleSprint(2);
             List<Sprint> sprintobj = new List<Sprint>();
             sprintobj.Add(sprint1);
             sprintobj.Add(sprint2);
@@ -162,7 +162,7 @@ namespace UnitTest.Logic
             actual.Should().BeEquivalentTo(expected);
         }
 
-        private Sprint CreateSampleSprint(int sprintId=1)
+        private Sprint CreateSampleSprint(int sprintId = 1)
         {
             Sprint sprint = new Sprint()
             {

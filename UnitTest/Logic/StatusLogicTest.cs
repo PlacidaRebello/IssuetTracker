@@ -10,17 +10,17 @@ namespace UnitTest.Logic
 {
     public class StatusLogicTest
     {
-        readonly Mock<IStatusEngine> mockStatusEngine;
+        readonly Mock<IIssueStatusEngine> mockStatusEngine;
 
         public StatusLogicTest()
         {
-            mockStatusEngine = new Mock<IStatusEngine>();
+            mockStatusEngine = new Mock<IIssueStatusEngine>();
         }
 
         [Fact]
         public void CreateStatus_ValidCall()
         {
-            Status status = new Status()
+            IssueStatus status = new IssueStatus()
             {
                 StatusName = "In progress",
                 CreatedBy = "Placida"
@@ -29,7 +29,7 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.CreateStatus(status))
                 .Returns(1);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             int expected = 1;
             int actual = statusLogic.CreateStatus(status);
@@ -46,10 +46,10 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.EditStatus(status))
                 .Returns(true);
 
-            mockStatusEngine.Setup(x => x.StatusExists(status.StatusId))
+            mockStatusEngine.Setup(x => x.StatusExists(status.IssueStatusId))
                .Returns(true);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             bool expected = true;
             bool actual = statusLogic.EditStatus(status);
@@ -66,10 +66,10 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.EditStatus(status))
                 .Returns(true);
 
-            mockStatusEngine.Setup(x => x.StatusExists(status.StatusId))
+            mockStatusEngine.Setup(x => x.StatusExists(status.IssueStatusId))
                 .Returns(false);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             Action act = () => { statusLogic.EditStatus(status); };
 
@@ -79,7 +79,7 @@ namespace UnitTest.Logic
 
             mockStatusEngine.Verify(x => x.EditStatus(status), Times.Never);
         }
-        
+
         [Fact]
         public void GetStatusById_ReturnsSuccessfull()
         {
@@ -89,7 +89,7 @@ namespace UnitTest.Logic
 
             var expected = CreateSampleStatus();
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             var actual = statusLogic.GetStatus(1);
 
@@ -104,10 +104,10 @@ namespace UnitTest.Logic
                 .Returns(true);
 
             mockStatusEngine.Setup(x => x.GetStatus(1))
-                .Returns((Status)null);
+                .Returns((IssueStatus)null);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
-            Action act = () => { statusLogic.RemoveStatus(status.StatusId); };
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
+            Action act = () => { statusLogic.RemoveStatus(status.IssueStatusId); };
 
             act.Should().Throw<Exception>()
                 .And.Message
@@ -123,13 +123,13 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.RemoveStatus(status))
                            .Returns(true);
 
-            mockStatusEngine.Setup(x => x.GetStatus(status.StatusId))
+            mockStatusEngine.Setup(x => x.GetStatus(status.IssueStatusId))
                 .Returns(status);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             bool expected = true;
-            bool actual = statusLogic.RemoveStatus(status.StatusId);
+            bool actual = statusLogic.RemoveStatus(status.IssueStatusId);
 
             Assert.Equal(expected, actual);
 
@@ -144,7 +144,7 @@ namespace UnitTest.Logic
             mockStatusEngine.Setup(x => x.GetStatusByName("In progress"))
                 .Returns(status);
 
-            StatusLogic statusLogic = new StatusLogic(mockStatusEngine.Object);
+            IssueStatusLogic statusLogic = new IssueStatusLogic(mockStatusEngine.Object);
 
             var expected = status;
             var actual = statusLogic.GetStatusByName("In progress");
@@ -153,11 +153,11 @@ namespace UnitTest.Logic
             actual.Should().BeEquivalentTo(expected);
         }
 
-        private Status CreateSampleStatus()
+        private IssueStatus CreateSampleStatus()
         {
-            Status status = new Status()
+            IssueStatus status = new IssueStatus()
             {
-                StatusId = 1,
+                IssueStatusId = 1,
                 StatusName = "In progress",
                 CreatedBy = "Placida"
             };
