@@ -5,3 +5,6 @@
   <a href="https://codeclimate.com/github/PlacidaRebello/IssuetTracker/maintainability"><img src="https://api.codeclimate.com/v1/badges/6ec8a1fa37a029e512da/maintainability" /></a>
 
 <a href="https://codeclimate.com/github/PlacidaRebello/IssuetTracker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/6ec8a1fa37a029e512da/test_coverage" /></a>
+
+![Azure DevOps tests](https://img.shields.io/azure-devops/tests/placidarebello12/placidarebello12/1)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fdevissuetracker.azurewebsites.net%2Fswagger%2Findex.html)
