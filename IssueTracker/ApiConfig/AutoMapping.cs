@@ -31,6 +31,9 @@ namespace IssueTracker.ApiConfig
             CreateMap<EditSprintRequest, Sprint>(MemberList.Source);
             CreateMap<Sprint, GetSprintData>();
 
+            CreateMap<CreateReleaseRequest, Release>(MemberList.Source);
+            CreateMap<EditReleaseRequest, Release>(MemberList.Source);
+            CreateMap<Release, GetReleaseData>();
         }
     }
 }

@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200107120422_InsertSprintStatusLocal")]
+    partial class InsertSprintStatusLocal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,10 +40,10 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IssueStatusId")
+                    b.Property<int?>("SprintId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SprintId")
+                    b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
@@ -52,32 +54,11 @@ namespace DataAccess.Migrations
 
                     b.HasKey("IssueId");
 
-                    b.HasIndex("IssueStatusId");
-
                     b.HasIndex("SprintId");
 
+                    b.HasIndex("StatusId");
+
                     b.ToTable("Issues");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.IssueStatus", b =>
-                {
-                    b.Property<int>("IssueStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StatusName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IssueStatusId");
-
-                    b.ToTable("IssueStatus");
                 });
 
             modelBuilder.Entity("DataAccess.Models.IssueType", b =>
@@ -186,6 +167,27 @@ namespace DataAccess.Migrations
                     b.HasKey("SprintStatusId");
 
                     b.ToTable("SprintStatuses");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Status", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -386,13 +388,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Issue", b =>
                 {
-                    b.HasOne("DataAccess.Models.IssueStatus", "IssueStatus")
-                        .WithMany()
-                        .HasForeignKey("IssueStatusId");
-
                     b.HasOne("DataAccess.Models.Sprint", "Sprint")
                         .WithMany("Issues")
                         .HasForeignKey("SprintId");
+
+                    b.HasOne("DataAccess.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Release", b =>

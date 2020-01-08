@@ -39,11 +39,11 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPut]
-        public CreateResponse PutIssueType(EditIssueTypeRequest issueType)
+        public SuccessResponse PutIssueType(EditIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
             _issueTypeLogic.EditIssueType(newIssueType);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = newIssueType.IssueTypeId,
                 Message = "Edited Successfully"
@@ -51,12 +51,12 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public CreateResponse PostIssueType(CreateIssueTypeRequest issueType)
+        public SuccessResponse PostIssueType(CreateIssueTypeRequest issueType)
         {
             var newIssueType = _mapper.Map<IssueType>(issueType);
             newIssueType.CreatedDate = DateTime.Now;
             var issueTypeId = _issueTypeLogic.CreateIssueType(newIssueType);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = issueTypeId,
                 Message = "IssueType Created Successfully"
@@ -64,10 +64,10 @@ namespace IssueTracker.Controllers
         }
 
         [HttpDelete("{id}")]
-        public CreateResponse DeleteIssueType(int id)
+        public SuccessResponse DeleteIssueType(int id)
         {
             _issueTypeLogic.RemoveIssueType(id);
-            return new CreateResponse
+            return new SuccessResponse
             {
                 Id = id,
                 Message = "Deleted Successfully"
