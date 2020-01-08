@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
-    public interface IReleaseEngine
+    public interface IReleasePersistence
     {
         int CreateRelease(Release release);
         Release GetRelease(int id);

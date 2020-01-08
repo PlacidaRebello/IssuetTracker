@@ -10,11 +10,11 @@ namespace UnitTest.Logic
 {
     public class StatusLogicTest
     {
-        readonly Mock<IStatusEngine> mockStatusEngine;
+        readonly Mock<IStatusPersistence> mockStatusEngine;
 
         public StatusLogicTest()
         {
-            mockStatusEngine = new Mock<IStatusEngine>();
+            mockStatusEngine = new Mock<IStatusPersistence>();
         }
 
         [Fact]

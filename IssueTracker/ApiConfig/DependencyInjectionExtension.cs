@@ -11,21 +11,21 @@ namespace IssueTracker.ApiConfig
         public static void AddCustomTransientServices(this IServiceCollection services)
         {
             services.AddTransient<IIssuesLogic, IssuesLogic>();
-            services.AddTransient<IIssuesEngine, IssuesEngine>();
+            services.AddTransient<IIssuesPersistence, IssuesEngine>();
 
             services.AddTransient<IStatusLogic, StatusLogic>();
-            services.AddTransient<IStatusEngine, StatusEngine>();
+            services.AddTransient<IStatusPersistence, StatusEngine>();
 
             services.AddTransient<IIssueTypeLogic, IssueTypeLogic>();
-            services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();
+            services.AddTransient<IIssueTypePersistence, IssueTypeEngine>();
 
             services.AddTransient<IRegisterLogic, RegisterLogic>();
 
             services.AddTransient<ISprintLogic, SprintLogic>();
-            services.AddTransient<ISprintEngine, SprintEngine>();
+            services.AddTransient<ISprintPersistence, SprintEngine>();
 
             services.AddTransient<IReleaseLogic, ReleaseLogic>();
-            services.AddTransient<IReleaseEngine, ReleaseEngine>();
+            services.AddTransient<IReleasePersistence, ReleaseEngine>();
         }
     }
 }

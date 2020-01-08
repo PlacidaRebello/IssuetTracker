@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class IssuesEngine : IIssuesEngine
+    public class IssuesEngine : IIssuesPersistence
     {
         private readonly DataContext _context;
         public IssuesEngine(DataContext context)

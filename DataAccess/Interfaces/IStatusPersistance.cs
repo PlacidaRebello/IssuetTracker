@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
-    public interface IStatusEngine
+    public interface IStatusPersistence
     {
         int CreateStatus(Status status);
         Status GetStatusByName(string statusName);

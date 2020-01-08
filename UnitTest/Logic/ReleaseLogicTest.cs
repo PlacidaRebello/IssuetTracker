@@ -11,10 +11,10 @@ namespace UnitTest.Logic
 {
     public class ReleaseLogicTest
     {
-        readonly Mock<IReleaseEngine> mockReleaseEngine;
+        readonly Mock<IReleasePersistence> mockReleaseEngine;
         public ReleaseLogicTest()
         {
-            mockReleaseEngine = new Mock<IReleaseEngine>();
+            mockReleaseEngine = new Mock<IReleasePersistence>();
         }
 
         [Fact]

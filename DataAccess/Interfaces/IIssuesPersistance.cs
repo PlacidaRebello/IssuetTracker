@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
-    public interface IIssuesEngine
+    public interface IIssuesPersistence
     {
         int CreateIssue(Issue issue);
         Issue GetIssue(int id);

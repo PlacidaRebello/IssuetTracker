@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class SprintEngine : ISprintEngine
+    public class SprintEngine : ISprintPersistence
     {
         private readonly DataContext _context;
         public SprintEngine(DataContext context)

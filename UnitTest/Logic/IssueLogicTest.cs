@@ -11,11 +11,11 @@ namespace UnitTest.Logic
 {
     public class IssueLogicTest
     {
-        readonly Mock<IIssuesEngine> mockIssuesEngine;
+        readonly Mock<IIssuesPersistence> mockIssuesEngine;
         readonly Mock<IStatusLogic> mockStatusLogic;
         public IssueLogicTest()
         {
-            mockIssuesEngine = new Mock<IIssuesEngine>();
+            mockIssuesEngine = new Mock<IIssuesPersistence>();
             mockStatusLogic = new Mock<IStatusLogic>();
         }
 

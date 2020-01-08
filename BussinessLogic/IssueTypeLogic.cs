@@ -8,8 +8,8 @@ namespace BussinessLogic
 {
     public class IssueTypeLogic : IIssueTypeLogic
     {
-        private readonly IIssueTypeEngine _issueTypeEngine;
-        public IssueTypeLogic(IIssueTypeEngine issueTypeEngine)
+        private readonly IIssueTypePersistence _issueTypeEngine;
+        public IssueTypeLogic(IIssueTypePersistence issueTypeEngine)
         {
             _issueTypeEngine = issueTypeEngine;
         }

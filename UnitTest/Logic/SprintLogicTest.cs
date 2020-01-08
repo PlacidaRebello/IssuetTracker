@@ -11,10 +11,10 @@ namespace UnitTest.Logic
 {
     public class SprintLogicTest
     {
-        readonly Mock<ISprintEngine> mockSprintEngine;
+        readonly Mock<ISprintPersistence> mockSprintEngine;
         public SprintLogicTest()
         {
-            mockSprintEngine = new Mock<ISprintEngine>();
+            mockSprintEngine = new Mock<ISprintPersistence>();
         }
 
         [Fact]

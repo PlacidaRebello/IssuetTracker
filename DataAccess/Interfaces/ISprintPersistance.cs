@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
-    public interface ISprintEngine
+    public interface ISprintPersistence
     {
         int CreateSprint(Sprint sprint);
         Sprint GetSprint(int id);

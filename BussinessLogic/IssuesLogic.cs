@@ -8,9 +8,9 @@ namespace BussinessLogic
 {
     public class IssuesLogic : IIssuesLogic
     {
-        private readonly IIssuesEngine _issuesEngine;
+        private readonly IIssuesPersistence _issuesEngine;
         private readonly IStatusLogic _statusLogic;
-        public IssuesLogic(IIssuesEngine issuesEngine, IStatusLogic statusEngine)
+        public IssuesLogic(IIssuesPersistence issuesEngine, IStatusLogic statusEngine)
         {
             _issuesEngine = issuesEngine;
             _statusLogic = statusEngine;

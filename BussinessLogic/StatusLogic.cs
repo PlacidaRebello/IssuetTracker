@@ -8,8 +8,8 @@ namespace BussinessLogic
 {
     public class StatusLogic : IStatusLogic
     {
-        private readonly IStatusEngine _statusEngine;
-        public StatusLogic(IStatusEngine statusEngine)
+        private readonly IStatusPersistence _statusEngine;
+        public StatusLogic(IStatusPersistence statusEngine)
         {
             _statusEngine = statusEngine;
         }

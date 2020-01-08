@@ -8,8 +8,8 @@ namespace BussinessLogic
 {
     public class SprintLogic : ISprintLogic
     {
-        private readonly ISprintEngine _sprintEngine;
-        public SprintLogic(ISprintEngine sprintEngine)
+        private readonly ISprintPersistence _sprintEngine;
+        public SprintLogic(ISprintPersistence sprintEngine)
         {
             _sprintEngine = sprintEngine;
         }

@@ -8,8 +8,8 @@ namespace BussinessLogic
 {
     public class ReleaseLogic : IReleaseLogic
     {
-        private readonly IReleaseEngine _releaseEngine;
-        public ReleaseLogic(IReleaseEngine releaseEngine)
+        private readonly IReleasePersistence _releaseEngine;
+        public ReleaseLogic(IReleasePersistence releaseEngine)
         {
             _releaseEngine = releaseEngine;
         }

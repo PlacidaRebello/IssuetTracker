@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class ReleaseEngine : IReleaseEngine
+    public class ReleaseEngine : IReleasePersistence
     {
         private readonly DataContext _context;
         public ReleaseEngine(DataContext context)

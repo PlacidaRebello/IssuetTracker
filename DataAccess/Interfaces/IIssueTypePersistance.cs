@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Interfaces
 {
-    public interface IIssueTypeEngine
+    public interface IIssueTypePersistence
     {
         IssueType GetIssueType(int id);
         bool IssueTypeExists(int id);

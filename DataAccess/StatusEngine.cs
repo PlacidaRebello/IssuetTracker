@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class StatusEngine : IStatusEngine
+    public class StatusEngine : IStatusPersistence
     {
         private readonly DataContext _context;
         public StatusEngine(DataContext context)
