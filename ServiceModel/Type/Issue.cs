@@ -11,7 +11,7 @@ namespace ServiceModel.Type
         public string AssignedTo { get; set; }
         public string Tags { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string IssueStatus { get; set; }
         public string CreatedBy { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace IssueTracker.Controllers
         public SuccessResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            newIssue.Status = new Status { StatusName = issue.Status };
+            newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             _issuesLogic.EditIssue(newIssue);
             return new SuccessResponse
             {
@@ -53,7 +53,7 @@ namespace IssueTracker.Controllers
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            newIssue.Status = new Status { StatusName = issue.Status };
+            newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             var issueId = _issuesLogic.CreateIssue(newIssue);
             return new SuccessResponse
             {

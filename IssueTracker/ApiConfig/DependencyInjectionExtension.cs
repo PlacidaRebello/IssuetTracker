@@ -13,8 +13,8 @@ namespace IssueTracker.ApiConfig
             services.AddTransient<IIssuesLogic, IssuesLogic>();
             services.AddTransient<IIssuesEngine, IssuesEngine>();
 
-            services.AddTransient<IStatusLogic, StatusLogic>();
-            services.AddTransient<IStatusEngine, StatusEngine>();
+            services.AddTransient<IIssueStatusLogic, IssueStatusLogic>();
+            services.AddTransient<IIssueStatusEngine, IssueStatusEngine>();
 
             services.AddTransient<IIssueTypeLogic, IssueTypeLogic>();
             services.AddTransient<IIssueTypeEngine, IssueTypeEngine>();

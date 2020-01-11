@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200107130142_StatusNameChanges")]
+    partial class StatusNameChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("IssueStatusId");
 
-                    b.ToTable("IssueStatus");
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("DataAccess.Models.IssueType", b =>
@@ -101,38 +103,6 @@ namespace DataAccess.Migrations
                     b.ToTable("IssueType");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Release", b =>
-                {
-                    b.Property<int>("ReleaseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReleaseName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SprintStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ReleaseId");
-
-                    b.HasIndex("SprintStatusId");
-
-                    b.ToTable("Release");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Sprint", b =>
                 {
                     b.Property<int>("SprintId")
@@ -149,9 +119,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReleaseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SprintName")
                         .HasColumnType("nvarchar(max)");
 
@@ -165,8 +132,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("SprintId");
-
-                    b.HasIndex("ReleaseId");
 
                     b.HasIndex("SprintStatusId");
 
@@ -395,21 +360,8 @@ namespace DataAccess.Migrations
                         .HasForeignKey("SprintId");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Release", b =>
-                {
-                    b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
-                        .WithMany("Release")
-                        .HasForeignKey("SprintStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DataAccess.Models.Sprint", b =>
                 {
-                    b.HasOne("DataAccess.Models.Release", null)
-                        .WithMany("Sprints")
-                        .HasForeignKey("ReleaseId");
-
                     b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
                         .WithMany("Sprint")
                         .HasForeignKey("SprintStatusId")

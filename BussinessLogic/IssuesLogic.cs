@@ -9,11 +9,11 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IStatusLogic _statusLogic;
-        public IssuesLogic(IIssuesEngine issuesEngine, IStatusLogic statusEngine)
+        private readonly IIssueStatusLogic _issueStatusLogic;
+        public IssuesLogic(IIssuesEngine issuesEngine, IIssueStatusLogic statusEngine)
         {
             _issuesEngine = issuesEngine;
-            _statusLogic = statusEngine;
+            _issueStatusLogic = statusEngine;
         }
 
         public Issue GetIssue(int id)
@@ -23,12 +23,12 @@ namespace BussinessLogic
 
         public int CreateIssue(Issue issue)
         {
-            var status = _statusLogic.GetStatusByName(issue.Status.StatusName);
+            var status = _issueStatusLogic.GetStatusByName(issue.IssueStatus.StatusName);
             if (status == null)
             {
                 throw new Exception("Status doesn't exist. Please create a status and then add Issues");
             }
-            issue.Status = status;
+            issue.IssueStatus = status;
             issue.CreatedDate = DateTime.Now;
             return _issuesEngine.CreateIssue(issue);
         }

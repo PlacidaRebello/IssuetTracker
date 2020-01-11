@@ -2,7 +2,7 @@
 
 namespace ServiceModel.Dto
 {
-    public class CreateStatusRequest : Status
+    public class CreateIssueStatusRequest : IssueStatus
     {
     }
 }

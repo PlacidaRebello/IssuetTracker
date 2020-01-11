@@ -26,8 +26,8 @@ namespace UnitTest.Logic
         [Theory]
         [InlineData(typeof(CreateIssueRequest), typeof(Issue))]
         [InlineData(typeof(CreateIssueTypeRequest), typeof(IssueType))]
-        [InlineData(typeof(CreateStatusRequest), typeof(Status))]
-        [InlineData(typeof(EditStatusRequest), typeof(Status))]
+        [InlineData(typeof(CreateIssueStatusRequest), typeof(IssueStatus))]
+        [InlineData(typeof(EditIssueStatusRequest), typeof(IssueStatus))]
         [InlineData(typeof(RegisterUserRequest), typeof(AppUser))]
         public void ShouldSupportMappingFromSouceToDestination(Type source, Type destination)
         {
