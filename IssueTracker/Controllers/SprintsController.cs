@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SprintTracker.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SprintsController : ControllerBase
