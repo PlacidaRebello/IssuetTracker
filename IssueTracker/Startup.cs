@@ -19,16 +19,28 @@ namespace IssueTracker
         {
             Configuration = configuration;
         }
-
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(c=>
+            //services.AddCors(c=>
+            //{
+            //    c.AddPolicy("Allow Origin", options => options.AllowAnyOrigin());
+            //});
+            services.AddCors(options =>
             {
-                c.AddPolicy("Allow Origin", options => options.AllowAnyOrigin());
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200",
+                                        "http://www.abcd.com")
+                                        .AllowAnyHeader()
+                                        .AllowAnyOrigin();
+                });
             });
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
 
@@ -63,8 +75,8 @@ namespace IssueTracker
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseCors(options => options.AllowAnyOrigin());
-
+            // app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
             app.UseCustomSwagger();
