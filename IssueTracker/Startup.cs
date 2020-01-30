@@ -37,7 +37,9 @@ namespace IssueTracker
                     builder.WithOrigins("http://localhost:4200",
                                         "http://www.abcd.com")
                                         .AllowAnyHeader()
-                                        .AllowAnyOrigin();
+                                        .AllowAnyOrigin()
+                                        //.AllowAnyMethod()
+                                        .WithMethods("GET","PUT","POST","DELETE");
                 });
             });
 
