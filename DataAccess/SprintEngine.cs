@@ -48,5 +48,11 @@ namespace DataAccess
         {
             return _context.Sprints.Any(e => e.SprintId == id);
         }
+
+        //getlist of statuses for dropdown
+        public List<SprintStatus> GetSprintStatusList() 
+        {
+            return _context.SprintStatuses.ToList<SprintStatus>();
+        }
     }
 }

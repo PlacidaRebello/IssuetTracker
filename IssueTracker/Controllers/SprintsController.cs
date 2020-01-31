@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SprintTracker.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SprintsController : ControllerBase
@@ -70,6 +70,15 @@ namespace SprintTracker.Controllers
                 Id = id,
                 Message = "Deleted Succesfully"
             };
+        }
+
+        [HttpGet]
+        [Route("GetSprintStatus")]
+        public IEnumerable<GetSprintStatusData> GetSprintStatusList()
+        {
+            List<SprintStatus> sprintStatus = _sprintLogic.GetSprintStatusList();
+            List<GetSprintStatusData> list = _mapper.Map<List<SprintStatus>, List<GetSprintStatusData>>(sprintStatus);
+            return list;
         }
     }
 }

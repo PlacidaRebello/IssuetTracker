@@ -27,7 +27,7 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(CreateUserRequest userRequest)
+        public async Task<IActionResult> SignIn(CreateSignInUserRequest userRequest)
         {
             var user = await _userManager.FindByNameAsync(userRequest.Username);
             if (user == null)

@@ -2,7 +2,7 @@
 
 namespace ServiceModel.Dto
 {
-    public class CreateUserRequest : User
+    public class CreateSignInUserRequest : User
     {
     }
 }
