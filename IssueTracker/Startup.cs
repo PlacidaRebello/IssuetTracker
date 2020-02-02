@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServiceModel.Type;
+using NSwag;
 
 namespace IssueTracker
 {
@@ -29,6 +30,7 @@ namespace IssueTracker
             //{
             //    c.AddPolicy("Allow Origin", options => options.AllowAnyOrigin());
             //});
+            services.AddSwaggerDocument();
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
@@ -62,7 +64,7 @@ namespace IssueTracker
 
             services.AddDbContext<DataContext>(item => item.UseSqlServer(Configuration.GetConnectionString("myconn")));
 
-            services.AddSwagger();
+            //services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +83,10 @@ namespace IssueTracker
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
-            app.UseCustomSwagger();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            //app.UseCustomSwagger();
+            //app.UseSwaggerUi(typeof(Startup).GetType().Assembly, new swaggeruiowin )
 
             app.UseRouting();
 
