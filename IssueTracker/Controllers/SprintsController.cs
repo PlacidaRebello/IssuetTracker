@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SprintTracker.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SprintsController : ControllerBase
@@ -44,7 +44,7 @@ namespace SprintTracker.Controllers
             _sprintLogic.EditSprint(newSprint);
             return new SuccessResponse
             {
-                Message = "Edited Succesfully"
+                Message = "Sprint Edited Succesfully"
             };
         }
 
@@ -68,7 +68,7 @@ namespace SprintTracker.Controllers
             return new SuccessResponse
             {
                 Id = id,
-                Message = "Deleted Succesfully"
+                Message = "Sprint Deleted Succesfully"
             };
         }
 

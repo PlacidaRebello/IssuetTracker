@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace IssueTracker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReleasesController : ControllerBase
@@ -38,13 +38,13 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPut]
-        public SuccessResponse PutRelease(int id, EditReleaseRequest release)
+        public SuccessResponse PutRelease(EditReleaseRequest release)
         {
             var newRelease = _mapper.Map<Release>(release);
             _releaseLogic.EditRelease(newRelease);
             return new SuccessResponse
             {
-                Message = "Edited Succesfully"
+                Message = "Release Edited Succesfully"
             };
         }
 
@@ -67,7 +67,7 @@ namespace IssueTracker.Controllers
             return new SuccessResponse
             {
                 Id = id,
-                Message = "Deleted Succesfully"
+                Message = "Release Deleted Succesfully"
             };
         }
     }
