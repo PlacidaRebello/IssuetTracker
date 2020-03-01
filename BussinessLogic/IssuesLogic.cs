@@ -23,11 +23,11 @@ namespace BussinessLogic
 
         public int CreateIssue(Issue issue)
         {
-            var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
-            if (status == null)
-            {
-                throw new Exception("Status doesn't exist. Please create a status and then add Issues");
-            }
+            //var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
+            //if (status == null)
+            //{
+            //    throw new Exception("Status doesn't exist. Please create a status and then add Issues");
+            //}
            // issue.IssueStatus = status;
             issue.CreatedDate = DateTime.Now;
             return _issuesEngine.CreateIssue(issue);
