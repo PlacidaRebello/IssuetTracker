@@ -79,5 +79,29 @@ namespace DataAccess
 
             return issueList;
         }
+
+        public List<Issue> GetIssueListByIssueType(string issueType) 
+        {
+            var issueList = (from IssueStatus in _context.IssueStatus
+                             join Issue in _context.Issues
+                             on IssueStatus.IssueStatusId equals Issue.IssueStatusId
+                             where Issue.StatusName==issueType
+                             select new Issue
+                             {
+                                 IssueId = Issue.IssueId,
+                                 Subject = Issue.Subject,
+                                 Description = Issue.Description,
+                                 AssignedTo = Issue.AssignedTo,
+                                 Tags = Issue.Tags,
+                                 IssueStatusId = IssueStatus.IssueStatusId,
+                                 StatusName = IssueStatus.StatusName
+                             }).ToList();
+
+            return issueList;
+        }
+        public bool DragDropissues(int itemOrder,int nextitemOrder,int prevItemOrder) 
+        {
+            return true;
+        }
     }
 }

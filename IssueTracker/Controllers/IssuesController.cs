@@ -72,5 +72,17 @@ namespace IssueTracker.Controllers
                 Message = "Deleted Succesfully"
             };
         }
+
+        [HttpPut]
+        [Route("DragDropIssue")]
+        public SuccessResponse DragIssue(DragDropIssueRequest dragDropIssue)
+        {
+            _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemOrder,dragDropIssue.NextItemOrder,
+                dragDropIssue.CurrentItemIndex,dragDropIssue.CurrentItemOrder,dragDropIssue.NoOfItems,dragDropIssue.IssueType);
+            return new SuccessResponse
+            {                
+                Message = "Succesfully"
+            };
+        }
     }
 }
