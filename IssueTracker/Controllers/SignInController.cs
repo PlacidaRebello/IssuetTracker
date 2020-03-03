@@ -27,7 +27,7 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(CreateUserRequest userRequest)
+        public async Task<IActionResult> SignIn(CreateSignInUserRequest userRequest)
         {
             var user = await _userManager.FindByNameAsync(userRequest.Username);
             if (user == null)
@@ -60,7 +60,7 @@ namespace IssueTracker.Controllers
                 );
             return new
             {
-                token = $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}",
+                token = $"{new JwtSecurityTokenHandler().WriteToken(token)}",
                 expiration = token.ValidTo
             };
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Models
 {
@@ -9,9 +10,13 @@ namespace DataAccess.Models
         public string Description { get; set; }
         public string AssignedTo { get; set; }
         public string Tags { get; set; }
+        public int IssueStatusId { get; set; }
+        [NotMapped]
+        public string StatusName { get; set; }
         public IssueStatus IssueStatus { get; set; }
         public virtual Sprint Sprint { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int Order { get; set; }
     }
 }

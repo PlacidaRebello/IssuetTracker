@@ -37,12 +37,12 @@ namespace UnitTest.Logic
         [Fact]
         public void SaveIssue_ValidCall()
         {
-            IssueStatus objStatus = new IssueStatus()
-            {
-                IssueStatusId = 1,
-                StatusName = "nt done",
-                CreatedBy = ""
-            };
+            //IssueStatus objStatus = new IssueStatus()
+            //{
+            //    IssueStatusId = 1,
+            //    StatusName = "nt done",
+            //    CreatedBy = ""
+            //};
             Issue issue = new Issue()
             {
                 // IssueId = 1,
@@ -50,54 +50,44 @@ namespace UnitTest.Logic
                 Description = "do it",
                 AssignedTo = "placi",
                 Tags = "to be done",
-                IssueStatus = new IssueStatus
-                {
-                    IssueStatusId = 1,
-                    StatusName = "nt done",
-                    CreatedBy = ""
-                },
+                IssueStatusId=1,
                 CreatedBy = "jason"
             };
-
-            // var issue = GetSampleIssue();
 
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);
 
-            mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
-            .Returns(objStatus);
-
-            int expected = 1;
+            //mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
+            //.Returns(objStatus);
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
-
+            int expected = 1;
             var actual = issuesLogic.CreateIssue(issue);
 
             Assert.Equal(expected, actual);
             mockIssuesEngine.Verify(x => x.CreateIssue(issue), Times.Once);
-
         }
 
-        [Fact]
-        public void CreateIssue_Null_Status_Throws_ExceptionAsync()
-        {
-            mockIssuesEngine.Setup(x => x.CreateIssue(GetSampleIssue()))
-                .Returns(1);
+        //[Fact]
+        //public void CreateIssue_Null_Status_Throws_ExceptionAsync()
+        //{
+        //    mockIssuesEngine.Setup(x => x.CreateIssue(GetSampleIssue()))
+        //        .Returns(1);
 
-            mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
-                .Returns((IssueStatus)null);
+        //    mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
+        //        .Returns((IssueStatus)null);
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+        //    IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
 
-            Action act = () => { issuesLogic.CreateIssue(GetSampleIssue()); };
+        //    Action act = () => { issuesLogic.CreateIssue(GetSampleIssue()); };
 
-            act.Should().Throw<Exception>()
-             .And.Message
-             .Should().Be("Status doesn't exist. Please create a status and then add Issues");
+        //    act.Should().Throw<Exception>()
+        //     .And.Message
+        //     .Should().Be("Status doesn't exist. Please create a status and then add Issues");
 
-            mockIssuesEngine.Verify(x => x.CreateIssue(GetSampleIssue()), Times.Never);
+        //    mockIssuesEngine.Verify(x => x.CreateIssue(GetSampleIssue()), Times.Never);
 
-        }
+        //}
 
         [Fact]
         public void EditIssue_IssueDoesNotExists_ThrowsException()
@@ -190,12 +180,7 @@ namespace UnitTest.Logic
                 Description = "do it",
                 AssignedTo = "placi",
                 Tags = "to be done",
-                IssueStatus = new IssueStatus
-                {
-                    IssueStatusId = 1,
-                    StatusName = "nt done",
-                    CreatedBy = ""
-                },
+                IssueStatusId=1,
                 CreatedBy = "jason"
             };
             return issue;

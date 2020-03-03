@@ -23,12 +23,12 @@ namespace BussinessLogic
 
         public int CreateIssue(Issue issue)
         {
-            var status = _issueStatusLogic.GetStatusByName(issue.IssueStatus.StatusName);
-            if (status == null)
-            {
-                throw new Exception("Status doesn't exist. Please create a status and then add Issues");
-            }
-            issue.IssueStatus = status;
+            //var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
+            //if (status == null)
+            //{
+            //    throw new Exception("Status doesn't exist. Please create a status and then add Issues");
+            //}
+           // issue.IssueStatus = status;
             issue.CreatedDate = DateTime.Now;
             return _issuesEngine.CreateIssue(issue);
         }
@@ -56,6 +56,41 @@ namespace BussinessLogic
         public List<Issue> GetIssueList()
         {
             return _issuesEngine.GetIssueList();
+        }
+
+        public bool DragDropIssues(bool previtem,int prevItemOrder,int nextItemOrder,int currentItemOrder,int currentItemIndex,int noOfItems, string issueType) 
+        {
+            List<Issue> issues= _issuesEngine.GetIssueListByIssueType(issueType);
+            int itemOrder;
+            int nextItem;
+            if (currentItemIndex>=noOfItems/2)
+            {
+                if (previtem)
+                {
+                    itemOrder = prevItemOrder + 1;
+                }
+                else
+                {
+                    itemOrder = nextItemOrder - 1;
+                }
+                //this should go in for loop for remaining items of list
+                if (itemOrder>=nextItemOrder)
+                {
+                    nextItem = nextItemOrder + 1;
+                }
+            }
+            else
+            {
+                if (previtem)
+                {
+                    itemOrder = prevItemOrder;
+                    prevItemOrder = prevItemOrder - 1;//this should go in loop
+                }
+                else {
+                    itemOrder = nextItemOrder - 1;
+                }
+            }
+            return true;
         }
     }
 }

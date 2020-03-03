@@ -14,6 +14,8 @@ namespace DataAccess.Models
         public DateTime EndDate { get; set; }
         public virtual ICollection<Issue> Issues { get; set; }
         public int SprintStatusId { get; set; }
+        [NotMapped ]
+        public string SprintStatusName { get; set; }
         public SprintStatus SprintStatus { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

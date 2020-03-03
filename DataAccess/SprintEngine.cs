@@ -29,12 +29,42 @@ namespace DataAccess
 
         public Sprint GetSprint(int id)
         {
-            return _context.Sprints.FirstOrDefault(i => i.SprintId == id);
+            //return _context.Sprints.FirstOrDefault(i => i.SprintId == id);
+            var sprint = (from SprintStatus in _context.SprintStatuses
+                          join Sprint in _context.Sprints
+                          on SprintStatus.SprintStatusId equals Sprint.SprintStatusId
+                          where Sprint.SprintId==id
+                          select new Sprint
+                          {
+                              SprintId = Sprint.SprintId,
+                              SprintName = Sprint.SprintName,
+                              SprintPoints = Sprint.SprintPoints,
+                              StartDate = Sprint.StartDate,
+                              EndDate = Sprint.EndDate,
+                              SprintStatusId = Sprint.SprintStatusId
+                              //SprintStatusName = SprintStatus.SprintStatusName
+                          }).FirstOrDefault();
+            return sprint;
         }
 
         public List<Sprint> GetSprints()
         {
-            return _context.Sprints.ToList<Sprint>();
+            // return _context.Sprints.ToList<Sprint>();
+            var sprintList = (from SprintStatus in _context.SprintStatuses
+                              join Sprint in _context.Sprints
+                              on SprintStatus.SprintStatusId equals Sprint.SprintStatusId
+                              select new Sprint
+                              {
+                                  SprintId = Sprint.SprintId,
+                                  SprintName = Sprint.SprintName,
+                                  SprintPoints = Sprint.SprintPoints,
+                                  StartDate = Sprint.StartDate,
+                                  EndDate = Sprint.EndDate,
+                                  SprintStatusId = Sprint.SprintStatusId,
+                                  SprintStatusName = SprintStatus.SprintStatusName
+                              }).ToList();
+
+            return sprintList;
         }
 
         public bool RemoveSprint(Sprint sprint)
@@ -47,6 +77,12 @@ namespace DataAccess
         public bool SprintExists(int id)
         {
             return _context.Sprints.Any(e => e.SprintId == id);
+        }
+
+        //getlist of statuses for dropdown
+        public List<SprintStatus> GetSprintStatusList() 
+        {
+            return _context.SprintStatuses.ToList<SprintStatus>();
         }
     }
 }
