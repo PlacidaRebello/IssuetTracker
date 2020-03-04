@@ -12,6 +12,7 @@ namespace ServiceModel.Type
         public string Tags { get; set; }
         [Required]
         public int IssueStatusId { get; set; }
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; }   
+        public int Order { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace DataAccess.Interfaces
         bool EditIssue(Issue issue);
         bool IssueExists(int id);
         List<Issue> GetIssueList();
-        List<Issue> GetIssueListByIssueType(string issueType);
+        List<Issue> GetIssueListByStatus(string issueStatus);
     }
 }

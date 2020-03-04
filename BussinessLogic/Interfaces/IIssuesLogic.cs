@@ -10,6 +10,6 @@ namespace BussinessLogic.Interfaces
         Issue GetIssue(int id);
         bool EditIssue(Issue issue);
         List<Issue> GetIssueList();
-        bool DragDropIssues(bool previtem, int prevItemOrder, int nextItemOrder, int currentItemOrder, int currentItemIndex, int noOfItems,string issueType);
+        bool DragDropIssues(bool previtem, int prevItemOrder, int nextItemOrder, int currentItemIndex,string issueStatus, int issueId);
     }
 }

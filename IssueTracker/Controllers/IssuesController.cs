@@ -77,8 +77,8 @@ namespace IssueTracker.Controllers
         [Route("DragDropIssue")]
         public SuccessResponse DragIssue(DragDropIssueRequest dragDropIssue)
         {
-            _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemOrder,dragDropIssue.NextItemOrder,
-                dragDropIssue.CurrentItemIndex,dragDropIssue.CurrentItemOrder,dragDropIssue.NoOfItems,dragDropIssue.IssueType);
+            _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemId,dragDropIssue.NextItemId,
+                dragDropIssue.CurrentItemIndex,dragDropIssue.IssueStatus, dragDropIssue.IssueId);
             return new SuccessResponse
             {                
                 Message = "Succesfully"
