@@ -15,8 +15,7 @@ namespace BussinessLogic
         }
 
         public int CreateRelease(Release release)
-        {
-            release.SprintStatusId = 1;
+        {            
             release.CreatedDate = DateTime.Now;
             return _releaseEngine.CreateRelease(release);
         }

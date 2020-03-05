@@ -44,7 +44,7 @@ namespace IssueTracker.Controllers
             _releaseLogic.EditRelease(newRelease);
             return new SuccessResponse
             {
-                Message = "Edited Succesfully"
+                Message = "Release Edited Succesfully"
             };
         }
 
@@ -67,7 +67,7 @@ namespace IssueTracker.Controllers
             return new SuccessResponse
             {
                 Id = id,
-                Message = "Deleted Succesfully"
+                Message = "Release Deleted Succesfully"
             };
         }
     }

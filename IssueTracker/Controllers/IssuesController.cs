@@ -41,7 +41,7 @@ namespace IssueTracker.Controllers
         public SuccessResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
+           // newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             _issuesLogic.EditIssue(newIssue);
             return new SuccessResponse
             {
@@ -53,7 +53,7 @@ namespace IssueTracker.Controllers
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
+            //newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             var issueId = _issuesLogic.CreateIssue(newIssue);
             return new SuccessResponse
             {
@@ -70,6 +70,18 @@ namespace IssueTracker.Controllers
             {
                 Id = id,
                 Message = "Deleted Succesfully"
+            };
+        }
+
+        [HttpPut]
+        [Route("DragDropIssue")]
+        public SuccessResponse DragIssue(DragDropIssueRequest dragDropIssue)
+        {
+            _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemId,dragDropIssue.NextItemId,
+                dragDropIssue.CurrentItemIndex,dragDropIssue.IssueStatus, dragDropIssue.IssueId);
+            return new SuccessResponse
+            {                
+                Message = "Succesfully"
             };
         }
     }

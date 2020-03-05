@@ -26,11 +26,40 @@ namespace DataAccess
         }
         public Release GetRelease(int id)
         {
-            return _context.Release.FirstOrDefault(i => i.ReleaseId == id);
+            //return _context.Release.FirstOrDefault(i => i.ReleaseId == id);
+            var release = (from SprintStatus in _context.SprintStatuses
+                               join Release in _context.Release
+                               on SprintStatus.SprintStatusId equals Release.SprintStatusId
+                               where Release.ReleaseId==id
+                               select new Release
+                               {
+                                   ReleaseId = Release.ReleaseId,
+                                   ReleaseName = Release.ReleaseName,
+                                   StartDate = Release.StartDate,
+                                   EndDate = Release.EndDate,
+                                   SprintStatusId = Release.SprintStatusId,
+                                   SprintStatusName = SprintStatus.SprintStatusName
+                               }).FirstOrDefault();
+
+            return release;
         }
         public List<Release> GetReleaseList()
         {
-            return _context.Release.ToList<Release>();
+            //  return _context.Release.ToList<Release>();
+            var releaseList = (from SprintStatus in _context.SprintStatuses
+                        join Release in _context.Release
+                        on SprintStatus.SprintStatusId equals Release.SprintStatusId
+                        select new Release
+                        {
+                           ReleaseId=Release.ReleaseId,
+                           ReleaseName=Release.ReleaseName,
+                           StartDate=Release.StartDate,
+                           EndDate=Release.EndDate,
+                           SprintStatusId=Release.SprintStatusId,
+                           SprintStatusName=SprintStatus.SprintStatusName
+                        }).ToList();
+
+            return releaseList;
         }
         public bool ReleaseExists(int id)
         {
