@@ -12,7 +12,7 @@ namespace ServiceModel.Dto
         public int CurrentItemIndex { get; set; }   
        // public int CurrentItemOrder { get; set; }
        // public int NoOfItems { get; set; }
-        public string IssueStatus { get; set; }
+        public int IssueStatus { get; set; }
         public int IssueId { get; set; }
     }
 }

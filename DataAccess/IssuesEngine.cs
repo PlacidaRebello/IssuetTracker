@@ -15,7 +15,7 @@ namespace DataAccess
 
         public int CreateIssue(Issue issue)
         {
-            issue.Order = 5;//remove dis 
+            issue.Order = _context.Issues.OrderByDescending(i => i.Order).FirstOrDefault().Order+1;
             _context.Issues.Add(issue);
             _context.SaveChanges();
             return issue.IssueId;
@@ -23,6 +23,7 @@ namespace DataAccess
 
         public bool EditIssue(Issue issue)
         {
+            //issue.Order= _context.Issues.FirstOrDefault(i => i.IssueId == issue.IssueId).Order;
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
@@ -84,12 +85,12 @@ namespace DataAccess
             return issueList;
         }
 
-        public List<Issue> GetIssueListByStatus(string issueStatus) 
+        public List<Issue> GetIssueListByStatus(int issueStatus) 
         {
             var issueList = (from IssueStatus in _context.IssueStatus
                              join Issue in _context.Issues
                              on IssueStatus.IssueStatusId equals Issue.IssueStatusId
-                             where IssueStatus.StatusName == issueStatus
+                             where IssueStatus.IssueStatusId == issueStatus
                              orderby Issue.Order ascending
                              select new Issue
                              {
@@ -105,8 +106,10 @@ namespace DataAccess
 
             return issueList;
         }
-        public bool DragDropissues(int itemOrder,int nextitemOrder,int prevItemOrder) 
+        public bool DragDropIssueList(List<Issue> issues)
         {
+            _context.Issues.UpdateRange(issues);
+            _context.SaveChanges();
             return true;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BussinessLogic;
 using BussinessLogic.Interfaces;
+using BussinessLogic.Logic;
 using DataAccess;
 using DataAccess.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ namespace IssueTracker.ApiConfig
         {
             services.AddTransient<IIssuesLogic, IssuesLogic>();
             services.AddTransient<IIssuesEngine, IssuesEngine>();
+
+            services.AddTransient<IDragDropLogic, DragDropLogic>();
 
             services.AddTransient<IIssueStatusLogic, IssueStatusLogic>();
             services.AddTransient<IIssueStatusEngine, IssueStatusEngine>();

@@ -13,10 +13,12 @@ namespace UnitTest.Logic
     {
         readonly Mock<IIssuesEngine> mockIssuesEngine;
         readonly Mock<IIssueStatusLogic> mockStatusLogic;
+        readonly Mock<IDragDropLogic> mockDragDropLogic;
         public IssueLogicTest()
         {
             mockIssuesEngine = new Mock<IIssuesEngine>();
             mockStatusLogic = new Mock<IIssueStatusLogic>();
+            mockDragDropLogic = new Mock<IDragDropLogic>();
         }
 
         [Fact]
@@ -27,7 +29,7 @@ namespace UnitTest.Logic
 
             var expected = GetSampleIssue();
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object, mockDragDropLogic.Object);
 
             var actual = issuesLogic.GetIssue(1);
 
@@ -60,7 +62,7 @@ namespace UnitTest.Logic
             //mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
             //.Returns(objStatus);
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object,mockDragDropLogic.Object);
             int expected = 1;
             var actual = issuesLogic.CreateIssue(issue);
 
@@ -99,7 +101,7 @@ namespace UnitTest.Logic
             mockIssuesEngine.Setup(x => x.IssueExists(issue.IssueId))
                 .Returns(false);
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object,mockDragDropLogic.Object);
 
             Action act = () => { issuesLogic.EditIssue(issue); };
 
@@ -122,7 +124,7 @@ namespace UnitTest.Logic
 
             bool expected = true;
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object, mockDragDropLogic.Object);
 
             bool actual = issuesLogic.EditIssue(issue);
 
@@ -140,7 +142,7 @@ namespace UnitTest.Logic
             mockIssuesEngine.Setup(x => x.GetIssue(issue.IssueId))
                 .Returns((Issue)null);
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object, mockDragDropLogic.Object);
 
             Action act = () => { issuesLogic.RemoveIssue(issue.IssueId); };
 
@@ -161,7 +163,7 @@ namespace UnitTest.Logic
             mockIssuesEngine.Setup(x => x.GetIssue(issue.IssueId))
                 .Returns(issue);
 
-            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object, mockDragDropLogic.Object);
 
             bool expected = true;
             bool actual = issuesLogic.RemoveIssue(issue.IssueId);
@@ -171,6 +173,17 @@ namespace UnitTest.Logic
             mockIssuesEngine.Verify(x => x.RemoveIssue(issue), Times.Once);
         }
 
+
+        [Fact]
+        public void DragDropIssue_IssueListUpdated_ValidCall() 
+        {
+            var issue = GetSampleIssue();
+            //mockIssuesEngine.Setup(x => x.DragDropIssueList(issue))
+            //    .Returns(true);
+
+            mockIssuesEngine.Setup(x => x.IssueExists(issue.IssueId))
+                .Returns(true);
+        }
         private Issue GetSampleIssue()
         {
             Issue issue = new Issue()
@@ -185,5 +198,6 @@ namespace UnitTest.Logic
             };
             return issue;
         }
+        
     }
 }

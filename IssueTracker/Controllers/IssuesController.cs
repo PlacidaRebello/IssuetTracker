@@ -77,12 +77,17 @@ namespace IssueTracker.Controllers
         [Route("DragDropIssue")]
         public SuccessResponse DragIssue(DragDropIssueRequest dragDropIssue)
         {
+            /*List<Issue> issues =*/
             _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemId,dragDropIssue.NextItemId,
                 dragDropIssue.CurrentItemIndex,dragDropIssue.IssueStatus, dragDropIssue.IssueId);
+
             return new SuccessResponse
-            {                
+            {
                 Message = "Succesfully"
             };
+
+            //List<GetIssueData> issueList = _mapper.Map<List<Issue>, List<GetIssueData>>(issues);
+            //return issueList;
         }
     }
 }
