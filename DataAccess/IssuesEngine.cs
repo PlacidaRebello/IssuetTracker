@@ -24,6 +24,10 @@ namespace DataAccess
         public bool EditIssue(Issue issue)
         {
             //issue.Order= _context.Issues.FirstOrDefault(i => i.IssueId == issue.IssueId).Order;
+            issue.Order = (from Issue in _context.Issues
+                           where Issue.IssueId ==issue.IssueId
+                           select Issue.Order
+                         ).FirstOrDefault();
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;

@@ -10,12 +10,10 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IIssueStatusLogic _issueStatusLogic;
         private readonly IDragDropLogic _dragDropLogic;
-        public IssuesLogic(IIssuesEngine issuesEngine, IIssueStatusLogic statusEngine, IDragDropLogic dragDropLogic)
+        public IssuesLogic(IIssuesEngine issuesEngine, IDragDropLogic dragDropLogic)
         {
             _issuesEngine = issuesEngine;
-            _issueStatusLogic = statusEngine;
             _dragDropLogic = dragDropLogic;
         }
 
