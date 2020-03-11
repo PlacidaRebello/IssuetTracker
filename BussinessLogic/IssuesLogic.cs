@@ -23,13 +23,10 @@ namespace BussinessLogic
         }
 
         public int CreateIssue(Issue issue)
-        {
-            //var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
-            //if (status == null)
-            //{
-            //    throw new Exception("Status doesn't exist. Please create a status and then add Issues");
-            //}
-            // issue.IssueStatus = status;
+        {            
+            var issueItem = _issuesEngine.IssueExists();
+            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
+
             issue.CreatedDate = DateTime.Now;
             return _issuesEngine.CreateIssue(issue);
         }
@@ -60,15 +57,13 @@ namespace BussinessLogic
         }
 
         public bool DragDropIssues(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueStatus, int issueId)
-        {
-           
+        {           
             Issue issue = _issuesEngine.GetIssue(issueId);
             issue.IssueStatusId = issueStatus;
             List<Issue> issues = _issuesEngine.GetIssueListByStatus(issueStatus);
 
             List<Issue> reOrderedIssues = _dragDropLogic.DropItem(previtem,prevItemId,nextItemId,currentItemIndex,issue,issues);
             return  _issuesEngine.DragDropIssueList(reOrderedIssues);
-            //return _issuesEngine.GetIssueList();
         }
     }
 }

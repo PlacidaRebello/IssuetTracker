@@ -13,5 +13,6 @@ namespace DataAccess.Interfaces
         List<Issue> GetIssueList();
         List<Issue> GetIssueListByStatus(int issueStatus);
         bool DragDropIssueList(List<Issue> issues);
+        Issue IssueExists();
     }
 }

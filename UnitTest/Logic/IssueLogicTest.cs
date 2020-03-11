@@ -21,12 +21,35 @@ namespace UnitTest.Logic
         }
 
         [Fact]
+        public void GetIssues_ReturnsSuccessfull()
+        {
+            var issue1 = CreateSampleIssue();
+            var issue2 = CreateSampleIssue(2,2);
+            var issue3 = CreateSampleIssue(3,3);
+            List<Issue> Issueobj = new List<Issue>();
+            Issueobj.Add(issue1);
+            Issueobj.Add(issue2);
+            Issueobj.Add(issue3);
+
+            mockIssuesEngine.Setup(x => x.GetIssueList())
+               .Returns(Issueobj);
+
+            var expected = Issueobj;
+
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockDragDropLogic.Object);
+
+            var actual = issuesLogic.GetIssueList();
+
+            Assert.Equal(expected, actual);
+            actual.Should().BeEquivalentTo(expected);
+        }
+        [Fact]
         public void GetIssueById_ValidData()
         {
             mockIssuesEngine.Setup(x => x.GetIssue(1))
-               .Returns(GetSampleIssue());
+               .Returns(CreateSampleIssue());
 
-            var expected = GetSampleIssue();
+            var expected = CreateSampleIssue();
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockDragDropLogic.Object);
 
@@ -36,30 +59,22 @@ namespace UnitTest.Logic
         }
 
         [Fact]
-        public void SaveIssue_ValidCall()
+        public void CreateIssue_IssueExists_IssueOrderSetToMax_NewIssueCreatedSuccessfully()
         {
-            //IssueStatus objStatus = new IssueStatus()
+            //Issue issue = new Issue()
             //{
-            //    IssueStatusId = 1,
-            //    StatusName = "nt done",
-            //    CreatedBy = ""
+            //    // IssueId = 1,
+            //    Subject = "abc",
+            //    Description = "do it",
+            //    AssignedTo = "placi",
+            //    Tags = "to be done",
+            //    IssueStatusId=1,
+            //    CreatedBy = "jason"
             //};
-            Issue issue = new Issue()
-            {
-                // IssueId = 1,
-                Subject = "abc",
-                Description = "do it",
-                AssignedTo = "placi",
-                Tags = "to be done",
-                IssueStatusId=1,
-                CreatedBy = "jason"
-            };
 
+            Issue issue = GetSampleIssue();
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);
-
-            //mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
-            //.Returns(objStatus);
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object,mockDragDropLogic.Object);
             int expected = 1;
@@ -69,31 +84,32 @@ namespace UnitTest.Logic
             mockIssuesEngine.Verify(x => x.CreateIssue(issue), Times.Once);
         }
 
-        //[Fact]
-        //public void CreateIssue_Null_Status_Throws_ExceptionAsync()
-        //{
-        //    mockIssuesEngine.Setup(x => x.CreateIssue(GetSampleIssue()))
-        //        .Returns(1);
+        [Fact]
+        public void CreateIssue_IssueDoesNotExists_SetIssueOrderToOne_NewIssueCreatedSuccessfully()
+        {
+            
+            Issue issue = GetSampleIssue();
+            mockIssuesEngine.Setup(x => x.IssueExists())
+                .Returns((Issue)null);          
+            Issue issueItem = null;
+            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
 
-        //    mockStatusLogic.Setup(x => x.GetStatusByName("nt done"))
-        //        .Returns((IssueStatus)null);
+            mockIssuesEngine.Setup(x => x.CreateIssue(issue))
+                .Returns(1);           
 
-        //    IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockStatusLogic.Object);
+            IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockDragDropLogic.Object);
+            int expected = 1;
+            int actual = issuesLogic.CreateIssue(issue);
 
-        //    Action act = () => { issuesLogic.CreateIssue(GetSampleIssue()); };
+            Assert.Equal(expected, actual);
+            mockIssuesEngine.Verify(x => x.CreateIssue(issue), Times.Once);
 
-        //    act.Should().Throw<Exception>()
-        //     .And.Message
-        //     .Should().Be("Status doesn't exist. Please create a status and then add Issues");
-
-        //    mockIssuesEngine.Verify(x => x.CreateIssue(GetSampleIssue()), Times.Never);
-
-        //}
+        }
 
         [Fact]
         public void EditIssue_IssueDoesNotExists_ThrowsException()
         {
-            var issue = GetSampleIssue();
+            var issue = CreateSampleIssue();
             mockIssuesEngine.Setup(x => x.EditIssue(issue))
                 .Returns(true);
 
@@ -114,7 +130,7 @@ namespace UnitTest.Logic
         [Fact]
         public void EditIssue_IssueEdited_ValidCall()
         {
-            var issue = GetSampleIssue();
+            var issue = CreateSampleIssue();
             mockIssuesEngine.Setup(x => x.EditIssue(issue))
                 .Returns(true);
 
@@ -134,7 +150,7 @@ namespace UnitTest.Logic
         [Fact]
         public void DeleteIssue_IssueDoesNotExists_ThrowsException()
         {
-            var issue = GetSampleIssue();
+            var issue = CreateSampleIssue();
             mockIssuesEngine.Setup(x => x.RemoveIssue(issue))
                 .Returns(true);
 
@@ -155,7 +171,7 @@ namespace UnitTest.Logic
         [Fact]
         public void DeleteIssue_IssueDeleted_ValidCall()
         {
-            var issue = GetSampleIssue();
+            var issue = CreateSampleIssue();
             mockIssuesEngine.Setup(x => x.RemoveIssue(issue))
                 .Returns(true);
 
@@ -179,11 +195,6 @@ namespace UnitTest.Logic
             var issue2 = CreateSampleIssue(2,1);
             var issue3 = CreateSampleIssue(3,2);
             var issue4 = CreateSampleIssue(4,3);
-            //List<Issue> issueObj = new List<Issue>();            
-            //issueObj.Add(issue1);
-            //issueObj.Add(issue2);
-            //issueObj.Add(issue3);
-            //issueObj.Add(issue4);
 
             List<Issue> issueInProgress = new List<Issue>();
             issueInProgress.Add(issue3);
@@ -193,14 +204,16 @@ namespace UnitTest.Logic
             reOrderedIssues.Add(issue3);
             reOrderedIssues.Add(issue4);
 
-            mockIssuesEngine.Setup(x => x.GetIssue(4))
-                .Returns(issue4);
+            mockIssuesEngine.Setup(x => x.GetIssue(4)).Returns(issue4);
             issue4.IssueStatusId = 2;
-            mockIssuesEngine.Setup(x => x.GetIssueListByStatus(2))
-                .Returns(issueInProgress);
-            mockDragDropLogic.Setup(x => x.DropItem(false, 0, 3, 0, issue4, issueInProgress)).Returns(reOrderedIssues);
-            mockIssuesEngine.Setup(x=>x.DragDropIssueList(reOrderedIssues))
-                .Returns(true);
+
+            mockIssuesEngine.Setup(x => x.GetIssueListByStatus(2)).Returns(issueInProgress);
+
+            mockDragDropLogic.Setup(x => x.DropItem(false, 0, 3, 0, issue4, issueInProgress))
+                .Returns(reOrderedIssues);
+
+            mockIssuesEngine.Setup(x=>x.DragDropIssueList(reOrderedIssues)).Returns(true);
+
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object, mockDragDropLogic.Object);
 
             bool expected = true;
@@ -212,7 +225,7 @@ namespace UnitTest.Logic
         {
             Issue issue = new Issue()
             {
-                IssueId = 1,
+                //IssueId = 1,
                 Subject = "abc",
                 Description = "do it",
                 AssignedTo = "placi",
