@@ -242,6 +242,7 @@ namespace UnitTest.Logic
                 Tags = "to be done",
                 IssueStatusId = issueStatusId,
                 CreatedBy = "jason",
+                StatusName="TODO",
                 Order=issueId
             };
             return issue;

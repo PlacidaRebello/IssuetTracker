@@ -3,9 +3,7 @@ using DataAccess.Interfaces;
 using DataAccess.Models;
 using FluentAssertions;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace UnitTest.Logic
@@ -129,6 +127,26 @@ namespace UnitTest.Logic
 
             DragDropLogic dragDropLogic = new DragDropLogic(mockIssuesEngine.Object);
             List<Issue> actual = dragDropLogic.DropItem(previtem, prevItemId, nextItemId, currentItemIndex, CreateSampleIssue(issueId), CreateSampleData(issueStatusId));
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Theory]
+        [InlineData(true,2,4,1,7,3)]
+        public void DropItemToSameList_ReOrderList_Successful(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueId, int issueStatusId)
+        {
+            Issue issue = CreateSampleIssue(issueId, issueStatusId);
+            List<Issue> issues = CreateSampleData(issueStatusId);
+            Issue prevIssue = CreateSampleIssue(prevItemId);
+            Issue nextIssue = CreateSampleIssue(nextItemId);
+            mockIssuesEngine.Setup(x => x.GetIssue(prevItemId)).Returns(prevIssue);
+            mockIssuesEngine.Setup(x => x.GetIssue(nextItemId)).Returns(nextIssue);
+            issues.RemoveAll(x=>x.IssueId==issue.IssueId);
+            issue.Order = 3;
+            issues.Add(issue);
+            List<Issue> expected = issues;
+
+            DragDropLogic dragDropLogic = new DragDropLogic(mockIssuesEngine.Object);
+            List<Issue> actual = dragDropLogic.DropItem(previtem, prevItemId, nextItemId, currentItemIndex, CreateSampleIssue(issueId,issueStatusId), CreateSampleData(issueStatusId));
             actual.Should().BeEquivalentTo(expected);
         }
         public List<Issue> CreateSampleData(int IssueStatusId=1)

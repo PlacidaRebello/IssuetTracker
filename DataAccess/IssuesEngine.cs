@@ -15,9 +15,6 @@ namespace DataAccess
 
         public int CreateIssue(Issue issue)
         {
-            //var issueItem = _context.Issues.OrderByDescending(i => i.Order).FirstOrDefault();            
-            //issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
-
             _context.Issues.Add(issue);
             _context.SaveChanges();
             return issue.IssueId;
@@ -25,7 +22,6 @@ namespace DataAccess
 
         public bool EditIssue(Issue issue)
         {
-            //issue.Order= _context.Issues.FirstOrDefault(i => i.IssueId == issue.IssueId).Order;
             issue.Order = (from Issue in _context.Issues
                            where Issue.IssueId ==issue.IssueId
                            select Issue.Order
@@ -37,7 +33,6 @@ namespace DataAccess
 
         public Issue GetIssue(int id)
         {
-            //return _context.Issues.FirstOrDefault(i => i.IssueId == id);
             var issue = (from IssueStatus in _context.IssueStatus
                          join Issue in _context.Issues
                          on IssueStatus.IssueStatusId equals Issue.IssueStatusId
@@ -76,7 +71,6 @@ namespace DataAccess
 
         public List<Issue> GetIssueList()
         {
-            // return _context.Issues.ToList<Issue>();
             var issueList = (from IssueStatus in _context.IssueStatus
                          join Issue in _context.Issues
                          on IssueStatus.IssueStatusId equals Issue.IssueStatusId

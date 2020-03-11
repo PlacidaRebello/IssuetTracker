@@ -15,7 +15,6 @@ namespace BussinessLogic
         }
         public int CreateSprint(Sprint sprint)
         {
-            // sprint.SprintStatusId = 1;
             sprint.CreatedDate = DateTime.Now;
             return _sprintEngine.CreateSprint(sprint);
         }
@@ -39,8 +38,6 @@ namespace BussinessLogic
         {
             return _sprintEngine.GetSprints();
         }
-
-
         public bool RemoveSprint(int id)
         {
             var sprint = _sprintEngine.GetSprint(id);
