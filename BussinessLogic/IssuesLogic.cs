@@ -1,4 +1,5 @@
 ﻿using BussinessLogic.Interfaces;
+using BussinessLogic.Logic;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
@@ -9,11 +10,11 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IIssueStatusLogic _issueStatusLogic;
-        public IssuesLogic(IIssuesEngine issuesEngine, IIssueStatusLogic statusEngine)
+        private readonly IDragDropLogic _dragDropLogic;
+        public IssuesLogic(IIssuesEngine issuesEngine, IDragDropLogic dragDropLogic)
         {
             _issuesEngine = issuesEngine;
-            _issueStatusLogic = statusEngine;
+            _dragDropLogic = dragDropLogic;
         }
 
         public Issue GetIssue(int id)
@@ -22,13 +23,10 @@ namespace BussinessLogic
         }
 
         public int CreateIssue(Issue issue)
-        {
-            //var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
-            //if (status == null)
-            //{
-            //    throw new Exception("Status doesn't exist. Please create a status and then add Issues");
-            //}
-           // issue.IssueStatus = status;
+        {            
+            var issueItem = _issuesEngine.IssueExists();
+            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
+
             issue.CreatedDate = DateTime.Now;
             return _issuesEngine.CreateIssue(issue);
         }
@@ -58,39 +56,14 @@ namespace BussinessLogic
             return _issuesEngine.GetIssueList();
         }
 
-        public bool DragDropIssues(bool previtem,int prevItemOrder,int nextItemOrder,int currentItemOrder,int currentItemIndex,int noOfItems, string issueType) 
-        {
-            List<Issue> issues= _issuesEngine.GetIssueListByIssueType(issueType);
-            int itemOrder;
-            int nextItem;
-            if (currentItemIndex>=noOfItems/2)
-            {
-                if (previtem)
-                {
-                    itemOrder = prevItemOrder + 1;
-                }
-                else
-                {
-                    itemOrder = nextItemOrder - 1;
-                }
-                //this should go in for loop for remaining items of list
-                if (itemOrder>=nextItemOrder)
-                {
-                    nextItem = nextItemOrder + 1;
-                }
-            }
-            else
-            {
-                if (previtem)
-                {
-                    itemOrder = prevItemOrder;
-                    prevItemOrder = prevItemOrder - 1;//this should go in loop
-                }
-                else {
-                    itemOrder = nextItemOrder - 1;
-                }
-            }
-            return true;
+        public bool DragDropIssues(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueStatus, int issueId)
+        {           
+            Issue issue = _issuesEngine.GetIssue(issueId);
+            issue.IssueStatusId = issueStatus;
+            List<Issue> issues = _issuesEngine.GetIssueListByStatus(issueStatus);
+
+            List<Issue> reOrderedIssues = _dragDropLogic.DropItem(previtem,prevItemId,nextItemId,currentItemIndex,issue,issues);
+            return  _issuesEngine.DragDropIssueList(reOrderedIssues);
         }
     }
 }

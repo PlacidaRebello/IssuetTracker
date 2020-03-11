@@ -26,7 +26,6 @@ namespace DataAccess
         }
         public Release GetRelease(int id)
         {
-            //return _context.Release.FirstOrDefault(i => i.ReleaseId == id);
             var release = (from SprintStatus in _context.SprintStatuses
                                join Release in _context.Release
                                on SprintStatus.SprintStatusId equals Release.SprintStatusId
@@ -45,7 +44,6 @@ namespace DataAccess
         }
         public List<Release> GetReleaseList()
         {
-            //  return _context.Release.ToList<Release>();
             var releaseList = (from SprintStatus in _context.SprintStatuses
                         join Release in _context.Release
                         on SprintStatus.SprintStatusId equals Release.SprintStatusId

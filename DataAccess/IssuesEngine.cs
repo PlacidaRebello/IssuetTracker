@@ -22,6 +22,10 @@ namespace DataAccess
 
         public bool EditIssue(Issue issue)
         {
+            issue.Order = (from Issue in _context.Issues
+                           where Issue.IssueId ==issue.IssueId
+                           select Issue.Order
+                         ).FirstOrDefault();
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
@@ -29,21 +33,21 @@ namespace DataAccess
 
         public Issue GetIssue(int id)
         {
-            //return _context.Issues.FirstOrDefault(i => i.IssueId == id);
             var issue = (from IssueStatus in _context.IssueStatus
-                           join Issue in _context.Issues
-                           on IssueStatus.IssueStatusId equals Issue.IssueStatusId
-                           where Issue.IssueId == id
-                           select new Issue
-                           {
-                               IssueId = Issue.IssueId,
-                               Subject = Issue.Subject,
-                               Description=Issue.Description,
-                               AssignedTo=Issue.AssignedTo,
-                               Tags = Issue.Tags,
-                               IssueStatusId = IssueStatus.IssueStatusId,
-                               StatusName=IssueStatus.StatusName
-                           }).FirstOrDefault();
+                         join Issue in _context.Issues
+                         on IssueStatus.IssueStatusId equals Issue.IssueStatusId
+                         where Issue.IssueId == id
+                         select new Issue
+                         {
+                             IssueId = Issue.IssueId,
+                             Subject = Issue.Subject,
+                             Description = Issue.Description,
+                             AssignedTo = Issue.AssignedTo,
+                             Tags = Issue.Tags,
+                             IssueStatusId = IssueStatus.IssueStatusId,
+                             StatusName = IssueStatus.StatusName,
+                             Order = Issue.Order
+                         }).FirstOrDefault();
 
             return issue;
         }
@@ -60,13 +64,18 @@ namespace DataAccess
             return _context.Issues.Any(e => e.IssueId == id);
         }
 
+        public Issue IssueExists() 
+        {
+           return _context.Issues.OrderByDescending(i => i.Order).FirstOrDefault();
+        }
+
         public List<Issue> GetIssueList()
         {
-            // return _context.Issues.ToList<Issue>();
             var issueList = (from IssueStatus in _context.IssueStatus
                          join Issue in _context.Issues
                          on IssueStatus.IssueStatusId equals Issue.IssueStatusId
-                         select new Issue
+                             orderby Issue.Order ascending
+                             select new Issue
                          {
                              IssueId = Issue.IssueId,
                              Subject = Issue.Subject,
@@ -74,18 +83,20 @@ namespace DataAccess
                              AssignedTo = Issue.AssignedTo,
                              Tags = Issue.Tags,
                              IssueStatusId = IssueStatus.IssueStatusId,
-                             StatusName=IssueStatus.StatusName
+                             StatusName=IssueStatus.StatusName,
+                             Order=Issue.Order
                          }).ToList();
 
             return issueList;
         }
 
-        public List<Issue> GetIssueListByIssueType(string issueType) 
+        public List<Issue> GetIssueListByStatus(int issueStatus) 
         {
             var issueList = (from IssueStatus in _context.IssueStatus
                              join Issue in _context.Issues
                              on IssueStatus.IssueStatusId equals Issue.IssueStatusId
-                             where Issue.StatusName==issueType
+                             where IssueStatus.IssueStatusId == issueStatus
+                             orderby Issue.Order ascending
                              select new Issue
                              {
                                  IssueId = Issue.IssueId,
@@ -94,13 +105,16 @@ namespace DataAccess
                                  AssignedTo = Issue.AssignedTo,
                                  Tags = Issue.Tags,
                                  IssueStatusId = IssueStatus.IssueStatusId,
-                                 StatusName = IssueStatus.StatusName
+                                 StatusName = IssueStatus.StatusName,
+                                 Order = Issue.Order
                              }).ToList();
 
             return issueList;
         }
-        public bool DragDropissues(int itemOrder,int nextitemOrder,int prevItemOrder) 
+        public bool DragDropIssueList(List<Issue> issues)
         {
+            _context.Issues.UpdateRange(issues);
+            _context.SaveChanges();
             return true;
         }
     }

@@ -7,11 +7,10 @@ namespace ServiceModel.Dto
     public class DragDropIssueRequest
     {
         public bool PrevItem { get; set; }
-        public int PrevItemOrder { get; set; }
-        public int NextItemOrder { get; set; }
-        public int CurrentItemIndex { get; set; }   
-        public int CurrentItemOrder { get; set; }
-        public int NoOfItems { get; set; }
-        public string IssueType { get; set; }   
+        public int PrevItemId { get; set; }
+        public int NextItemId { get; set; }
+        public int CurrentItemIndex { get; set; }  
+        public int IssueStatus { get; set; }
+        public int IssueId { get; set; }
     }
 }
