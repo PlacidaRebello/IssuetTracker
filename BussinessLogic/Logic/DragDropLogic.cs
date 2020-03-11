@@ -15,6 +15,9 @@ namespace BussinessLogic.Logic
         public List<Issue> DropItem(bool previtem, int prevItemId, int nextItemId, int currentItemIndex,Issue issue,List<Issue> issues)
         {
             Issue prevIssue, NextIssue;
+            var item = issues.Find(x => x.IssueId == issue.IssueId);
+            if (item != null)
+                issues.Remove(item);
             if (currentItemIndex >= decimal.Divide(issues.Count, 2))
             {
                 if (previtem)
@@ -66,7 +69,7 @@ namespace BussinessLogic.Logic
                     }
                 }
             }
-            //add issue to issuelist            
+
             issues.Add(issue);
             return issues;
         }

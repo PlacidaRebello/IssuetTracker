@@ -86,14 +86,10 @@ namespace UnitTest.Logic
 
         [Fact]
         public void CreateIssue_IssueDoesNotExists_SetIssueOrderToOne_NewIssueCreatedSuccessfully()
-        {
-            
+        {            
             Issue issue = GetSampleIssue();
             mockIssuesEngine.Setup(x => x.IssueExists())
                 .Returns((Issue)null);          
-            Issue issueItem = null;
-            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
-
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);           
 
@@ -103,7 +99,6 @@ namespace UnitTest.Logic
 
             Assert.Equal(expected, actual);
             mockIssuesEngine.Verify(x => x.CreateIssue(issue), Times.Once);
-
         }
 
         [Fact]
