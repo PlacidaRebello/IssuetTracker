@@ -13,10 +13,9 @@ namespace BussinessLogic
             _userManager = userManager;
         }
 
-        public async Task<bool> RegisterUser(AppUser user, string password)
+        public async Task<IdentityResult> RegisterUser(AppUser user, string password)
         {
-            var result = await _userManager.CreateAsync(user, password);
-            return result.Succeeded;
+            return await _userManager.CreateAsync(user, password);            
         }
     }
 }
