@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace IssueTracker.Controllers
 {
@@ -27,13 +28,14 @@ namespace IssueTracker.Controllers
         public async Task<SuccessResponse> CreateUserAsync(RegisterUserRequest userRequest)
         {
             var newUser = _mapper.Map<AppUser>(userRequest);
-            bool result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
-            if (result)
+            var result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
+            if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(newUser, isPersistent: false);//cookies shoulnot persist after browser is closed
-                return new SuccessResponse { Message = "registered", Id = 1 };
+                return new SuccessResponse { Message = "Registered Succesfully." };
             }
-            return new SuccessResponse { Message = "try again" };
+
+            return new SuccessResponse { Message = result.Errors.FirstOrDefault()?.Description};
         }
     }
 }
