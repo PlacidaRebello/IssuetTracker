@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Interfaces;
+﻿using BussinessLogic.Factory;
+using BussinessLogic.Interfaces;
 using BussinessLogic.Logic;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -26,9 +27,12 @@ namespace BussinessLogic
         {            
             var issueItem = _issuesEngine.IssueExists();
             issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
-
             issue.CreatedDate = DateTime.Now;
-            return _issuesEngine.CreateIssue(issue);
+
+            IIssue issue1 = IssuesFactory.CreateIssue(issue.IssueTypeId, _issuesEngine);
+            var issueId = issue1.Create(issue);
+            return issueId;
+            //return _issuesEngine.CreateIssue(issue);
         }
 
         public bool RemoveIssue(int id)

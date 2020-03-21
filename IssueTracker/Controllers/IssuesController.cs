@@ -53,11 +53,8 @@ namespace IssueTracker.Controllers
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            var newIssueDetails = _mapper.Map<IssueDetails>(issue);
-            //var issueId = _issuesLogic.CreateIssue(newIssue);
+            var issueId = _issuesLogic.CreateIssue(newIssue);
 
-            IIssue issue1 = IssuesFactory.CreateIssue(newIssue.IssueTypeId);
-            var issueId = issue1.Create(newIssue,newIssueDetails);
             return new SuccessResponse
             {
                 Id = issueId,

@@ -1,4 +1,5 @@
 ﻿using BussinessLogic.Interfaces;
+using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,20 @@ namespace BussinessLogic
     public class Bug : IIssue
     {
 
-        private readonly IIssuesLogic _issuesLogic;
-        //public Bug(IIssuesLogic issuesLogic)
-        //{
-        //    _issuesLogic = issuesLogic;
-        //}
-
-        public int Create(Issue issue, IssueDetails issueDetails)
+        private readonly IIssuesEngine _issuesEngine;
+        public Bug(IIssuesEngine issuesEngine)
         {
-            int issueId = _issuesLogic.CreateIssue(issue);
+            _issuesEngine = issuesEngine;
+        }
+
+        public int Create(Issue issue)
+        {
+            int issueId = _issuesEngine.CreateIssue(issue);
+
+            IssueDetails issueDetails = issue.IssueDetails;
             issueDetails.IssueId = issueId;
-            _issuesLogic.AddIssueDetails(issueDetails);
+
+            _issuesEngine.AddIssueDetails(issueDetails);
             return issueId;
         }
         
