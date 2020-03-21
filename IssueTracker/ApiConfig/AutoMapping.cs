@@ -15,6 +15,9 @@ namespace IssueTracker.ApiConfig
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore());
             CreateMap<Issue, GetIssueData>();
 
+            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source);
+            CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
+
             CreateMap<CreateIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<EditIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<IssueStatus, GetIssueStatusData>();

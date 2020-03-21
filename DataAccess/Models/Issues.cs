@@ -18,5 +18,10 @@ namespace DataAccess.Models
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int Order { get; set; }
+        public int IssueTypeId { get; set; }
+        [NotMapped]
+        public string IssueTypeName { get; set; }
+        public IssueType IssueType { get; set; }
+        public IssueDetails IssueDetails { get; set; }
     }
 }

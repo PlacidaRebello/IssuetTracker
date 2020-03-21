@@ -1,22 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace ServiceModel.Type
+namespace DataAccess.Models
 {
-    public class Issue
+    public class IssueDetails
     {
-        [Required]
-        public string Subject { get; set; }
-        public string Description { get; set; }
-        [Required]
-        public string AssignedTo { get; set; }
-        public string Tags { get; set; }
-        [Required]
-        public int IssueStatusId { get; set; }
-        public string CreatedBy { get; set; }   
-        public int Order { get; set; }
-        public int IssueTypeId { get; set; }
-        //details
+        public int IssueDetailsId { get; set; }
         public string Attachment { get; set; }
         public int Reporter { get; set; }
         public string Enviroment { get; set; }
@@ -28,5 +19,7 @@ namespace ServiceModel.Type
         public int UAT { get; set; }
         public bool MyProperty { get; set; }
         public string TImeTracking { get; set; }
-    }   
+        public int IssueId { get; set; }    
+        public Issue Issue { get; set; }
+    }
 }

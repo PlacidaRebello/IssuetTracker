@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -52,7 +53,11 @@ namespace IssueTracker.Controllers
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            var issueId = _issuesLogic.CreateIssue(newIssue);
+            var newIssueDetails = _mapper.Map<IssueDetails>(issue);
+            //var issueId = _issuesLogic.CreateIssue(newIssue);
+
+            IIssue issue1 = IssuesFactory.CreateIssue(newIssue.IssueTypeId);
+            var issueId = issue1.Create(newIssue,newIssueDetails);
             return new SuccessResponse
             {
                 Id = issueId,

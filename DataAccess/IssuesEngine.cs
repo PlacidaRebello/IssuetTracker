@@ -117,5 +117,12 @@ namespace DataAccess
             _context.SaveChanges();
             return true;
         }
+
+        public bool AddIssueDetails(IssueDetails issueDetails)
+        {
+            _context.IssueDetails.Add(issueDetails);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

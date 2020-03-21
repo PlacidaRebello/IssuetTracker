@@ -65,5 +65,10 @@ namespace BussinessLogic
             List<Issue> reOrderedIssues = _dragDropLogic.DropItem(previtem,prevItemId,nextItemId,currentItemIndex,issue,issues);
             return  _issuesEngine.DragDropIssueList(reOrderedIssues);
         }
+
+        public bool AddIssueDetails(IssueDetails issueDetails)
+        {
+            return _issuesEngine.AddIssueDetails(issueDetails);
+        }
     }
 }
