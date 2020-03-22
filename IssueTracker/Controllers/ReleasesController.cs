@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace IssueTracker.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReleasesController : ControllerBase

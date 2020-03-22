@@ -1,4 +1,6 @@
-﻿using BussinessLogic.Interfaces;
+﻿using BussinessLogic.Factory;
+using BussinessLogic.Interfaces;
+using BussinessLogic.Logic;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
@@ -9,11 +11,11 @@ namespace BussinessLogic
     public class IssuesLogic : IIssuesLogic
     {
         private readonly IIssuesEngine _issuesEngine;
-        private readonly IIssueStatusLogic _issueStatusLogic;
-        public IssuesLogic(IIssuesEngine issuesEngine, IIssueStatusLogic statusEngine)
+        private readonly IDragDropLogic _dragDropLogic;
+        public IssuesLogic(IIssuesEngine issuesEngine, IDragDropLogic dragDropLogic)
         {
             _issuesEngine = issuesEngine;
-            _issueStatusLogic = statusEngine;
+            _dragDropLogic = dragDropLogic;
         }
 
         public Issue GetIssue(int id)
@@ -22,15 +24,14 @@ namespace BussinessLogic
         }
 
         public int CreateIssue(Issue issue)
-        {
-            //var status = _issueStatusLogic.GetStatus(issue.IssueStatusId);
-            //if (status == null)
-            //{
-            //    throw new Exception("Status doesn't exist. Please create a status and then add Issues");
-            //}
-            // issue.IssueStatus = status;
+        {            
+            var issueItem = _issuesEngine.IssueExists();
+            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
             issue.CreatedDate = DateTime.Now;
-            return _issuesEngine.CreateIssue(issue);
+
+            var issueManager = IssuesFactory.GetIssueManager(issue.IssueTypeId, _issuesEngine);
+            var issueId = issueManager.Create(issue);
+            return issueId;
         }
 
         public bool RemoveIssue(int id)
@@ -58,68 +59,19 @@ namespace BussinessLogic
             return _issuesEngine.GetIssueList();
         }
 
-        public bool DragDropIssues(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, string issueStatus, int issueId)
-        {
+        public bool DragDropIssues(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueStatus, int issueId)
+        {           
             Issue issue = _issuesEngine.GetIssue(issueId);
-            Issue prevIssue, NextIssue;
-
+            issue.IssueStatusId = issueStatus;
             List<Issue> issues = _issuesEngine.GetIssueListByStatus(issueStatus);
 
-            if (currentItemIndex >= (issues.Count / 2))
-            {
-                if (previtem)
-                {
-                    prevIssue = _issuesEngine.GetIssue(prevItemId);
-                    issue.Order = prevIssue.Order + 1;
-                }
-                else
-                {
-                    NextIssue = _issuesEngine.GetIssue(nextItemId);
-                    issue.Order = NextIssue.Order - 1;
-                }
-            }
-            else
-            {
-                if (previtem)
-                {
-                    prevIssue = _issuesEngine.GetIssue(prevItemId);
-                    issue.Order = prevIssue.Order;
-                    //  prevItemOrder = prevItemOrder - 1;//this should go in loop
-                }
-                else
-                {
-                    NextIssue = _issuesEngine.GetIssue(nextItemId);
-                    issue.Order = NextIssue.Order - 1;
-                }
-            }
-            // issue belongs to 2nd half
-            for (int i = currentItemIndex; i < issues.Count; i++)
-            {
-                if (issues[i].Order <= issue.Order)
-                {
-                    issues[i].Order = issue.Order + 1;
-                    int j = i;
-                }
-                else if (i > 0 && issues[i].Order <= issues[i - 1].Order)
-                {
-                    issues[i].Order = issues[i - 1].Order + 1;
-                }
-            }
-            //isue belongs to 1st half
-            //for (int i = currentItemIndex; i >0; i--)
-            //{
-            //    if (issues[i].Order >= issue.Order)
-            //    {
-            //        issues[i].Order = issue.Order - 1;
-            //        int j = i;
-            //    }
-            //    else if (i > 0 && issues[i].Order <= issues[i - 1].Order)
-            //    {
-            //        issues[i].Order = issues[i - 1].Order + 1;
-            //    }
-            //}   
+            List<Issue> reOrderedIssues = _dragDropLogic.DropItem(previtem,prevItemId,nextItemId,currentItemIndex,issue,issues);
+            return  _issuesEngine.DragDropIssueList(reOrderedIssues);
+        }
 
-            return true;
+        public bool AddIssueDetails(IssueDetails issueDetails)
+        {
+            return _issuesEngine.AddIssueDetails(issueDetails);
         }
     }
 }

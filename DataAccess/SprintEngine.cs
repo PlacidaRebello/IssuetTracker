@@ -29,7 +29,6 @@ namespace DataAccess
 
         public Sprint GetSprint(int id)
         {
-            //return _context.Sprints.FirstOrDefault(i => i.SprintId == id);
             var sprint = (from SprintStatus in _context.SprintStatuses
                           join Sprint in _context.Sprints
                           on SprintStatus.SprintStatusId equals Sprint.SprintStatusId
@@ -42,14 +41,12 @@ namespace DataAccess
                               StartDate = Sprint.StartDate,
                               EndDate = Sprint.EndDate,
                               SprintStatusId = Sprint.SprintStatusId
-                              //SprintStatusName = SprintStatus.SprintStatusName
                           }).FirstOrDefault();
             return sprint;
         }
 
         public List<Sprint> GetSprints()
         {
-            // return _context.Sprints.ToList<Sprint>();
             var sprintList = (from SprintStatus in _context.SprintStatuses
                               join Sprint in _context.Sprints
                               on SprintStatus.SprintStatusId equals Sprint.SprintStatusId

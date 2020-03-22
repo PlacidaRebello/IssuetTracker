@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -41,7 +42,6 @@ namespace IssueTracker.Controllers
         public SuccessResponse PutIssue(EditIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-           // newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             _issuesLogic.EditIssue(newIssue);
             return new SuccessResponse
             {
@@ -53,8 +53,8 @@ namespace IssueTracker.Controllers
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
             var newIssue = _mapper.Map<Issue>(issue);
-            //newIssue.IssueStatus = new IssueStatus { StatusName = issue.IssueStatus };
             var issueId = _issuesLogic.CreateIssue(newIssue);
+
             return new SuccessResponse
             {
                 Id = issueId,
@@ -80,7 +80,7 @@ namespace IssueTracker.Controllers
             _issuesLogic.DragDropIssues(dragDropIssue.PrevItem,dragDropIssue.PrevItemId,dragDropIssue.NextItemId,
                 dragDropIssue.CurrentItemIndex,dragDropIssue.IssueStatus, dragDropIssue.IssueId);
             return new SuccessResponse
-            {                
+            {
                 Message = "Succesfully"
             };
         }
