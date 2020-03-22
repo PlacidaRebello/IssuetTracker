@@ -9,12 +9,19 @@ namespace IssueTracker.ApiConfig
     {
         public AutoMapping()
         {
-            CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.IssueStatus, opt => opt.Ignore());
-            CreateMap<EditIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.IssueStatus, opt => opt.Ignore());
-            CreateMap<Issue, GetIssueData>();
 
+            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source);
+            CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
+                .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+
+            CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
+            CreateMap<EditIssueRequest, Issue>(MemberList.Source)
+                .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+
+            CreateMap<IssueDetails, GetIssueData>(MemberList.Source);
+            CreateMap<Issue, GetIssueData>();
 
             CreateMap<CreateIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<EditIssueStatusRequest, IssueStatus>(MemberList.Source);
