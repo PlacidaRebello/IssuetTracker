@@ -29,10 +29,9 @@ namespace BussinessLogic
             issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
             issue.CreatedDate = DateTime.Now;
 
-            IIssue issue1 = IssuesFactory.CreateIssue(issue.IssueTypeId, _issuesEngine);
-            var issueId = issue1.Create(issue);
+            var issueManager = IssuesFactory.GetIssueManager(issue.IssueTypeId, _issuesEngine);
+            var issueId = issueManager.Create(issue);
             return issueId;
-            //return _issuesEngine.CreateIssue(issue);
         }
 
         public bool RemoveIssue(int id)
