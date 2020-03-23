@@ -18,7 +18,7 @@ namespace DataAccess.Models
         public int Epic { get; set; }
         public int UAT { get; set; }
         public bool MyProperty { get; set; }
-        public string TImeTracking { get; set; }
+        public string TimeTracking { get; set; }
         public int IssueId { get; set; }    
         public Issue Issue { get; set; }
     }

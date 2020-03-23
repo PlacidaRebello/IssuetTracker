@@ -24,9 +24,10 @@ namespace BussinessLogic
         }
 
         public int CreateIssue(Issue issue)
-        {            
+        {
             var issueItem = _issuesEngine.IssueExists();
             issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
+
             issue.CreatedDate = DateTime.Now;
 
             var issueManager = IssuesFactory.GetIssueManager(issue.IssueTypeId, _issuesEngine);

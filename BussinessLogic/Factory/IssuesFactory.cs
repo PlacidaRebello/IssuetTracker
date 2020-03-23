@@ -9,7 +9,7 @@ namespace BussinessLogic.Factory
 {
     public static class IssuesFactory
     {
-        public static IIssue CreateIssue(int issueTypeId,IIssuesEngine issuesEngine) 
+        public static IIssue GetIssueManager(int issueTypeId,IIssuesEngine issuesEngine) 
         {
             IIssue issueObj = null;
             //random Id values considerd
