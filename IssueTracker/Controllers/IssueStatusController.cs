@@ -72,5 +72,7 @@ namespace IssueTracker.Controllers
                 Message = "Deleted Succesfully"
             };
         }
+
+       
     }
 }

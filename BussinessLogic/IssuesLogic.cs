@@ -1,6 +1,5 @@
 ﻿using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
-using BussinessLogic.Logic;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;
@@ -25,11 +24,8 @@ namespace BussinessLogic
 
         public int CreateIssue(Issue issue)
         {
-            var issueItem = _issuesEngine.IssueExists();
-            issue.Order = issueItem == null ? 1 : issueItem.Order + 1;
-
+            issue.Order = _issuesEngine.GetMaxOrder() + 1;
             issue.CreatedDate = DateTime.Now;
-
             var issueManager = IssuesFactory.GetIssueManager(issue.IssueTypeId, _issuesEngine);
             var issueId = issueManager.Create(issue);
             return issueId;
@@ -70,9 +66,5 @@ namespace BussinessLogic
             return  _issuesEngine.DragDropIssueList(reOrderedIssues);
         }
 
-        public bool AddIssueDetails(IssueDetails issueDetails)
-        {
-            return _issuesEngine.AddIssueDetails(issueDetails);
-        }
     }
 }

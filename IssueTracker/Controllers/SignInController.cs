@@ -18,6 +18,7 @@ namespace IssueTracker.Controllers
     {
         private UserManager<IdentityUser> _userManager { get; }
         private SignInManager<IdentityUser> _signInManager { get; }
+
         private readonly AuthOptions _authOptions;
         public SignInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IOptions<AuthOptions> authOptionsAccessor)
         {
@@ -64,5 +65,8 @@ namespace IssueTracker.Controllers
                 expiration = token.ValidTo
             };
         }
+
+        
+        
     }
 }

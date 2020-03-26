@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -84,5 +83,6 @@ namespace IssueTracker.Controllers
                 Message = "Succesfully"
             };
         }
+
     }
 }

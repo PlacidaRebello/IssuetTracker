@@ -46,7 +46,9 @@ namespace DataAccess
                              Tags = Issue.Tags,
                              IssueStatusId = IssueStatus.IssueStatusId,
                              StatusName = IssueStatus.StatusName,
-                             Order = Issue.Order
+                             Order = Issue.Order,
+                             IssueTypeId=Issue.IssueTypeId,
+                             IssueDetails=Issue.IssueDetails
                          }).FirstOrDefault();
 
             return issue;
@@ -63,10 +65,10 @@ namespace DataAccess
         {
             return _context.Issues.Any(e => e.IssueId == id);
         }
-
-        public Issue IssueExists() 
+        
+        public int GetMaxOrder()
         {
-           return _context.Issues.OrderByDescending(i => i.Order).FirstOrDefault();
+            return _context.Issues.Max(i => i.Order);
         }
 
         public List<Issue> GetIssueList()
@@ -84,7 +86,9 @@ namespace DataAccess
                              Tags = Issue.Tags,
                              IssueStatusId = IssueStatus.IssueStatusId,
                              StatusName=IssueStatus.StatusName,
-                             Order=Issue.Order
+                             Order=Issue.Order,
+                             IssueTypeId=Issue.IssueTypeId,
+                             IssueDetails=Issue.IssueDetails
                          }).ToList();
 
             return issueList;
@@ -106,7 +110,9 @@ namespace DataAccess
                                  Tags = Issue.Tags,
                                  IssueStatusId = IssueStatus.IssueStatusId,
                                  StatusName = IssueStatus.StatusName,
-                                 Order = Issue.Order
+                                 Order = Issue.Order,
+                                 IssueTypeId=Issue.IssueTypeId,
+                                 IssueDetails=Issue.IssueDetails
                              }).ToList();
 
             return issueList;
@@ -117,12 +123,7 @@ namespace DataAccess
             _context.SaveChanges();
             return true;
         }
-
-        public bool AddIssueDetails(IssueDetails issueDetails)
-        {
-            _context.IssueDetails.Add(issueDetails);
-            _context.SaveChanges();
-            return true;
-        }
+          
+                
     }
 }

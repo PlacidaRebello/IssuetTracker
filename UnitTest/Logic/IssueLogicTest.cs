@@ -88,8 +88,8 @@ namespace UnitTest.Logic
         public void CreateIssue_IssueDoesNotExists_SetIssueOrderToOne_NewIssueCreatedSuccessfully()
         {            
             Issue issue = GetSampleIssue();
-            mockIssuesEngine.Setup(x => x.IssueExists())
-                .Returns((Issue)null);          
+            //mockIssuesEngine.Setup(x => x.IssueExists())
+            //    .Returns((Issue)null);          
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);           
 
