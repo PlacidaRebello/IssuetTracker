@@ -223,7 +223,7 @@ namespace UnitTest.Logic
                 //IssueId = 1,
                 Subject = "abc",
                 Description = "do it",
-                AssignedTo = "placi",
+                UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId=1,
                 CreatedBy = "jason"
@@ -238,7 +238,7 @@ namespace UnitTest.Logic
                 IssueId = issueId,
                 Subject = "abc",
                 Description = "do it",
-                AssignedTo = "placi",
+                UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId = issueStatusId,
                 CreatedBy = "jason",
