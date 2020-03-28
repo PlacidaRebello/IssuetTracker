@@ -14,5 +14,6 @@ namespace DataAccess.Interfaces
         List<Issue> GetIssueListByStatus(int issueStatus);
         bool DragDropIssueList(List<Issue> issues);
         int GetMaxOrder();
+        bool IssueExists();
     }
 }

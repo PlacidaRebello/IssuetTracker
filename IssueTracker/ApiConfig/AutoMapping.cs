@@ -13,15 +13,19 @@ namespace IssueTracker.ApiConfig
             CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source);
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x=>x.UserId,opt=>opt.MapFrom(p=>p.AssignedTo))
                 .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
 
             CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x=>x.UserId,opt=>opt.MapFrom(p=>p.AssignedTo))
                 .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
 
             //CreateMap<IssueDetails, GetIssueData>(MemberList.Source);
             CreateMap<Issue, GetIssueData>()
+                .ForMember(dest=>dest.AssignedTo,opt=>opt.MapFrom(src=>src.UserId))
+                .ForMember(dest=>dest.IssueDetailsId,opt=>opt.MapFrom(src=>src.IssueDetails.IssueDetailsId))
                 .ForMember(dest=>dest.Attachment,opt=>opt.MapFrom(src=>src.IssueDetails.Attachment))
                 .ForMember(dest=>dest.AcceptanceCriteria,x=>x.MapFrom(src=>src.IssueDetails.AcceptanceCriteria))
                 .ForMember(dest => dest.Browser, x => x.MapFrom(src => src.IssueDetails.Browser))

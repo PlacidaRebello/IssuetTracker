@@ -26,6 +26,10 @@ namespace DataAccess
                            where Issue.IssueId ==issue.IssueId
                            select Issue.Order
                          ).FirstOrDefault();
+            //Issue issue1 = (from Issue in _context.Issues
+            //                where Issue.IssueId == issue.IssueId
+            //                select Issue).FirstOrDefault();
+            //issue1 = issue;
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
@@ -68,7 +72,8 @@ namespace DataAccess
         
         public int GetMaxOrder()
         {
-            return _context.Issues.Max(i => i.Order);
+           int order = _context.Issues.Max(i => i.Order);                      
+           return order;
         }
 
         public List<Issue> GetIssueList()
@@ -123,7 +128,10 @@ namespace DataAccess
             _context.SaveChanges();
             return true;
         }
-          
-                
+
+        public bool IssueExists()
+        {
+            return _context.Issues.Any();
+        }
     }
 }
