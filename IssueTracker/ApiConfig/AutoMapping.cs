@@ -22,7 +22,6 @@ namespace IssueTracker.ApiConfig
                 .ForMember(x=>x.UserId,opt=>opt.MapFrom(p=>p.AssignedTo))
                 .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
 
-            //CreateMap<IssueDetails, GetIssueData>(MemberList.Source);
             CreateMap<Issue, GetIssueData>()
                 .ForMember(dest=>dest.AssignedTo,opt=>opt.MapFrom(src=>src.UserId))
                 .ForMember(dest=>dest.IssueDetailsId,opt=>opt.MapFrom(src=>src.IssueDetails.IssueDetailsId))

@@ -26,10 +26,7 @@ namespace DataAccess
                            where Issue.IssueId ==issue.IssueId
                            select Issue.Order
                          ).FirstOrDefault();
-            //Issue issue1 = (from Issue in _context.Issues
-            //                where Issue.IssueId == issue.IssueId
-            //                select Issue).FirstOrDefault();
-            //issue1 = issue;
+            
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
