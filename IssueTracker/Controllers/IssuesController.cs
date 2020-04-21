@@ -84,5 +84,12 @@ namespace IssueTracker.Controllers
             };
         }
 
+        [HttpGet]
+        [Route("Points")]
+        public int[] GetPoints() {
+            int[] a = { 20, 40, 40 };
+            return a;
+        }
+
     }
 }

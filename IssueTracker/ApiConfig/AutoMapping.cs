@@ -50,12 +50,14 @@ namespace IssueTracker.ApiConfig
             CreateMap<CreateSprintRequest, Sprint>(MemberList.Source);
             CreateMap<EditSprintRequest, Sprint>(MemberList.Source);
             CreateMap<Sprint, GetSprintData>();
+            CreateMap<Sprint, GetSprintsList>();
 
             CreateMap<SprintStatus, GetSprintStatusData>();
 
             CreateMap<CreateReleaseRequest, Release>(MemberList.Source);
             CreateMap<EditReleaseRequest, Release>(MemberList.Source);
             CreateMap<Release, GetReleaseData>();
+            CreateMap<Release, GetReleaseList>();
         }
     }
 }

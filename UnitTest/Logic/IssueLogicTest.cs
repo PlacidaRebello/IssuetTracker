@@ -1,4 +1,5 @@
 ﻿using BussinessLogic;
+using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -71,13 +72,19 @@ namespace UnitTest.Logic
             //    IssueStatusId=1,
             //    CreatedBy = "jason"
             //};
-
             Issue issue = GetSampleIssue();
-            mockIssuesEngine.Setup(x => x.CreateIssue(issue))
+
+            mockIssuesEngine.Setup(x => x.IssueExists())
+                .Returns(true);
+            mockIssuesEngine.Setup(x => x.GetMaxOrder())
                 .Returns(1);
+            issue.Order = 2;
+            
+            mockIssuesEngine.Setup(x => x.CreateIssue(issue))
+                .Returns(2);
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object,mockDragDropLogic.Object);
-            int expected = 1;
+            int expected = 2;
             var actual = issuesLogic.CreateIssue(issue);
 
             Assert.Equal(expected, actual);
@@ -88,8 +95,9 @@ namespace UnitTest.Logic
         public void CreateIssue_IssueDoesNotExists_SetIssueOrderToOne_NewIssueCreatedSuccessfully()
         {            
             Issue issue = GetSampleIssue();
-            //mockIssuesEngine.Setup(x => x.IssueExists())
-            //    .Returns((Issue)null);          
+            mockIssuesEngine.Setup(x => x.IssueExists())
+                .Returns(false);
+            issue.Order = 1;
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);           
 
@@ -226,7 +234,19 @@ namespace UnitTest.Logic
                 UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId=1,
-                CreatedBy = "jason"
+                CreatedBy = "jason",
+                Order=0,
+                IssueDetails= new IssueDetails{ 
+                    AcceptanceCriteria="abcd",
+                    Attachment="defghijklmno",
+                    UserId="abcd21234asd",
+                    Enviroment="c#",
+                    Browser="Chrome",
+                    StoryPoints=2,
+                    Epic=1,
+                    UAT=false,
+                    TimeTracking="none"
+                }
             };
             return issue;
         }

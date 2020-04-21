@@ -72,6 +72,15 @@ namespace SprintTracker.Controllers
         }
 
         [HttpGet]
+        [Route("SprintsList")]
+        public IEnumerable<GetSprintsList> GetListOfSprints() 
+        {
+            List<Sprint> Sprints = _sprintLogic.GetSprints();
+            List<GetSprintsList> list = _mapper.Map<List<Sprint>, List<GetSprintsList>>(Sprints);
+            return list;
+        }
+
+        [HttpGet]
         [Route("GetSprintStatus")]
         public IEnumerable<GetSprintStatusData> GetSprintStatusList()
         {
