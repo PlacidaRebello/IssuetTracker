@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -84,5 +83,13 @@ namespace IssueTracker.Controllers
                 Message = "Succesfully"
             };
         }
+
+        [HttpGet]
+        [Route("Points")]
+        public int[] GetPoints() {
+            int[] a = { 20, 40, 40 };
+            return a;
+        }
+
     }
 }

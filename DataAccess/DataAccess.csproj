@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200224181351_AddStatusIdAndNameColumn.Designer.cs" />
     <Compile Remove="Migrations\20200224191917_AddFkStatusId.cs" />
     <Compile Remove="Migrations\20200224191917_AddFkStatusId.Designer.cs" />
+    <Compile Remove="Migrations\20200325180603_UserIdAddedToDetails.cs" />
+    <Compile Remove="Migrations\20200325180603_UserIdAddedToDetails.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

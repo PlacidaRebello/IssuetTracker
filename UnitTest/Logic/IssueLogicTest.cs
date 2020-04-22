@@ -1,4 +1,5 @@
 ﻿using BussinessLogic;
+using BussinessLogic.Factory;
 using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -71,13 +72,19 @@ namespace UnitTest.Logic
             //    IssueStatusId=1,
             //    CreatedBy = "jason"
             //};
-
             Issue issue = GetSampleIssue();
-            mockIssuesEngine.Setup(x => x.CreateIssue(issue))
+
+            mockIssuesEngine.Setup(x => x.IssueExists())
+                .Returns(true);
+            mockIssuesEngine.Setup(x => x.GetMaxOrder())
                 .Returns(1);
+            issue.Order = 2;
+            
+            mockIssuesEngine.Setup(x => x.CreateIssue(issue))
+                .Returns(2);
 
             IssuesLogic issuesLogic = new IssuesLogic(mockIssuesEngine.Object,mockDragDropLogic.Object);
-            int expected = 1;
+            int expected = 2;
             var actual = issuesLogic.CreateIssue(issue);
 
             Assert.Equal(expected, actual);
@@ -89,7 +96,8 @@ namespace UnitTest.Logic
         {            
             Issue issue = GetSampleIssue();
             mockIssuesEngine.Setup(x => x.IssueExists())
-                .Returns((Issue)null);          
+                .Returns(false);
+            issue.Order = 1;
             mockIssuesEngine.Setup(x => x.CreateIssue(issue))
                 .Returns(1);           
 
@@ -223,10 +231,22 @@ namespace UnitTest.Logic
                 //IssueId = 1,
                 Subject = "abc",
                 Description = "do it",
-                AssignedTo = "placi",
+                UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId=1,
-                CreatedBy = "jason"
+                CreatedBy = "jason",
+                Order=0,
+                IssueDetails= new IssueDetails{ 
+                    AcceptanceCriteria="abcd",
+                    Attachment="defghijklmno",
+                    UserId="abcd21234asd",
+                    Enviroment="c#",
+                    Browser="Chrome",
+                    StoryPoints=2,
+                    Epic=1,
+                    UAT=false,
+                    TimeTracking="none"
+                }
             };
             return issue;
         }
@@ -238,7 +258,7 @@ namespace UnitTest.Logic
                 IssueId = issueId,
                 Subject = "abc",
                 Description = "do it",
-                AssignedTo = "placi",
+                UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId = issueStatusId,
                 CreatedBy = "jason",

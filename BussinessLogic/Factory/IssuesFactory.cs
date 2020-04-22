@@ -9,19 +9,19 @@ namespace BussinessLogic.Factory
 {
     public static class IssuesFactory
     {
-        public static IIssue CreateIssue(int issueTypeId,IIssuesEngine issuesEngine) 
+        public static IIssue GetIssueManager(int issueTypeId,IIssuesEngine issuesEngine) 
         {
             IIssue issueObj = null;
             //random Id values considerd
-            if (issueTypeId==1)
+            if (issueTypeId==3)
             {
                 issueObj = new Bug(issuesEngine);
             }
-            else if (issueTypeId == 2)
+            else if (issueTypeId == 4)
             {
                 issueObj = new Story(issuesEngine);
             }
-            else if (issueTypeId == 3)
+            else if (issueTypeId == 5)
             {
                 issueObj = new Tasks(issuesEngine);
             }

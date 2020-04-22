@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200325113845_UpdateUATToBool")]
+    partial class UpdateUATToBool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,9 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AssignedTo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -53,10 +58,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnName("AssignedTo")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("IssueId");
 
                     b.HasIndex("IssueStatusId");
@@ -64,8 +65,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("IssueTypeId");
 
                     b.HasIndex("SprintId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Issues");
                 });
@@ -95,6 +94,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("IssueId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Reporter")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("StoryPoints")
                         .HasColumnType("decimal(18,2)");
 
@@ -104,16 +106,10 @@ namespace DataAccess.Migrations
                     b.Property<bool>("UAT")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserId")
-                        .HasColumnName("Reporter")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("IssueDetailsId");
 
                     b.HasIndex("IssueId")
                         .IsUnique();
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("IssueDetails");
                 });
@@ -460,10 +456,6 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Models.Sprint", "Sprint")
                         .WithMany("Issues")
                         .HasForeignKey("SprintId");
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DataAccess.Models.IssueDetails", b =>
@@ -473,10 +465,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("DataAccess.Models.IssueDetails", "IssueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Release", b =>

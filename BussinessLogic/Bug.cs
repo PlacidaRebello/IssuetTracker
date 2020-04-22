@@ -19,11 +19,6 @@ namespace BussinessLogic
         public int Create(Issue issue)
         {
             int issueId = _issuesEngine.CreateIssue(issue);
-
-            IssueDetails issueDetails = issue.IssueDetails;
-            issueDetails.IssueId = issueId;
-
-            _issuesEngine.AddIssueDetails(issueDetails);
             return issueId;
         }
         

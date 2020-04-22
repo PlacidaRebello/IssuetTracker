@@ -70,5 +70,14 @@ namespace IssueTracker.Controllers
                 Message = "Release Deleted Succesfully"
             };
         }
+
+        [HttpGet]
+        [Route("ReleaseList")]
+        public IEnumerable<GetReleaseList> GetListOfReleases()
+        {
+            List<Release> release = _releaseLogic.GetReleaseList();
+            List<GetReleaseList> releaseList = _mapper.Map<List<Release>, List<GetReleaseList>>(release);
+            return releaseList;
+        }
     }
 }

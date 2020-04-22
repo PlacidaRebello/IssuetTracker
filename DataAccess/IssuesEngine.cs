@@ -26,6 +26,7 @@ namespace DataAccess
                            where Issue.IssueId ==issue.IssueId
                            select Issue.Order
                          ).FirstOrDefault();
+            
             _context.Issues.Update(issue);
             _context.SaveChanges();
             return true;
@@ -42,11 +43,13 @@ namespace DataAccess
                              IssueId = Issue.IssueId,
                              Subject = Issue.Subject,
                              Description = Issue.Description,
-                             AssignedTo = Issue.AssignedTo,
+                             UserId = Issue.UserId,
                              Tags = Issue.Tags,
                              IssueStatusId = IssueStatus.IssueStatusId,
                              StatusName = IssueStatus.StatusName,
-                             Order = Issue.Order
+                             Order = Issue.Order,
+                             IssueTypeId=Issue.IssueTypeId,
+                             IssueDetails=Issue.IssueDetails
                          }).FirstOrDefault();
 
             return issue;
@@ -63,10 +66,11 @@ namespace DataAccess
         {
             return _context.Issues.Any(e => e.IssueId == id);
         }
-
-        public Issue IssueExists() 
+        
+        public int GetMaxOrder()
         {
-           return _context.Issues.OrderByDescending(i => i.Order).FirstOrDefault();
+           int order = _context.Issues.Max(i => i.Order);                      
+           return order;
         }
 
         public List<Issue> GetIssueList()
@@ -80,11 +84,13 @@ namespace DataAccess
                              IssueId = Issue.IssueId,
                              Subject = Issue.Subject,
                              Description = Issue.Description,
-                             AssignedTo = Issue.AssignedTo,
+                             UserId = Issue.UserId,
                              Tags = Issue.Tags,
                              IssueStatusId = IssueStatus.IssueStatusId,
                              StatusName=IssueStatus.StatusName,
-                             Order=Issue.Order
+                             Order=Issue.Order,
+                             IssueTypeId=Issue.IssueTypeId,
+                             IssueDetails=Issue.IssueDetails
                          }).ToList();
 
             return issueList;
@@ -102,11 +108,13 @@ namespace DataAccess
                                  IssueId = Issue.IssueId,
                                  Subject = Issue.Subject,
                                  Description = Issue.Description,
-                                 AssignedTo = Issue.AssignedTo,
+                                 UserId = Issue.UserId,
                                  Tags = Issue.Tags,
                                  IssueStatusId = IssueStatus.IssueStatusId,
                                  StatusName = IssueStatus.StatusName,
-                                 Order = Issue.Order
+                                 Order = Issue.Order,
+                                 IssueTypeId=Issue.IssueTypeId,
+                                 IssueDetails=Issue.IssueDetails
                              }).ToList();
 
             return issueList;
@@ -118,11 +126,9 @@ namespace DataAccess
             return true;
         }
 
-        public bool AddIssueDetails(IssueDetails issueDetails)
+        public bool IssueExists()
         {
-            _context.IssueDetails.Add(issueDetails);
-            _context.SaveChanges();
-            return true;
+            return _context.Issues.Any();
         }
     }
 }
