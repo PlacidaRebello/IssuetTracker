@@ -235,7 +235,9 @@ namespace UnitTest.Logic
                 Tags = "to be done",
                 IssueStatusId=1,
                 CreatedBy = "jason",
+                IssueTypeId=3,
                 Order=0,
+                SprintId=1,
                 IssueDetails= new IssueDetails{ 
                     AcceptanceCriteria="abcd",
                     Attachment="defghijklmno",
@@ -262,8 +264,10 @@ namespace UnitTest.Logic
                 Tags = "to be done",
                 IssueStatusId = issueStatusId,
                 CreatedBy = "jason",
-                StatusName="TODO",
-                Order=issueId
+                StatusName = "TODO",
+                Order = issueId,
+                SprintId = 1,
+                IssueTypeId=3
             };
             return issue;
         }
