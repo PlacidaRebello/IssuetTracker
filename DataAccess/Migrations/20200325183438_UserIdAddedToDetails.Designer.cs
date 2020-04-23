@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200325183438_UserIdAddedToDetails")]
+    partial class UserIdAddedToDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,9 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AssignedTo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -44,7 +49,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int>("SprintId")
+                    b.Property<int?>("SprintId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
@@ -53,10 +58,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnName("AssignedTo")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("IssueId");
 
                     b.HasIndex("IssueStatusId");
@@ -64,8 +65,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("IssueTypeId");
 
                     b.HasIndex("SprintId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Issues");
                 });
@@ -208,7 +207,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReleaseId")
+                    b.Property<int?>("ReleaseId")
                         .HasColumnType("int");
 
                     b.Property<string>("SprintName")
@@ -459,13 +458,7 @@ namespace DataAccess.Migrations
 
                     b.HasOne("DataAccess.Models.Sprint", "Sprint")
                         .WithMany("Issues")
-                        .HasForeignKey("SprintId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("SprintId");
                 });
 
             modelBuilder.Entity("DataAccess.Models.IssueDetails", b =>
@@ -492,11 +485,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Sprint", b =>
                 {
-                    b.HasOne("DataAccess.Models.Release", "Release")
+                    b.HasOne("DataAccess.Models.Release", null)
                         .WithMany("Sprints")
-                        .HasForeignKey("ReleaseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ReleaseId");
 
                     b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
                         .WithMany("Sprint")

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace IssueTracker.Controllers
 {
@@ -17,11 +18,14 @@ namespace IssueTracker.Controllers
         private SignInManager<IdentityUser> _signInManager { get; }
         private readonly IRegisterLogic _registerLogic;
         private readonly IMapper _mapper;
-        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic)
+
+        private readonly IUsersLogic _usersLogic;
+        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic,IUsersLogic usersLogic)
         {
             _signInManager = signInManager;
             _mapper = mapper;
             _registerLogic = registerLogic;
+            _usersLogic = usersLogic;
         }
 
         [HttpPost]
@@ -36,6 +40,21 @@ namespace IssueTracker.Controllers
             }
 
             return new SuccessResponse { Message = result.Errors.FirstOrDefault()?.Description};
+        }
+
+        [HttpGet("Users")]
+        public List<GetUsersData> GetUsers()
+        {
+            var users = _usersLogic.GetIdentityUsers();
+            List<GetUsersData> usersList = new List<GetUsersData>();
+            foreach (var user in users)
+            {
+                var newUser = new GetUsersData();
+                newUser.Id = user.Id;
+                newUser.Username = user.UserName;
+                usersList.Add(newUser);
+            }
+            return usersList;
         }
     }
 }

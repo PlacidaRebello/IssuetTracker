@@ -14,10 +14,16 @@ namespace DataAccess.Models
         public DbSet<Sprint> Sprints { get; set; }
         public DbSet<SprintStatus> SprintStatuses { get; set; }
         public DbSet<Release> Release { get; set; }
+        public DbSet<IssueDetails> IssueDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Release>()
+                         .HasMany<Sprint>(s => s.Sprints)
+                         .WithOne(x=>x.Release)
+                         .HasForeignKey(r=>r.ReleaseId)
+                         .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

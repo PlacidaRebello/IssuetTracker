@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200328112828_FKUserIdAsAssignedTo")]
+    partial class FKUserIdAsAssignedTo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int>("SprintId")
+                    b.Property<int?>("SprintId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
@@ -208,7 +210,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReleaseId")
+                    b.Property<int?>("ReleaseId")
                         .HasColumnType("int");
 
                     b.Property<string>("SprintName")
@@ -459,9 +461,7 @@ namespace DataAccess.Migrations
 
                     b.HasOne("DataAccess.Models.Sprint", "Sprint")
                         .WithMany("Issues")
-                        .HasForeignKey("SprintId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SprintId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
@@ -492,11 +492,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Sprint", b =>
                 {
-                    b.HasOne("DataAccess.Models.Release", "Release")
+                    b.HasOne("DataAccess.Models.Release", null)
                         .WithMany("Sprints")
-                        .HasForeignKey("ReleaseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ReleaseId");
 
                     b.HasOne("DataAccess.Models.SprintStatus", "SprintStatus")
                         .WithMany("Sprint")

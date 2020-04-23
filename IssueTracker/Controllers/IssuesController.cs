@@ -53,6 +53,7 @@ namespace IssueTracker.Controllers
         {
             var newIssue = _mapper.Map<Issue>(issue);
             var issueId = _issuesLogic.CreateIssue(newIssue);
+
             return new SuccessResponse
             {
                 Id = issueId,
@@ -82,5 +83,13 @@ namespace IssueTracker.Controllers
                 Message = "Succesfully"
             };
         }
+
+        [HttpGet]
+        [Route("Points")]
+        public int[] GetPoints() {
+            int[] a = { 20, 40, 40 };
+            return a;
+        }
+
     }
 }

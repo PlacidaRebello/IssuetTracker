@@ -22,7 +22,7 @@ namespace IssueTracker.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GetReleaseData> GetReleaseList()
+        public IEnumerable<GetReleaseData> GetReleases()
         {
             List<Release> release = _releaseLogic.GetReleaseList();
             List<GetReleaseData> releaseList = _mapper.Map<List<Release>, List<GetReleaseData>>(release);
@@ -69,6 +69,15 @@ namespace IssueTracker.Controllers
                 Id = id,
                 Message = "Release Deleted Succesfully"
             };
+        }
+
+        [HttpGet]
+        [Route("ReleaseList")]
+        public IEnumerable<GetReleaseList> GetListOfReleases()
+        {
+            List<Release> release = _releaseLogic.GetReleaseList();
+            List<GetReleaseList> releaseList = _mapper.Map<List<Release>, List<GetReleaseList>>(release);
+            return releaseList;
         }
     }
 }

@@ -6,5 +6,6 @@ namespace ServiceModel.Dto
     {
         public int IssueId { get; set; }
         public string StatusName { get; set; }
+        public int IssueDetailsId { get; set; }
     }
 }

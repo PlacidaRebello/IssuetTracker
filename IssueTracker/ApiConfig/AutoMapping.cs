@@ -9,11 +9,33 @@ namespace IssueTracker.ApiConfig
     {
         public AutoMapping()
         {
+
+            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source)
+                .ForMember(x=>x.UserId,opt=>opt.MapFrom(y=>y.Reporter));
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.IssueStatus, opt => opt.Ignore());
+                .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x => x.UserId, opt => opt.MapFrom(p => p.AssignedTo))
+                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+                //.ForPath(x => x.IssueDetails.UserId, opt => opt.MapFrom(y => y.Reporter));
+
+            CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
-                .ForMember(x => x.IssueStatus, opt => opt.Ignore());
-            CreateMap<Issue, GetIssueData>();
+                .ForMember(x => x.IssueStatus, opt => opt.Ignore())
+                .ForMember(x=>x.UserId,opt=>opt.MapFrom(p=>p.AssignedTo))
+                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+
+            CreateMap<Issue, GetIssueData>()
+                .ForMember(dest=>dest.AssignedTo,opt=>opt.MapFrom(src=>src.UserId))
+                .ForMember(dest=>dest.IssueDetailsId,opt=>opt.MapFrom(src=>src.IssueDetails.IssueDetailsId))
+                .ForMember(dest=>dest.Attachment,opt=>opt.MapFrom(src=>src.IssueDetails.Attachment))
+                .ForMember(dest=>dest.AcceptanceCriteria,x=>x.MapFrom(src=>src.IssueDetails.AcceptanceCriteria))
+                .ForMember(dest => dest.Browser, x => x.MapFrom(src => src.IssueDetails.Browser))
+                .ForMember(dest => dest.Enviroment, x => x.MapFrom(src => src.IssueDetails.Enviroment))
+                .ForMember(dest => dest.Epic, x => x.MapFrom(src => src.IssueDetails.Epic))
+                .ForMember(dest => dest.UAT, x => x.MapFrom(src => src.IssueDetails.UAT))
+                .ForMember(dest => dest.StoryPoints, x => x.MapFrom(src => src.IssueDetails.StoryPoints))
+                .ForMember(dest => dest.TImeTracking, x => x.MapFrom(src => src.IssueDetails.TimeTracking))
+                .ForMember(dest => dest.Reporter, x => x.MapFrom(src => src.IssueDetails.UserId));
 
             CreateMap<CreateIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<EditIssueStatusRequest, IssueStatus>(MemberList.Source);
@@ -26,16 +48,18 @@ namespace IssueTracker.ApiConfig
             CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
                 .ForSourceMember(x => x.Password, opt => opt.DoNotValidate())
                 .ForSourceMember(x => x.ConfirmPassword, cp => cp.DoNotValidate());
-
+            
             CreateMap<CreateSprintRequest, Sprint>(MemberList.Source);
             CreateMap<EditSprintRequest, Sprint>(MemberList.Source);
             CreateMap<Sprint, GetSprintData>();
+            CreateMap<Sprint, GetSprintsList>();
 
             CreateMap<SprintStatus, GetSprintStatusData>();
 
             CreateMap<CreateReleaseRequest, Release>(MemberList.Source);
             CreateMap<EditReleaseRequest, Release>(MemberList.Source);
             CreateMap<Release, GetReleaseData>();
+            CreateMap<Release, GetReleaseList>();
         }
     }
 }

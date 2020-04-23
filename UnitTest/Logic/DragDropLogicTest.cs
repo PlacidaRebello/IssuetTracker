@@ -184,7 +184,7 @@ namespace UnitTest.Logic
                 IssueId = issueId,
                 Subject = "abc",
                 Description = "do it",
-                AssignedTo = "placi",
+                UserId = "placi",
                 Tags = "to be done",
                 IssueStatusId = issueStatusId,
                 CreatedBy = "jason",
