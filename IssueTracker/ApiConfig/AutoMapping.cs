@@ -10,11 +10,13 @@ namespace IssueTracker.ApiConfig
         public AutoMapping()
         {
 
-            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source);
+            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source)
+                .ForMember(x=>x.UserId,opt=>opt.MapFrom(y=>y.Reporter));
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore())
-                .ForMember(x=>x.UserId,opt=>opt.MapFrom(p=>p.AssignedTo))
+                .ForMember(x => x.UserId, opt => opt.MapFrom(p => p.AssignedTo))
                 .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+                //.ForPath(x => x.IssueDetails.UserId, opt => opt.MapFrom(y => y.Reporter));
 
             CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)

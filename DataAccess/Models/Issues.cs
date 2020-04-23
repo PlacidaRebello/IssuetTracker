@@ -17,7 +17,8 @@ namespace DataAccess.Models
         [NotMapped]
         public string StatusName { get; set; }
         public IssueStatus IssueStatus { get; set; }
-        public virtual Sprint Sprint { get; set; }
+        public int SprintId { get; set; }
+        public Sprint Sprint { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int Order { get; set; }

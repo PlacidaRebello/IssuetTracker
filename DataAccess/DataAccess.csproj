@@ -23,6 +23,10 @@
     <Compile Remove="Migrations\20200224191917_AddFkStatusId.Designer.cs" />
     <Compile Remove="Migrations\20200325180603_UserIdAddedToDetails.cs" />
     <Compile Remove="Migrations\20200325180603_UserIdAddedToDetails.Designer.cs" />
+    <Compile Remove="Migrations\20200422173224_FkSprintIdAddedToIssue.cs" />
+    <Compile Remove="Migrations\20200422173224_FkSprintIdAddedToIssue.Designer.cs" />
+    <Compile Remove="Migrations\20200422180637_FkSprintIdReleaseIDAddedToIssueNSprint.cs" />
+    <Compile Remove="Migrations\20200422180637_FkSprintIdReleaseIDAddedToIssueNSprint.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

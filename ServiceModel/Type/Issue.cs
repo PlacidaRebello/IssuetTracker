@@ -15,7 +15,8 @@ namespace ServiceModel.Type
         public int IssueStatusId { get; set; }
         public string CreatedBy { get; set; }   
         public int Order { get; set; }
-        public int IssueTypeId { get; set; }
+        public int IssueTypeId { get; set; }    
+        public int SprintId { get; set; }
         //details
         public string Attachment { get; set; }
         public string Reporter { get; set; }

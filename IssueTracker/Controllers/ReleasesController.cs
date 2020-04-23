@@ -22,7 +22,7 @@ namespace IssueTracker.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GetReleaseData> GetReleaseList()
+        public IEnumerable<GetReleaseData> GetReleases()
         {
             List<Release> release = _releaseLogic.GetReleaseList();
             List<GetReleaseData> releaseList = _mapper.Map<List<Release>, List<GetReleaseData>>(release);

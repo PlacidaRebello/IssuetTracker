@@ -40,7 +40,8 @@ namespace DataAccess
                               SprintPoints = Sprint.SprintPoints,
                               StartDate = Sprint.StartDate,
                               EndDate = Sprint.EndDate,
-                              SprintStatusId = Sprint.SprintStatusId
+                              SprintStatusId = Sprint.SprintStatusId,
+                              ReleaseId=Sprint.ReleaseId
                           }).FirstOrDefault();
             return sprint;
         }
@@ -58,7 +59,8 @@ namespace DataAccess
                                   StartDate = Sprint.StartDate,
                                   EndDate = Sprint.EndDate,
                                   SprintStatusId = Sprint.SprintStatusId,
-                                  SprintStatusName = SprintStatus.SprintStatusName
+                                  SprintStatusName = SprintStatus.SprintStatusName,
+                                  ReleaseId=Sprint.ReleaseId
                               }).ToList();
 
             return sprintList;

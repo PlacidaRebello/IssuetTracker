@@ -19,6 +19,11 @@ namespace DataAccess.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Release>()
+                         .HasMany<Sprint>(s => s.Sprints)
+                         .WithOne(x=>x.Release)
+                         .HasForeignKey(r=>r.ReleaseId)
+                         .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

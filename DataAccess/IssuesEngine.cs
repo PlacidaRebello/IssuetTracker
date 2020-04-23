@@ -49,7 +49,8 @@ namespace DataAccess
                              StatusName = IssueStatus.StatusName,
                              Order = Issue.Order,
                              IssueTypeId=Issue.IssueTypeId,
-                             IssueDetails=Issue.IssueDetails
+                             IssueDetails=Issue.IssueDetails,
+                             SprintId=Issue.SprintId
                          }).FirstOrDefault();
 
             return issue;
@@ -90,7 +91,8 @@ namespace DataAccess
                              StatusName=IssueStatus.StatusName,
                              Order=Issue.Order,
                              IssueTypeId=Issue.IssueTypeId,
-                             IssueDetails=Issue.IssueDetails
+                             IssueDetails=Issue.IssueDetails,
+                             SprintId=Issue.SprintId
                          }).ToList();
 
             return issueList;

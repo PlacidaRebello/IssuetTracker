@@ -19,5 +19,7 @@ namespace DataAccess.Models
         public SprintStatus SprintStatus { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int ReleaseId { get; set; }
+        public Release Release { get; set; }    
     }
 }
