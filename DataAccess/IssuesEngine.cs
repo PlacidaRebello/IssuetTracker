@@ -17,6 +17,13 @@ namespace DataAccess
         {
             _context.Issues.Add(issue);
             _context.SaveChanges();
+
+            IssuePriority priority = new IssuePriority();
+            priority.IssueOrder = issue.Order;
+            priority.IssueId = issue.IssueId;
+            _context.IssuePriority.Add(priority);
+            _context.SaveChanges();
+
             return issue.IssueId;
         }
 
@@ -116,7 +123,8 @@ namespace DataAccess
                                  StatusName = IssueStatus.StatusName,
                                  Order = Issue.Order,
                                  IssueTypeId=Issue.IssueTypeId,
-                                 IssueDetails=Issue.IssueDetails
+                                 IssueDetails=Issue.IssueDetails,
+                                 SprintId=Issue.SprintId
                              }).ToList();
 
             return issueList;
@@ -127,10 +135,11 @@ namespace DataAccess
             _context.SaveChanges();
             return true;
         }
-
         public bool IssueExists()
         {
             return _context.Issues.Any();
         }
+
+     
     }
 }

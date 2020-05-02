@@ -1,4 +1,4 @@
-﻿using ServiceModel.Type;
+using ServiceModel.Type;
 
 namespace ServiceModel.Dto
 {
