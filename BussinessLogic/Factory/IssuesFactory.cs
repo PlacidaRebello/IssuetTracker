@@ -1,33 +1,28 @@
 ﻿using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
-using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DataAccess.DataModels;
 
 namespace BussinessLogic.Factory
 {
     public static class IssuesFactory
     {
-        public static IIssue GetIssueManager(int issueTypeId,IIssuesEngine issuesEngine) 
+        public static IIssue GetIssueManager(int issueTypeId, IIssuesEngine issuesEngine)
         {
             IIssue issueObj = null;
-            //random Id values considerd
-            if (issueTypeId==3)
+            if (issueTypeId == (int)IssueType.Bug)
             {
                 issueObj = new Bug(issuesEngine);
             }
-            else if (issueTypeId == 4)
+            else if (issueTypeId == (int)IssueType.Story)
             {
                 issueObj = new Story(issuesEngine);
             }
-            else if (issueTypeId == 5)
+            else if (issueTypeId == (int)IssueType.Task)
             {
                 issueObj = new Tasks(issuesEngine);
             }
-            
-            return issueObj;          
 
+            return issueObj;
         }
     }
 }
