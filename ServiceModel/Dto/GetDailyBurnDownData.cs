@@ -8,7 +8,7 @@ namespace ServiceModel.Dto
     {
         public int DailyBurnDownId { get; set; }
         public int SprintId { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public decimal PointsCompleted { get; set; }
         public decimal PointsPending { get; set; }
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using AutoMapper;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
@@ -52,6 +54,10 @@ namespace IssueTracker.Controllers
         {
             List<DailyBurnDown> burnDown = _issuesPriorityLogic.GetDailyBurnDowns();
             List<GetDailyBurnDownData> data = _mapper.Map<List<DailyBurnDown>, List<GetDailyBurnDownData>>(burnDown);
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].Date = burnDown[i].Date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            }
             return data;
         }
     }
