@@ -12,6 +12,7 @@ namespace IssueTracker.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Obsolete]
     public class IssueTypesController : ControllerBase
     {
         private readonly IMapper _mapper;

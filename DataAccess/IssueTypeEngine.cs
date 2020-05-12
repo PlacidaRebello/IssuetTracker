@@ -1,5 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +35,13 @@ namespace DataAccess
 
         public List<IssueType> GetIssueTypeList()
         {
-            return _context.IssueType.ToList<IssueType>();
+            return Enum.GetValues(typeof(DataModels.IssueType))
+               .Cast<DataModels.IssueType>()
+               .Select(t => new IssueType
+               {
+                   IssueTypeId = (int)t,
+                   IssueTypeName = t.ToString()
+               }).ToList();
         }
 
         public bool IssueTypeExists(int id)

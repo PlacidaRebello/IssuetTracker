@@ -25,7 +25,6 @@ namespace DataAccess.Models
         public int IssueTypeId { get; set; }
         [NotMapped]
         public string IssueTypeName { get; set; }
-        public IssueType IssueType { get; set; }
         public IssueDetails IssueDetails { get; set; }
     }
 }

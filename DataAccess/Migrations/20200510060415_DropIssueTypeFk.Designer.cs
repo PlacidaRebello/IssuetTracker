@@ -4,44 +4,22 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200510060415_DropIssueTypeFk")]
+    partial class DropIssueTypeFk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DataAccess.Models.DailyBurnDown", b =>
-                {
-                    b.Property<int>("DailyBurnDownId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("PointsCompleted")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PointsPending")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SprintId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DailyBurnDownId");
-
-                    b.ToTable("DailyBurnDown");
-                });
 
             modelBuilder.Entity("DataAccess.Models.Issue", b =>
                 {
@@ -138,26 +116,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("IssueDetails");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.IssuePriority", b =>
-                {
-                    b.Property<int>("IssuePriorityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IssueId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IssueOrder")
-                        .HasColumnType("int");
-
-                    b.HasKey("IssuePriorityId");
-
-                    b.HasIndex("IssueId");
-
-                    b.ToTable("IssuePriority");
                 });
 
             modelBuilder.Entity("DataAccess.Models.IssueStatus", b =>
@@ -515,15 +473,6 @@ namespace DataAccess.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.IssuePriority", b =>
-                {
-                    b.HasOne("DataAccess.Models.Issue", "Issue")
-                        .WithMany()
-                        .HasForeignKey("IssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataAccess.Models.Release", b =>
