@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200501175350_AddingDailyBurnDownTable")]
+    partial class AddingDailyBurnDownTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +86,8 @@ namespace DataAccess.Migrations
                     b.HasKey("IssueId");
 
                     b.HasIndex("IssueStatusId");
+
+                    b.HasIndex("IssueTypeId");
 
                     b.HasIndex("SprintId");
 
@@ -490,6 +494,12 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Models.IssueStatus", "IssueStatus")
                         .WithMany()
                         .HasForeignKey("IssueStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.IssueType", "IssueType")
+                        .WithMany()
+                        .HasForeignKey("IssueTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -15,6 +15,8 @@ namespace DataAccess.Models
         public DbSet<SprintStatus> SprintStatuses { get; set; }
         public DbSet<Release> Release { get; set; }
         public DbSet<IssueDetails> IssueDetails { get; set; }
+        public DbSet<IssuePriority> IssuePriority { get; set; }
+        public DbSet<DailyBurnDown> DailyBurnDown { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
