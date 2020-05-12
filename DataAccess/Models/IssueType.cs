@@ -2,6 +2,7 @@
 
 namespace DataAccess.Models
 {
+    [Obsolete]
     public class IssueType
     {
         public int IssueTypeId { get; set; }

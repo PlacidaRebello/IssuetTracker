@@ -27,6 +27,6 @@ namespace ServiceModel.Type
         public decimal StoryPoints { get; set; }
         public int Epic { get; set; }
         public bool UAT { get; set; }
-        public string TImeTracking { get; set; }
+        public string TimeTracking { get; set; }
     }   
 }

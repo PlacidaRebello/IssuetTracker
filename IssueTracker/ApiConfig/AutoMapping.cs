@@ -34,16 +34,16 @@ namespace IssueTracker.ApiConfig
                 .ForMember(dest => dest.Epic, x => x.MapFrom(src => src.IssueDetails.Epic))
                 .ForMember(dest => dest.UAT, x => x.MapFrom(src => src.IssueDetails.UAT))
                 .ForMember(dest => dest.StoryPoints, x => x.MapFrom(src => src.IssueDetails.StoryPoints))
-                .ForMember(dest => dest.TImeTracking, x => x.MapFrom(src => src.IssueDetails.TimeTracking))
+                .ForMember(dest => dest.TimeTracking, x => x.MapFrom(src => src.IssueDetails.TimeTracking))
                 .ForMember(dest => dest.Reporter, x => x.MapFrom(src => src.IssueDetails.UserId));
 
             CreateMap<CreateIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<EditIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<IssueStatus, GetIssueStatusData>();
 
-            CreateMap<CreateIssueTypeRequest, IssueType>(MemberList.Source);
-            CreateMap<EditIssueTypeRequest, IssueType>(MemberList.Source);
-            CreateMap<IssueType, GetIssueTypeData>();
+            CreateMap<CreateIssueTypeRequest, DataAccess.Models.IssueType>(MemberList.Source);
+            CreateMap<EditIssueTypeRequest, DataAccess.Models.IssueType>(MemberList.Source);
+            CreateMap<DataAccess.Models.IssueType, GetIssueTypeData>();
 
             CreateMap<RegisterUserRequest, AppUser>(MemberList.Source)
                 .ForSourceMember(x => x.Password, opt => opt.DoNotValidate())
