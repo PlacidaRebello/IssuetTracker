@@ -9,20 +9,31 @@ namespace IssueTracker.ApiConfig
     {
         public AutoMapping()
         {
-
-            CreateMap<CreateIssueRequest, IssueDetails>(MemberList.Source)
-                .ForMember(x => x.UserId, opt => opt.MapFrom(y => y.Reporter));
             CreateMap<CreateIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore())
                 .ForMember(x => x.UserId, opt => opt.MapFrom(p => p.AssignedTo))
-                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
-            //.ForPath(x => x.IssueDetails.UserId, opt => opt.MapFrom(y => y.Reporter));
+                .ForPath(x => x.IssueDetails.UserId, opt => opt.MapFrom(p => p.Reporter))
+                .ForPath(x => x.IssueDetails.StoryPoints, opt => opt.MapFrom(p => p.StoryPoints))
+                .ForPath(x => x.IssueDetails.Attachment, opt => opt.MapFrom(s => s.Attachment))
+                .ForPath(x => x.IssueDetails.Enviroment, opt => opt.MapFrom(s => s.Enviroment))
+                .ForPath(x => x.IssueDetails.Browser, opt => opt.MapFrom(s => s.Browser))
+                .ForPath(x => x.IssueDetails.AcceptanceCriteria, opt => opt.MapFrom(s => s.AcceptanceCriteria))
+                .ForPath(x => x.IssueDetails.Epic, opt => opt.MapFrom(s => s.Epic))
+                .ForPath(x => x.IssueDetails.UAT, opt => opt.MapFrom(s => s.UAT))
+                .ForPath(x => x.IssueDetails.TimeTracking, opt => opt.MapFrom(s => s.TimeTracking));
 
-            CreateMap<EditIssueRequest, IssueDetails>(MemberList.Source);
             CreateMap<EditIssueRequest, Issue>(MemberList.Source)
                 .ForMember(x => x.IssueStatus, opt => opt.Ignore())
                 .ForMember(x => x.UserId, opt => opt.MapFrom(p => p.AssignedTo))
-                .ForMember(x => x.IssueDetails, opt => opt.MapFrom(s => s));
+                .ForPath(x => x.IssueDetails.UserId, opt => opt.MapFrom(p => p.Reporter))
+                .ForPath(x => x.IssueDetails.StoryPoints, opt => opt.MapFrom(p => p.StoryPoints))
+                .ForPath(x => x.IssueDetails.Attachment, opt => opt.MapFrom(s => s.Attachment))
+                .ForPath(x => x.IssueDetails.Enviroment, opt => opt.MapFrom(s => s.Enviroment))
+                .ForPath(x => x.IssueDetails.Browser, opt => opt.MapFrom(s => s.Browser))
+                .ForPath(x => x.IssueDetails.AcceptanceCriteria, opt => opt.MapFrom(s => s.AcceptanceCriteria))
+                .ForPath(x => x.IssueDetails.Epic, opt => opt.MapFrom(s => s.Epic))
+                .ForPath(x => x.IssueDetails.UAT, opt => opt.MapFrom(s => s.UAT))
+                .ForPath(x => x.IssueDetails.TimeTracking, opt => opt.MapFrom(s => s.TimeTracking));
 
             CreateMap<Issue, GetIssueData>()
                 .ForMember(dest => dest.AssignedTo, opt => opt.MapFrom(src => src.UserId))
