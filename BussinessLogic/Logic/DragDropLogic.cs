@@ -14,36 +14,39 @@ namespace BussinessLogic.Logic
         }
         public List<Issue> DropItem(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, Issue issue, List<Issue> issues)
         {
-            Issue prevIssue, NextIssue;
-            RemoveIssueFromOldIssueList(issue, ref issues);//existing issueList
+            RemoveIssueFromOldIssueList(issue, ref issues);
+            ReorderIssuesInNewList(previtem, prevItemId, nextItemId, currentItemIndex, ref issue, ref issues);
 
+            issues.Add(issue);
+            return issues;
+        }
+
+        private void ReorderIssuesInNewList(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, ref Issue issue, ref List<Issue> issues)
+        {
             if (CheckIfIssueIsInBottomHalfOfList(currentItemIndex, issues.Count))
             {
-                //issue Belongs to 2nd half of list
-                //change issueorder
-                ChangeIssueOrder(previtem, prevItemId, nextItemId, ref issue);
-                //change the remaining issues order
-                ReOrderSubsequentIssues(currentItemIndex, issue, ref issues);
+                DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
+                ReorderSubsequentIssues(currentItemIndex, issue, ref issues);
             }
             else
             {
-                //issue belongs to 1st half
-                //change issue order
-                if (previtem)
-                {
-                    prevIssue = _issuesEngine.GetIssue(prevItemId);
-                    issue.Order = prevIssue.Order;
-                }
-                else
-                {
-                    NextIssue = _issuesEngine.GetIssue(nextItemId);
-                    issue.Order = NextIssue.Order - 1;
-                }
-                //chnge remaining issue order
-                ReOrderPriorIssues(currentItemIndex, issue, ref issues);
+                ApplyNewOrderToIssue(previtem, prevItemId, nextItemId, ref issue);
+                ReorderPriorIssues(currentItemIndex, issue, ref issues);
             }
-            issues.Add(issue);
-            return issues;
+        }
+
+        private void ApplyNewOrderToIssue(bool previtem, int prevItemId, int nextItemId, ref Issue issue)
+        {
+            if (previtem)
+            {
+                var prevIssue = _issuesEngine.GetIssue(prevItemId);
+                issue.Order = prevIssue.Order;
+            }
+            else
+            {
+                var NextIssue = _issuesEngine.GetIssue(nextItemId);
+                issue.Order = NextIssue.Order - 1;
+            }
         }
 
         private static bool CheckIfIssueIsInBottomHalfOfList(int currentItemIndex, int count)
@@ -57,21 +60,20 @@ namespace BussinessLogic.Logic
             if (item != null)
                 issues.Remove(item);
         }
-        public void ChangeIssueOrder(bool previtem, int prevItemId, int nextItemId, ref Issue issue)
+        public void DetermineNewIssueOrder(bool previtem, int prevItemId, int nextItemId, ref Issue issue)
         {
-            Issue prevIssue, NextIssue;
             if (previtem)
             {
-                prevIssue = _issuesEngine.GetIssue(prevItemId);
+                var prevIssue = _issuesEngine.GetIssue(prevItemId);
                 issue.Order = prevIssue.Order + 1;
             }
             else
             {
-                NextIssue = _issuesEngine.GetIssue(nextItemId);
+                var NextIssue = _issuesEngine.GetIssue(nextItemId);
                 issue.Order = NextIssue.Order - 1;
             }
         }
-        public void ReOrderPriorIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
+        public void ReorderPriorIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
         {
             for (int i = currentItemIndex - 1; i >= 0; i--)
             {
@@ -85,7 +87,7 @@ namespace BussinessLogic.Logic
                 }
             }
         }
-        public void ReOrderSubsequentIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
+        public void ReorderSubsequentIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
         {
             for (int i = currentItemIndex; i < issues.Count; i++)
             {

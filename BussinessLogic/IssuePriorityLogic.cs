@@ -7,12 +7,10 @@ namespace BussinessLogic
 {
     public class IssuePriorityLogic : IIssuePriorityLogic
     {
-        private readonly IDragDropLogic _dragDropLogic;
         private readonly IIssuePriorityEngine _issuePriorityEngine;
 
-        public IssuePriorityLogic( IDragDropLogic dragDropLogic, IIssuePriorityEngine issuePriorityEngine)
+        public IssuePriorityLogic(IIssuePriorityEngine issuePriorityEngine)
         {
-            _dragDropLogic = dragDropLogic;
             _issuePriorityEngine = issuePriorityEngine;
         }
 
@@ -27,8 +25,8 @@ namespace BussinessLogic
         }
         public bool UpdateIssuePrirority(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueId)
         {
-            IssuePriority issue = _issuePriorityEngine.GetIssuePriorityById(issueId);
-            List<IssuePriority> issues = _issuePriorityEngine.GetIssueListByPriority();
+            var issue = _issuePriorityEngine.GetIssuePriorityById(issueId);
+            var issues = _issuePriorityEngine.GetIssueListByPriority();
 
             var item = issues.Find(x => x.IssueId == issue.IssueId);
             if (item != null)
