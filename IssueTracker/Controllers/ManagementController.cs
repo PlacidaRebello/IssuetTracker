@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using AutoMapper;
 using BussinessLogic.Interfaces;
-using DataAccess.Models;
+using ServiceModel.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
 

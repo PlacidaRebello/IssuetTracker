@@ -1,5 +1,5 @@
 ﻿using DataAccess.Interfaces;
-using DataAccess.Models;
+using ServiceModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

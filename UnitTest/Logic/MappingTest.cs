@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.DataModels;
-using DataAccess.Models;
+using ServiceModel.Models;
 using ServiceModel.Dto;
 using System;
 using Xunit;

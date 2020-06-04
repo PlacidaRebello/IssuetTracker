@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccess.Models
+namespace ServiceModel.Models
 {
     public class IssueDetails
     {
@@ -9,7 +8,7 @@ namespace DataAccess.Models
         public string Attachment { get; set; }
         [Column("Reporter")]
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public string User { get; set; }
         public string Enviroment { get; set; }
         public string Browser { get; set; }
         public string AcceptanceCriteria { get; set; }

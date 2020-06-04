@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ServiceModel.Models;
 
-namespace DataAccess.Models
+namespace ServiceModel.Models
 {
     public class DataContext : IdentityDbContext
     {

@@ -1,7 +1,5 @@
-﻿using DataAccess.Models;
-using System;
+﻿using ServiceModel.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DataAccess.Interfaces
 {

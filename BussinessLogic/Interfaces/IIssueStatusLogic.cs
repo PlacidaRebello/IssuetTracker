@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using ServiceModel.Models;
 using System.Collections.Generic;
 
 namespace BussinessLogic.Interfaces

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAccess.Models
+namespace ServiceModel.Models
 {
     public class SprintStatus
     {

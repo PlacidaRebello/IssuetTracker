@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BussinessLogic.Interfaces;
-using DataAccess.Models;
+using ServiceModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;

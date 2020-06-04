@@ -1,6 +1,6 @@
 ﻿using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
-using DataAccess.Models;
+using ServiceModel.Models;
 using System.Collections.Generic;
 
 namespace BussinessLogic.Logic

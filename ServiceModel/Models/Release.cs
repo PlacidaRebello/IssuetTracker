@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
-namespace DataAccess.Models
+namespace ServiceModel.Models
 {
     public class Release
     {

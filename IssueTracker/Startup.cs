@@ -1,5 +1,5 @@
 using AutoMapper;
-using DataAccess.Models;
+using ServiceModel.Models;
 using IssueTracker.ApiConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

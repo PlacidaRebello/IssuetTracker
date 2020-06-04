@@ -1,6 +1,6 @@
 ﻿using BussinessLogic.Logic;
 using DataAccess.Interfaces;
-using DataAccess.Models;
+using ServiceModel.Models;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;

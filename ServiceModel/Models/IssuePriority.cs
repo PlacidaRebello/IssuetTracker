@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models
+﻿namespace ServiceModel.Models
 {
     public class IssuePriority
     {

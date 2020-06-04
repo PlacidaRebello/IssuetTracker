@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.DataModels;
-using DataAccess.Models;
+using ServiceModel.Models;
 using ServiceModel.Dto;
 
 namespace IssueTracker.ApiConfig
@@ -52,9 +52,9 @@ namespace IssueTracker.ApiConfig
             CreateMap<EditIssueStatusRequest, IssueStatus>(MemberList.Source);
             CreateMap<IssueStatus, GetIssueStatusData>();
 
-            CreateMap<CreateIssueTypeRequest, DataAccess.Models.IssueType>(MemberList.Source);
-            CreateMap<EditIssueTypeRequest, DataAccess.Models.IssueType>(MemberList.Source);
-            CreateMap<DataAccess.Models.IssueType, GetIssueTypeData>();
+            CreateMap<CreateIssueTypeRequest, ServiceModel.Models.IssueType>(MemberList.Source);
+            CreateMap<EditIssueTypeRequest, ServiceModel.Models.IssueType>(MemberList.Source);
+            CreateMap<ServiceModel.Models.IssueType, GetIssueTypeData>();
 
             CreateMap<IssuesCountByType, GetIssueCountByType>();
             CreateMap<DailyBurnDown, GetDailyBurnDownData>();
