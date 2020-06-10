@@ -31,7 +31,7 @@ namespace BussinessLogic
             else
             {
                 issue.Order = 1;
-            }            
+            }
             issue.CreatedDate = DateTime.Now;
             var issueManager = IssuesFactory.GetIssueManager(issue.IssueTypeId, _issuesEngine);
             var issueId = issueManager.Create(issue);
@@ -62,17 +62,15 @@ namespace BussinessLogic
         {
             return _issuesEngine.GetIssueList();
         }
-       
-
+        
         public bool DragDropIssues(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueStatus, int issueId)
-        {           
-            Issue issue = _issuesEngine.GetIssue(issueId);
+        {
+            var issue = _issuesEngine.GetIssue(issueId);
             issue.IssueStatusId = issueStatus;
-            List<Issue> issues = _issuesEngine.GetIssueListByStatus(issueStatus);
+            var issues = _issuesEngine.GetIssueListByStatus(issueStatus);
 
-            List<Issue> reOrderedIssues = _dragDropLogic.DropItem(previtem,prevItemId,nextItemId,currentItemIndex,issue,issues);
-            return  _issuesEngine.DragDropIssueList(reOrderedIssues);
+            var reOrderedIssues = _dragDropLogic.DropItem(previtem, prevItemId, nextItemId, currentItemIndex, issue, issues);
+            return _issuesEngine.DragDropIssueList(reOrderedIssues);
         }
-               
     }
 }
