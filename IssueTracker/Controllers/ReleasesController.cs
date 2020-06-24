@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
@@ -15,10 +16,12 @@ namespace IssueTracker.Controllers
     {
         private readonly IReleaseLogic _releaseLogic;
         private readonly IMapper _mapper;
-        public ReleasesController(IReleaseLogic releaseLogic, IMapper mapper)
+        private readonly IValidator<CreateReleaseRequest> _validator;
+        public ReleasesController(IReleaseLogic releaseLogic, IMapper mapper, IValidator<CreateReleaseRequest> validator)
         {
             _releaseLogic = releaseLogic;
             _mapper = mapper;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -51,6 +54,18 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public SuccessResponse PostRelease(CreateReleaseRequest release)
         {
+            var result = _validator.Validate(release);
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message =failure.PropertyName + " failed validation."+failure.ErrorMessage
+                    };
+                }
+            }    
+
             var newRelease = _mapper.Map<Release>(release);
             var releaseId = _releaseLogic.CreateRelease(newRelease);
             return new SuccessResponse
@@ -58,6 +73,7 @@ namespace IssueTracker.Controllers
                 Id = releaseId,
                 Message = "Release Created Successfully"
             };
+            
         }
 
         [HttpDelete("{id}")]

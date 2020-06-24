@@ -3,7 +3,11 @@ using BussinessLogic.Interfaces;
 using BussinessLogic.Logic;
 using DataAccess;
 using DataAccess.Interfaces;
+using FluentValidation;
+using IssueTracker.Validators;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceModel.Dto;
+using ServiceModel.Type;
 
 namespace IssueTracker.ApiConfig
 {
@@ -34,6 +38,8 @@ namespace IssueTracker.ApiConfig
 
             services.AddTransient<IReleaseLogic, ReleaseLogic>();
             services.AddTransient<IReleaseEngine, ReleaseEngine>();
+
+            services.AddSingleton<IValidator<CreateReleaseRequest>,ReleaseValidator>();
         }
     }
 }
