@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
@@ -15,10 +16,14 @@ namespace SprintTracker.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISprintLogic _sprintLogic;
-        public SprintsController(IMapper mapper, ISprintLogic sprintLogic)
+        private readonly IValidator<CreateSprintRequest> _createValidator;
+        private readonly IValidator<EditSprintRequest> _editValidator;
+        public SprintsController(IMapper mapper, ISprintLogic sprintLogic, IValidator<CreateSprintRequest> createValidator, IValidator<EditSprintRequest> editValidator)
         {
             _mapper = mapper;
             _sprintLogic = sprintLogic;
+            _createValidator = createValidator;
+            _editValidator = editValidator;
         }
 
         [HttpGet]
@@ -40,6 +45,17 @@ namespace SprintTracker.Controllers
         [HttpPut]
         public SuccessResponse PutSprint(EditSprintRequest sprint)
         {
+            var result = _editValidator.Validate(sprint,ruleSet:"*");
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newSprint = _mapper.Map<Sprint>(sprint);
             _sprintLogic.EditSprint(newSprint);
             return new SuccessResponse
@@ -51,6 +67,17 @@ namespace SprintTracker.Controllers
         [HttpPost]
         public SuccessResponse PostSprint(CreateSprintRequest sprint)
         {
+            var result = _createValidator.Validate(sprint,ruleSet:"*");
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newSprint = _mapper.Map<Sprint>(sprint);
             var SprintId = _sprintLogic.CreateSprint(newSprint);
             return new SuccessResponse
