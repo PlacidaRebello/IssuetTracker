@@ -7,6 +7,7 @@ using ServiceModel.Dto;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using FluentValidation;
 
 namespace IssueTracker.Controllers
 {
@@ -18,19 +19,32 @@ namespace IssueTracker.Controllers
         private SignInManager<IdentityUser> _signInManager { get; }
         private readonly IRegisterLogic _registerLogic;
         private readonly IMapper _mapper;
+        private readonly IValidator<RegisterUserRequest> _createValidator;
 
         private readonly IUsersLogic _usersLogic;
-        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic,IUsersLogic usersLogic)
+        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic,IUsersLogic usersLogic, IValidator<RegisterUserRequest> createValidator)
         {
             _signInManager = signInManager;
             _mapper = mapper;
             _registerLogic = registerLogic;
             _usersLogic = usersLogic;
+            _createValidator = createValidator;
         }
 
         [HttpPost]
         public async Task<SuccessResponse> CreateUserAsync(RegisterUserRequest userRequest)
         {
+            var res = _createValidator.Validate(userRequest, ruleSet: "Required");
+            if (!res.IsValid)
+            {
+                foreach (var failure in res.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newUser = _mapper.Map<AppUser>(userRequest);
             var result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
             if (result.Succeeded)

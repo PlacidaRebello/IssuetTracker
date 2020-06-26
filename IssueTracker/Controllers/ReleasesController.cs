@@ -16,12 +16,14 @@ namespace IssueTracker.Controllers
     {
         private readonly IReleaseLogic _releaseLogic;
         private readonly IMapper _mapper;
-        private readonly IValidator<CreateReleaseRequest> _validator;
-        public ReleasesController(IReleaseLogic releaseLogic, IMapper mapper, IValidator<CreateReleaseRequest> validator)
+        private readonly IValidator<CreateReleaseRequest> _createValidator;
+        private readonly IValidator<EditReleaseRequest> _editValidator;
+        public ReleasesController(IReleaseLogic releaseLogic, IMapper mapper, IValidator<CreateReleaseRequest> createValidator, IValidator<EditReleaseRequest> editValidator)
         {
             _releaseLogic = releaseLogic;
             _mapper = mapper;
-            _validator = validator;
+            _createValidator = createValidator;
+            _editValidator = editValidator;
         }
 
         [HttpGet]
@@ -43,6 +45,17 @@ namespace IssueTracker.Controllers
         [HttpPut]
         public SuccessResponse PutRelease(EditReleaseRequest release)
         {
+            var result = _editValidator.Validate(release, ruleSet: "*");
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newRelease = _mapper.Map<Release>(release);
             _releaseLogic.EditRelease(newRelease);
             return new SuccessResponse
@@ -54,7 +67,7 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public SuccessResponse PostRelease(CreateReleaseRequest release)
         {
-            var result = _validator.Validate(release);
+            var result = _createValidator.Validate(release, ruleSet: "Required");
             if (!result.IsValid)
             {
                 foreach (var failure in result.Errors)

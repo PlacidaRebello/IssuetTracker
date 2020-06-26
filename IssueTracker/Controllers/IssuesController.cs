@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BussinessLogic.Interfaces;
 using DataAccess.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
@@ -15,10 +16,14 @@ namespace IssueTracker.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IIssuesLogic _issuesLogic;
-        public IssuesController(IMapper mapper, IIssuesLogic issuesLogic)
+        private readonly IValidator<CreateIssueRequest> _createValidator;
+        private readonly IValidator<EditIssueRequest> _editValidator;
+        public IssuesController(IMapper mapper, IIssuesLogic issuesLogic, IValidator<CreateIssueRequest> createValidator, IValidator<EditIssueRequest> editValidator)
         {
             _mapper = mapper;
             _issuesLogic = issuesLogic;
+            _createValidator = createValidator;
+            _editValidator = editValidator;
         }
 
         [HttpGet]
@@ -40,6 +45,17 @@ namespace IssueTracker.Controllers
         [HttpPut]
         public SuccessResponse PutIssue(EditIssueRequest issue)
         {
+            var result = _editValidator.Validate(issue, ruleSet: "*");
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newIssue = _mapper.Map<Issue>(issue);
             _issuesLogic.EditIssue(newIssue);
             return new SuccessResponse
@@ -51,6 +67,17 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public SuccessResponse PostIssue(CreateIssueRequest issue)
         {
+            var result = _createValidator.Validate(issue, ruleSet: "Required");
+            if (!result.IsValid)
+            {
+                foreach (var failure in result.Errors)
+                {
+                    return new SuccessResponse
+                    {
+                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
+                    };
+                }
+            }
             var newIssue = _mapper.Map<Issue>(issue);
             var issueId = _issuesLogic.CreateIssue(newIssue);
 
@@ -82,14 +109,7 @@ namespace IssueTracker.Controllers
             {
                 Message = "Succesfully"
             };
-        }
-
-        //[HttpGet]
-        //[Route("Points")]
-        //public int[] GetPoints() {
-        //    int[] a = { 20, 40, 40 };
-        //    return a;
-        //}
+        }        
 
     }
 }

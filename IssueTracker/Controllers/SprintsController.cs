@@ -67,7 +67,7 @@ namespace SprintTracker.Controllers
         [HttpPost]
         public SuccessResponse PostSprint(CreateSprintRequest sprint)
         {
-            var result = _createValidator.Validate(sprint,ruleSet:"*");
+            var result = _createValidator.Validate(sprint,ruleSet:"Required");
             if (!result.IsValid)
             {
                 foreach (var failure in result.Errors)
