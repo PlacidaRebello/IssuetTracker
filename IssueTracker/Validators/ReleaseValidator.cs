@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
-using ServiceModel.Dto;
+﻿using FluentValidation;
+using ServiceModel.Type;
 
 namespace IssueTracker.Validators
 {
-    public class ReleaseValidator:AbstractValidator<CreateReleaseRequest>
+    public class ReleaseValidator<T> : AbstractValidator<T> where T : Release
     {
         public ReleaseValidator()
         {
-            RuleFor(release=>release.ReleaseName).NotEmpty();
-            RuleFor(release => release.SprintStatusId).NotEmpty();
-
+            RuleSet("Required", () =>
+            {
+                RuleFor(release => release.ReleaseName).NotEmpty().MaximumLength(20);
+                RuleFor(release => release.SprintStatusId).NotEmpty().NotEqual(-1);
+                RuleFor(x => x.StartDate).NotEmpty().LessThan(x => x.EndDate);
+                RuleFor(x => x.EndDate).NotEmpty().GreaterThan(x => x.StartDate);
+            });
         }
     }
 }

@@ -39,7 +39,14 @@ namespace IssueTracker.ApiConfig
             services.AddTransient<IReleaseLogic, ReleaseLogic>();
             services.AddTransient<IReleaseEngine, ReleaseEngine>();
 
-            services.AddSingleton<IValidator<CreateReleaseRequest>,ReleaseValidator>();
+            services.AddSingleton<IValidator<CreateReleaseRequest>,CreateReleaseRequestValidator>();
+            services.AddSingleton<IValidator<EditReleaseRequest>, EditReleaseRequestValidator>();
+            services.AddSingleton<IValidator<CreateSprintRequest>, CreateSprintRequestValidator>();
+            services.AddSingleton<IValidator<EditSprintRequest>, EditSprintRequestValidator>();
+            services.AddSingleton<IValidator<CreateIssueRequest>, CreateIssueRequestValidator>();
+            services.AddSingleton<IValidator<EditIssueRequest>, EditIssueRequestValidator>();
+            services.AddSingleton<IValidator<CreateSignInUserRequest>, CreateSignInUserRequestValidator>();
+            services.AddSingleton<IValidator<RegisterUserRequest>, RegisterUserRequestValidator>();
         }
     }
 }

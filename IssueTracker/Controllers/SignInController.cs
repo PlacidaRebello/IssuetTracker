@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -18,18 +19,28 @@ namespace IssueTracker.Controllers
     {
         private UserManager<IdentityUser> _userManager { get; }
         private SignInManager<IdentityUser> _signInManager { get; }
-
         private readonly AuthOptions _authOptions;
-        public SignInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IOptions<AuthOptions> authOptionsAccessor)
+        private readonly IValidator<CreateSignInUserRequest> _createValidator;
+        public SignInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
+            IOptions<AuthOptions> authOptionsAccessor, IValidator<CreateSignInUserRequest> createValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authOptions = authOptionsAccessor.Value;
+            _createValidator = createValidator;
         }
 
         [HttpPost]
         public async Task<IActionResult> SignIn(CreateSignInUserRequest userRequest)
         {
+            //var res = _createValidator.Validate(userRequest, ruleSet: "Required");
+            //if (!res.IsValid)
+            //{
+            //    foreach (var failure in res.Errors)
+            //    {
+            //        return failure.ErrorMessage;
+            //    }
+            //}
             var user = await _userManager.FindByNameAsync(userRequest.Username);
             if (user == null)
             {
