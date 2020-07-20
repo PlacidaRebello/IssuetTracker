@@ -1,15 +1,17 @@
-﻿using FluentValidation;
+﻿using BussinessLogic.Interfaces;
+using DataAccess.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ServiceModel.Dto;
-using ServiceModel.Type;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace IssueTracker.Controllers
 {
@@ -17,67 +19,57 @@ namespace IssueTracker.Controllers
     [ApiController]
     public class SignInController : ControllerBase
     {
-        private UserManager<IdentityUser> _userManager { get; }
-        private SignInManager<IdentityUser> _signInManager { get; }
-        private readonly AuthOptions _authOptions;
-        private readonly IValidator<CreateSignInUserRequest> _createValidator;
-        public SignInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
-            IOptions<AuthOptions> authOptionsAccessor, IValidator<CreateSignInUserRequest> createValidator)
+
+        public readonly UserManager<AppUser> userManager;
+        public readonly RoleManager<IdentityRole> roleManager;
+        public readonly IConfiguration _configuration;
+        public SignInController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _authOptions = authOptionsAccessor.Value;
-            _createValidator = createValidator;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            _configuration = configuration;
         }
 
         [HttpPost]
         public async Task<IActionResult> SignIn(CreateSignInUserRequest userRequest)
         {
-            //var res = _createValidator.Validate(userRequest, ruleSet: "Required");
-            //if (!res.IsValid)
-            //{
-            //    foreach (var failure in res.Errors)
-            //    {
-            //        return failure.ErrorMessage;
-            //    }
-            //}
-            var user = await _userManager.FindByNameAsync(userRequest.Username);
-            if (user == null)
+            var user = await userManager.FindByNameAsync(userRequest.Username);
+            if (user != null && await userManager.CheckPasswordAsync(user, userRequest.Password))
             {
-                return Unauthorized();
-            }
-            var result = await _signInManager.PasswordSignInAsync(user, userRequest.Password, false, false);
-
-            if (result.Succeeded)
-            {
-                return Ok(CreateToken(user.UserName));
+                var userRoles = await userManager.GetRolesAsync(user);
+                return Ok(createToken(user, userRoles));
             }
             return Unauthorized();
         }
 
-        private object CreateToken(string userName)
+        private object createToken(AppUser user, IList<string> userRoles)
         {
-            var authClaims = new[]
+            var authClaims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(ClaimTypes.Name, user.UserName),
+                //new Claim(ClaimTypes.Role,userRoles.FirstOrDefault()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
-                issuer: _authOptions.Issuer,
-                audience: _authOptions.Audience,
-                expires: DateTime.Now.AddHours(_authOptions.ExpiresInMinutes),
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddMinutes(120),
                 claims: authClaims,
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authOptions.SecureKey)),
-                    SecurityAlgorithms.HmacSha256Signature)
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                 );
             return new
             {
                 token = $"{new JwtSecurityTokenHandler().WriteToken(token)}",
                 expiration = token.ValidTo
             };
+
         }
 
-        
-        
     }
 }

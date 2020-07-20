@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DataAccess.DataModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +12,7 @@ namespace DataAccess.Models
         public string Description { get; set; }
         [Column("AssignedTo")]
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public AppUser User { get; set; }
         public string Tags { get; set; }
         public int IssueStatusId { get; set; }
         [NotMapped]

@@ -3,28 +3,30 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ServiceModel.Type;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace IssueTracker.ApiConfig
 {
     public static class AuthenticationExtension
     {
-        public static void AddCustomAuthentication(this IServiceCollection services, AuthOptions authOptions)
+        public static void AddCustomAuthentication(this IServiceCollection services, AuthOptions authOptions, IConfiguration configuration)
         {
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
-                    RequireExpirationTime = true,
-                    ValidIssuer = authOptions.Issuer,
-                    ValidAudience = authOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
+                    ValidAudience = configuration["JWT:ValidAudience"],
+                    ValidIssuer = configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
                 };
             });
         }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200501175350_AddingDailyBurnDownTable")]
-    partial class AddingDailyBurnDownTable
+    [Migration("20200708173649_UserRoles")]
+    partial class UserRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,8 +86,6 @@ namespace DataAccess.Migrations
                     b.HasKey("IssueId");
 
                     b.HasIndex("IssueStatusId");
-
-                    b.HasIndex("IssueTypeId");
 
                     b.HasIndex("SprintId");
 
@@ -494,12 +492,6 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Models.IssueStatus", "IssueStatus")
                         .WithMany()
                         .HasForeignKey("IssueStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Models.IssueType", "IssueType")
-                        .WithMany()
-                        .HasForeignKey("IssueTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
