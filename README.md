@@ -46,7 +46,8 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [JQuery](https://jquery.com)
 * Visual Studio 2019
-* Asp Net Core,Asp Net Standard
+* Dot Net Core 3.1
+* Dot Net Standard 2.1
 * AutoMapper
 * Fluent Validation
 * Swagger
