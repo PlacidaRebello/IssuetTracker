@@ -1,6 +1,6 @@
 # IssueTracker
 
-][![Build Status](https://dev.azure.com/placidarebello12/placidarebello12/_apis/build/status/PlacidaRebello.IssuetTracker?branchName=master)](https://dev.azure.com/placidarebello12/placidarebello12/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/placidarebello12/placidarebello12/_apis/build/status/PlacidaRebello.IssuetTracker?branchName=master)](https://dev.azure.com/placidarebello12/placidarebello12/_build/latest?definitionId=1&branchName=master)
 <a href="https://vsrm.dev.azure.com/placidarebello12/_apis/public/Release/badge/899b05e3-26fd-45ea-83d7-831236ec57a4/1/1"><img src="https://vsrm.dev.azure.com/placidarebello12/_apis/public/Release/badge/899b05e3-26fd-45ea-83d7-831236ec57a4/1/1" /></a>
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fdevissuetracker.azurewebsites.net%2Fswagger%2Findex.html)
 ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/placidarebello12/placidarebello12/1)
