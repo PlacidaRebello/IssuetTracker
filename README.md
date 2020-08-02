@@ -44,16 +44,20 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 
 ### Built With
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [JQuery](https://jquery.com)
-* Visual Studio 2019
-* Dot Net Core 3.1
-* Dot Net Standard 2.1
+* .Net Core 3.1
+* .Net Standard 2.1
+* Cloud Native (Azure)
+* Azure DevOps Pipelines CI/CD
 * AutoMapper
 * Fluent Validation
 * Swagger
-* Entity Framework Core Code First
-* Jwt Authentication
-* Asp Net Identity
+* NSwag
+* Entity Framework Core (Code First)
+* Jwt Token Authentication
+* ASP.NET Identity
+* XUnit, Moq, FluentAssertions
+* Visual Studio 2019
+* [JQuery](https://jquery.com)
  
 
 <!-- GETTING STARTED -->
