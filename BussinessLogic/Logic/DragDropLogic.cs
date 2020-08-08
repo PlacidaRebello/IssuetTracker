@@ -25,27 +25,15 @@ namespace BussinessLogic.Logic
         {
             if (CheckIfIssueIsInBottomHalfOfList(currentItemIndex, issues.Count))
             {
-                DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
-                ReorderSubsequentIssues(currentItemIndex, issue, ref issues);
+                var obj = new DragDropContext(new DropItemToBottom(_issuesEngine));
+                obj.DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
+                obj.ReorderIssues(currentItemIndex, ref issue, ref issues);
             }
             else
             {
-                ApplyNewOrderToIssue(previtem, prevItemId, nextItemId, ref issue);
-                ReorderPriorIssues(currentItemIndex, issue, ref issues);
-            }
-        }
-
-        private void ApplyNewOrderToIssue(bool previtem, int prevItemId, int nextItemId, ref Issue issue)
-        {
-            if (previtem)
-            {
-                var prevIssue = _issuesEngine.GetIssue(prevItemId);
-                issue.Order = prevIssue.Order;
-            }
-            else
-            {
-                var NextIssue = _issuesEngine.GetIssue(nextItemId);
-                issue.Order = NextIssue.Order - 1;
+                var obj = new DragDropContext(new DropItemToTop(_issuesEngine));
+                obj.DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
+                obj.ReorderIssues(currentItemIndex, ref issue, ref issues);
             }
         }
 
@@ -54,52 +42,11 @@ namespace BussinessLogic.Logic
             return currentItemIndex >= decimal.Divide(count, 2);
         }
 
-        public void RemoveIssueFromOldIssueList(Issue issue, ref List<Issue> issues)
+        private static void RemoveIssueFromOldIssueList(Issue issue, ref List<Issue> issues)
         {
             var item = issues.Find(x => x.IssueId == issue.IssueId);
             if (item != null)
                 issues.Remove(item);
-        }
-        public void DetermineNewIssueOrder(bool previtem, int prevItemId, int nextItemId, ref Issue issue)
-        {
-            if (previtem)
-            {
-                var prevIssue = _issuesEngine.GetIssue(prevItemId);
-                issue.Order = prevIssue.Order + 1;
-            }
-            else
-            {
-                var NextIssue = _issuesEngine.GetIssue(nextItemId);
-                issue.Order = NextIssue.Order - 1;
-            }
-        }
-        public void ReorderPriorIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
-        {
-            for (int i = currentItemIndex - 1; i >= 0; i--)
-            {
-                if (issues[i].Order >= issue.Order)
-                {
-                    issues[i].Order = issue.Order - 1;
-                }
-                if (issues[i].Order >= issues[i + 1].Order)
-                {
-                    issues[i].Order = issues[i + 1].Order - 1;
-                }
-            }
-        }
-        public void ReorderSubsequentIssues(int currentItemIndex, Issue issue, ref List<Issue> issues)
-        {
-            for (int i = currentItemIndex; i < issues.Count; i++)
-            {
-                if (issues[i].Order <= issue.Order)
-                {
-                    issues[i].Order = issue.Order + 1;
-                }
-                else if (i > 0 && issues[i].Order <= issues[i - 1].Order)
-                {
-                    issues[i].Order = issues[i - 1].Order + 1;
-                }
-            }
         }
     }
 }
