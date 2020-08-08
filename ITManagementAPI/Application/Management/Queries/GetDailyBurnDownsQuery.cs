@@ -26,7 +26,5 @@ namespace ITManagementAPI.Application.Management.Queries
            
             return await Task.FromResult(viewModel);
         }
-
-        
     }
 }

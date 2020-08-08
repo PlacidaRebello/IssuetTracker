@@ -16,17 +16,17 @@ namespace ITManagementAPI.Infrastructure.Persistence
         }
         public async Task<List<DailyBurnDown>> GetDataForBurnDownChart()
         {
-            var d = (from DailyBurnDown in _context.DailyBurnDown
-                     join Sprints in _context.Sprints
-                     on DailyBurnDown.SprintId equals Sprints.SprintId
-                     where DateTime.Now >= Sprints.StartDate && DateTime.Now <= Sprints.EndDate
-                     orderby DailyBurnDown.Date ascending
+            var d = (from dailyBurnDown in _context.DailyBurnDown
+                     join sprints in _context.Sprints
+                     on dailyBurnDown.SprintId equals sprints.SprintId
+                     where DateTime.Now >= sprints.StartDate && DateTime.Now <= sprints.EndDate
+                     orderby dailyBurnDown.Date ascending
                      select new DailyBurnDown
                      {
-                         SprintId = Sprints.SprintId,
-                         Date = DailyBurnDown.Date,
-                         PointsCompleted = DailyBurnDown.PointsCompleted,
-                         PointsPending = DailyBurnDown.PointsPending
+                         SprintId = sprints.SprintId,
+                         Date = dailyBurnDown.Date,
+                         PointsCompleted = dailyBurnDown.PointsCompleted,
+                         PointsPending = dailyBurnDown.PointsPending
                      }).ToListAsync();
             return await d;
         }
@@ -103,7 +103,7 @@ namespace ITManagementAPI.Infrastructure.Persistence
             return await issueList;
         }
 
-        public async Task<bool> UpdateIssuePriorities(List<IssuePriority> issues)
+        public async Task<bool> UpdateIssuePriorities(IEnumerable<IssuePriority> issues)
         {
             _context.IssuePriority.UpdateRange(issues);
             await _context.SaveChangesAsync();

@@ -22,7 +22,7 @@ namespace ITManagementAPI.Application.Management.Queries
         //details
         public string Attachment { get; set; }
         public string Reporter { get; set; }
-        public string Enviroment { get; set; }
+        public string Environment { get; set; }
         public string Browser { get; set; }
         public string AcceptanceCriteria { get; set; }
         [Column(TypeName = "decimal(18,2)")]
@@ -39,7 +39,7 @@ namespace ITManagementAPI.Application.Management.Queries
                 .ForMember(dest => dest.Attachment, opt => opt.MapFrom(src => src.IssueDetails.Attachment))
                 .ForMember(dest => dest.AcceptanceCriteria, x => x.MapFrom(src => src.IssueDetails.AcceptanceCriteria))
                 .ForMember(dest => dest.Browser, x => x.MapFrom(src => src.IssueDetails.Browser))
-                .ForMember(dest => dest.Enviroment, x => x.MapFrom(src => src.IssueDetails.Enviroment))
+                .ForMember(dest => dest.Environment, x => x.MapFrom(src => src.IssueDetails.Enviroment))
                 .ForMember(dest => dest.Epic, x => x.MapFrom(src => src.IssueDetails.Epic))
                 .ForMember(dest => dest.UAT, x => x.MapFrom(src => src.IssueDetails.UAT))
                 .ForMember(dest => dest.StoryPoints, x => x.MapFrom(src => src.IssueDetails.StoryPoints))

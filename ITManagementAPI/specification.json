@@ -6,121 +6,6 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Contact": {
-      "get": {
-        "tags": [
-          "Contact"
-        ],
-        "operationId": "Contact_GetAll",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ContactVm"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Contact"
-        ],
-        "operationId": "Contact_Post",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateContactCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Contact"
-        ],
-        "operationId": "Contact_Update",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateContactCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Contact/{email}": {
-      "get": {
-        "tags": [
-          "Contact"
-        ],
-        "operationId": "Contact_Get",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactVm"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Dashboard": {
       "get": {
         "tags": [
@@ -202,7 +87,7 @@
         "tags": [
           "Dashboard"
         ],
-        "operationId": "Dashboard_getDailyBurnDowns",
+        "operationId": "Dashboard_GetDailyBurnDowns",
         "responses": {
           "200": {
             "description": "",
@@ -223,136 +108,6 @@
   },
   "components": {
     "schemas": {
-      "ContactVm": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "contactId": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "city": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "assignedTo": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "CreateContactCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "city": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "assignedTo": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "UpdateContactCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "city": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "assignedTo": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "IssuesVm": {
         "type": "object",
         "additionalProperties": false,
@@ -413,7 +168,7 @@
             "type": "string",
             "nullable": true
           },
-          "enviroment": {
+          "environment": {
             "type": "string",
             "nullable": true
           },

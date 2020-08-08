@@ -31,7 +31,7 @@ namespace ITManagementAPI.Controllers
         }
         [HttpGet]
         [Route("GetBurnDownData")]
-        public async Task<List<DailyBurnDownVm>> getDailyBurnDowns()
+        public async Task<List<DailyBurnDownVm>> GetDailyBurnDowns()
         {
             return await Mediator.Send(new GetDailyBurnDownsQuery());
         }

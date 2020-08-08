@@ -10,7 +10,7 @@ namespace ITManagementAPI.Infrastructure.Persistence
         public Task<List<Issue>> GetManagementIssuesList();
        public List<IssuePriority> GetIssueListByPriority();
        public IssuePriority GetIssuePriorityById(int id);
-       public Task<bool> UpdateIssuePriorities(List<IssuePriority> issues);
+       public Task<bool> UpdateIssuePriorities(IEnumerable<IssuePriority> issues);
        public  List<IssuesCountByType> GetIssuesCountByType();
        public Task<List<DailyBurnDown>> GetDataForBurnDownChart();
     }

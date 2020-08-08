@@ -36,7 +36,7 @@ namespace ITManagementAPI.Application.Management.Commands
             if (item != null)
                 issues.Remove(item);
 
-            IssuePriority prevIssue, NextIssue;
+            IssuePriority prevIssue, nextIssue;
             if (request.CurrentItemIndex >= decimal.Divide(issues.Count, 2))
             {
                 if (request.PrevItem)
@@ -46,11 +46,11 @@ namespace ITManagementAPI.Application.Management.Commands
                 }
                 else
                 {
-                    NextIssue = _dashboardService.GetIssuePriorityById(request.NextItemId);
-                    issue.IssueOrder = NextIssue.IssueOrder - 1;
+                    nextIssue = _dashboardService.GetIssuePriorityById(request.NextItemId);
+                    issue.IssueOrder = nextIssue.IssueOrder - 1;
                 }
                 // issue belongs to 2nd half
-                for (int i = request.CurrentItemIndex; i < issues.Count; i++)
+                for (var i = request.CurrentItemIndex; i < issues.Count; i++)
                 {
                     if (issues[i].IssueOrder <= issue.IssueOrder)
                     {
@@ -71,16 +71,16 @@ namespace ITManagementAPI.Application.Management.Commands
                 }
                 else
                 {
-                    NextIssue = _dashboardService.GetIssuePriorityById(request.NextItemId);
-                    issue.IssueOrder = NextIssue.IssueOrder - 1;
+                    nextIssue = _dashboardService.GetIssuePriorityById(request.NextItemId);
+                    issue.IssueOrder = nextIssue.IssueOrder - 1;
                 }
-                //isue belongs to 1st half
-                for (int i = request.CurrentItemIndex - 1; i >= 0; i--)
+                //issue belongs to 1st half
+                for (var i = request.CurrentItemIndex - 1; i >= 0; i--)
                 {
                     if (issues[i].IssueOrder >= issue.IssueOrder)
                     {
                         issues[i].IssueOrder = issue.IssueOrder - 1;
-                        int j = i;
+                        var j = i;
                     }
                     if (issues[i].IssueOrder >= issues[i + 1].IssueOrder)
                     {
