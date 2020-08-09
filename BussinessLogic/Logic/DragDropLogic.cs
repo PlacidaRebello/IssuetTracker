@@ -1,4 +1,5 @@
-﻿using BussinessLogic.Interfaces;
+﻿using BussinessLogic.Factory;
+using BussinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System.Collections.Generic;
@@ -23,18 +24,9 @@ namespace BussinessLogic.Logic
 
         private void ReorderIssuesInNewList(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, ref Issue issue, ref List<Issue> issues)
         {
-            if (CheckIfIssueIsInBottomHalfOfList(currentItemIndex, issues.Count))
-            {
-                var obj = new DragDropContext(new DropItemToBottom(_issuesEngine));
-                obj.DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
-                obj.ReorderIssues(currentItemIndex, ref issue, ref issues);
-            }
-            else
-            {
-                var obj = new DragDropContext(new DropItemToTop(_issuesEngine));
-                obj.DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
-                obj.ReorderIssues(currentItemIndex, ref issue, ref issues);
-            }
+            var dragDropContext = DragDropFactory.GetDragDropManager(CheckIfIssueIsInBottomHalfOfList(currentItemIndex, issues.Count),_issuesEngine);
+            dragDropContext.DetermineNewIssueOrder(previtem, prevItemId, nextItemId, ref issue);
+            dragDropContext.ReorderIssues(currentItemIndex, ref issue, ref issues);           
         }
 
         private static bool CheckIfIssueIsInBottomHalfOfList(int currentItemIndex, int count)
