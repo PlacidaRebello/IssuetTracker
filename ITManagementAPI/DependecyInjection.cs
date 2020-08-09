@@ -14,7 +14,6 @@ namespace ITManagementAPI
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddSingleton<IContactService, CosmosContactService>();
             services.AddTransient<IDashboardService,DashboardService>();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));

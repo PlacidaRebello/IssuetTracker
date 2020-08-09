@@ -1,6 +1,5 @@
 using AutoMapper;
 using MicroservicesTemplate.Common.Behaviour;
-using ITManagementAPI.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +25,6 @@ namespace ITManagementAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCosmos(Configuration);
             services.AddDependencies();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
