@@ -11,6 +11,7 @@ namespace IssueTracker.ApiConfig
         {
             services.AddSwaggerGen(c =>
             {
+                c.CustomOperationIds(e => $"{e.HttpMethod.ToLower()}{e.ActionDescriptor.RouteValues["controller"]}");
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Issue Tracker", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
