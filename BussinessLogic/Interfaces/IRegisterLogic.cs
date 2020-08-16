@@ -8,5 +8,6 @@ namespace BussinessLogic.Interfaces
     {
         Task<AppUser> CheckIfUserExists(string userName);
         void CheckIfRolesExistsElseCreate();
+        Task<IdentityResult> CreateUser(AppUser user, string modelPassword);
     }
 }

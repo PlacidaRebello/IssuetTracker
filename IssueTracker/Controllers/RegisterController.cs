@@ -45,7 +45,8 @@ namespace IssueTracker.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName
             };
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = await _registerLogic.CreateUser(user, model.Password);
+            
             if (!result.Succeeded)
                 return new SuccessResponse { Message = "User creation failed! Please check user details and try again." };
 

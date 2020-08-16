@@ -12,5 +12,6 @@ namespace DataAccess.Interfaces
         List<AppUser> GetUsers();
         Task<AppUser> CheckIfUserExists(string userName);
         void CheckIfRolesExistsElseCreate();
+        Task<IdentityResult> CreateAsync(AppUser user, string password);
     }
 }

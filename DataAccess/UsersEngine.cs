@@ -37,5 +37,10 @@ namespace DataAccess
             if (!await _roleManager.RoleExistsAsync(UserRoles.Developer))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.Developer));
         }
+
+        public async Task<IdentityResult> CreateAsync(AppUser user, string password)
+        {
+            return await _userManager.CreateAsync(user, password);
+        }
     }
 }

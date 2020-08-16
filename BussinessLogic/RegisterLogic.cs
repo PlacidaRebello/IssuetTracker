@@ -24,5 +24,10 @@ namespace BussinessLogic
         {
              _userEngine.CheckIfRolesExistsElseCreate();
         }
+
+        public async Task<IdentityResult> CreateUser(AppUser user, string password)
+        {
+            return await _userEngine.CreateAsync(user, password);
+        }
     }
 }
