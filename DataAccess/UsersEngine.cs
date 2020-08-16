@@ -25,7 +25,7 @@ namespace DataAccess
             return await _userManager.FindByNameAsync(userName);
         }
 
-        public List<AppUser> getUsers()
+        public List<AppUser> GetUsers()
         {
             return _context.Users.ToList();
         }

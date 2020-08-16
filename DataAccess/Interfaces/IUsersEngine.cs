@@ -9,7 +9,7 @@ namespace DataAccess.Interfaces
 {
     public interface IUsersEngine
     {
-        List<AppUser> getUsers();
+        List<AppUser> GetUsers();
         Task<AppUser> CheckIfUserExists(string userName);
         void CheckIfRolesExistsElseCreate();
     }

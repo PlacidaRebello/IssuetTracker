@@ -16,11 +16,6 @@ namespace BussinessLogic
             _userEngine = userEngine;
         }
 
-        //public async Task<IdentityResult> RegisterUser(AppUser user, string password)
-        //{
-        //    return await _userManager.CreateAsync(user, password);            
-        //}
-
         public async Task<AppUser> CheckIfUserExists(string userName)
         {
             return await _userEngine.CheckIfUserExists(userName);

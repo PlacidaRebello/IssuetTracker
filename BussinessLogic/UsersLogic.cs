@@ -15,7 +15,7 @@ namespace BussinessLogic
         }
         public List<AppUser> GetIdentityUsers()
         {
-            return _usersEngine.getUsers();
+            return _usersEngine.GetUsers();
         }
     }
 }
