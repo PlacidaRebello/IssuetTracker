@@ -1,4 +1,5 @@
 using AutoMapper;
+using DataAccess.DataModels;
 using DataAccess.Models;
 using IssueTracker.ApiConfig;
 using Microsoft.AspNetCore.Builder;
@@ -43,8 +44,9 @@ namespace IssueTracker
                 });
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>();
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvcCore(options => options.OutputFormatters.Add(new XmlSerializerOutputFormatter()));
 
@@ -56,7 +58,7 @@ namespace IssueTracker
 
             var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
 
-            services.AddCustomAuthentication(authOptions);
+            services.AddCustomAuthentication(authOptions,Configuration);
 
             services.AddControllers();
 

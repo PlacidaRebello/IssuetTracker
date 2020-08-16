@@ -1,4 +1,5 @@
 ﻿using BussinessLogic.Interfaces;
+using DataAccess.DataModels;
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace BussinessLogic
         {
             _usersEngine = usersEngine;
         }
-        public List<IdentityUser> GetIdentityUsers()
+        public List<AppUser> GetIdentityUsers()
         {
-            return _usersEngine.getUsers();
+            return _usersEngine.GetUsers();
         }
     }
 }

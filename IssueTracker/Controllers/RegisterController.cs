@@ -1,59 +1,70 @@
-﻿using AutoMapper;
-using BussinessLogic.Interfaces;
+﻿using BussinessLogic.Interfaces;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceModel.Dto;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.Generic;
-using FluentValidation;
+using Microsoft.Extensions.Configuration;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace IssueTracker.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        private SignInManager<IdentityUser> _signInManager { get; }
+        public readonly UserManager<AppUser> userManager;
+        public readonly RoleManager<IdentityRole> roleManager;
+        public readonly IConfiguration _configuration;
         private readonly IRegisterLogic _registerLogic;
-        private readonly IMapper _mapper;
-        private readonly IValidator<RegisterUserRequest> _createValidator;
-
         private readonly IUsersLogic _usersLogic;
-        public RegisterController(SignInManager<IdentityUser> signInManager, IMapper mapper, IRegisterLogic registerLogic,IUsersLogic usersLogic, IValidator<RegisterUserRequest> createValidator)
+
+        public RegisterController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration, IRegisterLogic registerLogic, IUsersLogic usersLogic)
         {
-            _signInManager = signInManager;
-            _mapper = mapper;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            _configuration = configuration;
             _registerLogic = registerLogic;
             _usersLogic = usersLogic;
-            _createValidator = createValidator;
         }
 
         [HttpPost]
-        public async Task<SuccessResponse> CreateUserAsync(RegisterUserRequest userRequest)
+        [Route("register")]
+        public async Task<SuccessResponse> Register([FromBody] RegisterUserRequest model)
         {
-            var res = _createValidator.Validate(userRequest, ruleSet: "Required");
-            if (!res.IsValid)
-            {
-                foreach (var failure in res.Errors)
-                {
-                    return new SuccessResponse
-                    {
-                        Message = failure.PropertyName + " failed validation." + failure.ErrorMessage
-                    };
-                }
-            }
-            var newUser = _mapper.Map<AppUser>(userRequest);
-            var result = await _registerLogic.RegisterUser(newUser, userRequest.Password);
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(newUser, isPersistent: false);//cookies shoulnot persist after browser is closed
-                return new SuccessResponse { Message = "Registered Succesfully." };
-            }
+            var userExists = await _registerLogic.CheckIfUserExists(model.UserName);
+            if (userExists != null)
+                return new SuccessResponse {  Message = "User already exists!" };
 
-            return new SuccessResponse { Message = result.Errors.FirstOrDefault()?.Description};
+            AppUser user = new AppUser()
+            {
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.UserName
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+                return new SuccessResponse { Message = "User creation failed! Please check user details and try again." };
+
+            _registerLogic.CheckIfRolesExistsElseCreate();
+            AssignRoleToUser(model.UserRole,user);
+
+            return new SuccessResponse {  Message = "User created successfully!" };
+        }
+
+        private async void AssignRoleToUser(string UserRole,AppUser user) 
+        {
+            if (UserRole == UserRoles.Admin)
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.Admin);
+            }
+            else
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.Developer);
+            }
         }
 
         [HttpGet("Users")]
