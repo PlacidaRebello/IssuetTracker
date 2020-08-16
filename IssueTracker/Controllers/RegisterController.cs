@@ -33,12 +33,11 @@ namespace IssueTracker.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserRequest model)
+        public async Task<SuccessResponse> Register([FromBody] RegisterUserRequest model)
         {
             var userExists = await _registerLogic.CheckIfUserExists(model.UserName);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new SuccessResponse {  Message = "User already exists!" });
+                return new SuccessResponse {  Message = "User already exists!" };
 
             AppUser user = new AppUser()
             {
@@ -48,13 +47,12 @@ namespace IssueTracker.Controllers
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new SuccessResponse { Message = "User creation failed! Please check user details and try again." });
+                return new SuccessResponse { Message = "User creation failed! Please check user details and try again." };
 
             _registerLogic.CheckIfRolesExistsElseCreate();
             AssignRoleToUser(model.UserRole,user);
 
-            return Ok(new SuccessResponse {  Message = "User created successfully!" });
+            return new SuccessResponse {  Message = "User created successfully!" };
         }
 
         private async void AssignRoleToUser(string UserRole,AppUser user) 
