@@ -7,7 +7,8 @@ namespace BussinessLogic.Interfaces
     public interface IRegisterLogic
     {
         Task<AppUser> CheckIfUserExists(string userName);
-        void CheckIfRolesExistsElseCreate();
+        Task CheckIfRolesExistsElseCreate();
         Task<IdentityResult> CreateUser(AppUser user, string modelPassword);
+        Task AssignRoleToUser(string userRole, AppUser user);
     }
 }

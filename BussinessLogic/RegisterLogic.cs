@@ -8,11 +8,9 @@ namespace BussinessLogic
 {
     public class RegisterLogic : IRegisterLogic
     {
-        private UserManager<AppUser> _userManager { get; }
         private readonly IUsersEngine _userEngine;
-        public RegisterLogic(UserManager<AppUser> userManager, IUsersEngine userEngine) 
+        public RegisterLogic( IUsersEngine userEngine) 
         {
-            _userManager = userManager;
             _userEngine = userEngine;
         }
 
@@ -20,14 +18,19 @@ namespace BussinessLogic
         {
             return await _userEngine.CheckIfUserExists(userName);
         }
-        public void CheckIfRolesExistsElseCreate()
+        public async Task CheckIfRolesExistsElseCreate()
         {
-             _userEngine.CheckIfRolesExistsElseCreate();
+             await _userEngine.CheckIfRolesExistsElseCreate();
         }
 
         public async Task<IdentityResult> CreateUser(AppUser user, string password)
         {
             return await _userEngine.CreateAsync(user, password);
+        }
+
+        public async Task AssignRoleToUser(string userRole, AppUser user)
+        {
+           await  _userEngine.AssignRoleToUser(userRole,user);
         }
     }
 }

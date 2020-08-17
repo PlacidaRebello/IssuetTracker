@@ -30,7 +30,7 @@ namespace DataAccess
             return _context.Users.ToList();
         }
 
-        public async void CheckIfRolesExistsElseCreate()
+        public async Task CheckIfRolesExistsElseCreate()
         {
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
@@ -41,6 +41,17 @@ namespace DataAccess
         public async Task<IdentityResult> CreateAsync(AppUser user, string password)
         {
             return await _userManager.CreateAsync(user, password);
+        }
+        public async Task AssignRoleToUser(string userRole, AppUser user)
+        {
+            if (userRole == UserRoles.Admin)
+            {
+              await  _userManager.AddToRoleAsync(user, UserRoles.Admin);
+            }
+            else
+            {
+               await  _userManager.AddToRoleAsync(user, UserRoles.Developer);
+            }
         }
     }
 }

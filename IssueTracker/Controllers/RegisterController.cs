@@ -32,7 +32,6 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
         public async Task<SuccessResponse> Register([FromBody] RegisterUserRequest model)
         {
             var userExists = await _registerLogic.CheckIfUserExists(model.UserName);
@@ -50,23 +49,12 @@ namespace IssueTracker.Controllers
             if (!result.Succeeded)
                 return new SuccessResponse { Message = "User creation failed! Please check user details and try again." };
 
-            _registerLogic.CheckIfRolesExistsElseCreate();
-            AssignRoleToUser(model.UserRole,user);
+            await _registerLogic.CheckIfRolesExistsElseCreate();
+            await _registerLogic.AssignRoleToUser(model.UserRole,user);
 
             return new SuccessResponse {  Message = "User created successfully!" };
         }
-
-        private async void AssignRoleToUser(string UserRole,AppUser user) 
-        {
-            if (UserRole == UserRoles.Admin)
-            {
-                await userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
-            else
-            {
-                await userManager.AddToRoleAsync(user, UserRoles.Developer);
-            }
-        }
+               
 
         [HttpGet("Users")]
         public List<GetUsersData> GetUsers()
