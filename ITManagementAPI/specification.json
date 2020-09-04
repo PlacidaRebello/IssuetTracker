@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Dashboard": {
+    "/api/Dashboard/InitialIssuesList": {
       "get": {
         "tags": [
           "Dashboard"
@@ -27,7 +27,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/Dashboard/UpdateIssuePriority": {
       "put": {
         "tags": [
           "Dashboard"

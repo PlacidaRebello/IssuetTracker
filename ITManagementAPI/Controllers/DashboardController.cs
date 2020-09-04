@@ -12,12 +12,14 @@ namespace ITManagementAPI.Controllers
     public class DashboardController : ApiController
     {
         [HttpGet]
+        [Route("InitialIssuesList")]
         public async Task<List<IssuesVm>> GetInitialIssueList()
         {
             return await Mediator.Send(new GetIssuesListQuery());
         }
 
         [HttpPut]
+        [Route("UpdateIssuePriority")]
         public async Task<bool> UpdateIssuePriority(UpdateIssuePriorityCommand command)
         {
             return await Mediator.Send(command);

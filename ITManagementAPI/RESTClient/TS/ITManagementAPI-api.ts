@@ -35,7 +35,7 @@ export class DashboardClient implements IDashboardClient {
     }
 
     getInitialIssueList(): Observable<IssuesVm[]> {
-        let url_ = this.baseUrl + "/api/Dashboard";
+        let url_ = this.baseUrl + "/api/Dashboard/InitialIssuesList";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -87,7 +87,7 @@ export class DashboardClient implements IDashboardClient {
     }
 
     updateIssuePriority(command: UpdateIssuePriorityCommand): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/Dashboard";
+        let url_ = this.baseUrl + "/api/Dashboard/UpdateIssuePriority";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);

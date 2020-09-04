@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Interfaces;
+using DataAccess.DataModels;
 
 namespace DataAccess
 {
@@ -68,20 +69,28 @@ namespace DataAccess
         }
         public List<IssuesCountByType> GetIssuesByType()
         {
+            var issueType = Enum.GetValues(typeof(DataModels.IssueType)).Cast<DataModels.IssueType>()
+                         .Select(r => new { Value = (int)r, Name = r.ToString() }).ToList();
             List<Issue> issues = new List<Issue>();
             issues = (from Issue in _context.Issues
                       join Sprints in _context.Sprints
                       on Issue.SprintId equals Sprints.SprintId
-                      join IssueType in _context.IssueType
-                      on Issue.IssueTypeId equals IssueType.IssueTypeId
                       where DateTime.Now >= Sprints.StartDate && DateTime.Now <= Sprints.EndDate
                       select new Issue
                       {
                           IssueId = Issue.IssueId,
-                          IssueTypeName = IssueType.IssueTypeName
+                          IssueTypeId=Issue.IssueTypeId
                       }).ToList();
+            var issuelist = (from issue in issues
+                             join r in issueType
+                             on issue.IssueTypeId equals r.Value
+                             select new Issue
+                             {
+                                 IssueId = issue.IssueId,
+                                 IssueTypeName = r.Name
+                             });           
 
-            return (from issue in issues
+            return (from issue in issuelist
                     group issue by issue.IssueTypeName into IssueGp
                     select new IssuesCountByType
                     {
