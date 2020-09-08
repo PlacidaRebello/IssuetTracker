@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccess.Models;
+using ITManagementAPI.Application.Automapper;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ITManagementAPI.Application.Management.Queries
 {
-    public class DailyBurnDownVm
+    public class DailyBurnDownVm:IMapFrom<DailyBurnDown>
     {
         public int DailyBurnDownId { get; set; }
         public int SprintId { get; set; }

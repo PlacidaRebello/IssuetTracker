@@ -34,36 +34,28 @@ namespace ManagementAPI.IntegrationTest
         [Fact]
         public async Task GetIssuesCountByType_ReturnsAllCorrectIssuesCountWithType()
         {
-            //Arrange
-            //var sprint = new DataAccess.Models.Sprint
-            //{
-            //    SprintName = "Test Sprint",
-            //    ReleaseId=2                
-            //}
-
-            //var sprintcreated = await _client.post
-
             //Act
             var response = await _client.GetAsync("api/Dashboard/GetIssuesCountByType");
             var IssuesList = await response.Content.ReadAsAsync<List<IssuesCountVm>>();
 
             //Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            IssuesList.Should().NotBeEmpty();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);            
+            IssuesList.Should().NotBeNull();
         }
-        [Fact]
-        public async Task GetIssuesCountByType_ReturnsNotFound()
-        {       
-            //Act
-            var response = await _client.GetAsync($"api/Dashboard/GetIssuesCountByType");
-            var contact = await response.Content.ReadAsAsync<IssuesCountVm>();
-
-            //Assert
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
+       
         [Fact]
         public async Task GetDailyBurnDowns_ReturnsCorrectBurnDownData()
         {
+            //Arrange
+            //DailyBurnDown objBurnDown = new DailyBurnDown();
+            //objBurnDown.SprintId = 5;
+            //objBurnDown.Date = DateTime.Now;
+            //objBurnDown.PointsCompleted = 1;
+            //objBurnDown.PointsPending = 1;
+
+            //_context.DailyBurnDown.Add(objBurnDown);
+            //_context.SaveChanges();
+
             //Act
             var response = await _client.GetAsync("api/Dashboard/GetBurnDownData");
             var IssuesList = await response.Content.ReadAsAsync<List<DailyBurnDownVm>>();
@@ -71,7 +63,7 @@ namespace ManagementAPI.IntegrationTest
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             IssuesList.Should().NotBeEmpty();
-        }
+        }   
 
         [Fact]
         public async Task Put_ValidRequest_SuccessfullyUpdatesIssuePriority()
