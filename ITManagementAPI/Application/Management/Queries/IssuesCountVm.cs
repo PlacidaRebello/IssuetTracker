@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DataAccess.Models;
+﻿using DataAccess.Models;
 using ITManagementAPI.Application.Automapper;
 
 namespace ITManagementAPI.Application.Management.Queries

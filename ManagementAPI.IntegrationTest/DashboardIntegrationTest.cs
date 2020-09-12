@@ -76,11 +76,11 @@ namespace ManagementAPI.IntegrationTest
                 NextItemId = 4,
                 CurrentItemIndex = 10,
                 IssueStatus = 1,
-                IssueId = 10
+                IssueId = 55
             };
 
             //Act
-            var response = await _client.PostAsJsonAsync("api/Dashboard/UpdateIssuePriority", issuePriority);
+            var response = await _client.PutAsJsonAsync("api/Dashboard/UpdateIssuePriority", issuePriority);
             var result = await response.Content.ReadAsAsync<bool>();
 
             //Assert
