@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Interfaces;
 using DataAccess.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess
 {
@@ -58,7 +59,10 @@ namespace DataAccess
 
         public IssuePriority GetIssuePriorityById(int id)
         {
-            return _context.IssuePriority.FirstOrDefault(s => s.IssueId == id);
+            return _context.IssuePriority
+                .AsNoTracking()
+                .Include(i => i.Issue)
+                .FirstOrDefault(s => s.IssueId == id);
         }
 
         public bool UpdateIssuePriorities(List<IssuePriority> issues)
