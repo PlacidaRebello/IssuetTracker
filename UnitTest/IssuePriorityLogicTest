@@ -42,6 +42,19 @@ namespace UnitTest.Logic
 
             //Assert
             mockIssuePriorityEngine.Verify(x => x.GetIssuesByType(), Times.Once);
+        } 
+        [Fact]
+        public void GetManagementIssuesList_Returns_ListOfIssues()
+        {
+            //Arrange
+            mockIssuePriorityEngine.Setup(x => x.GetManagementIssuesList());
+
+            //Act
+            IssuePriorityLogic issuesPriorityLogic = new IssuePriorityLogic(mockIssuePriorityEngine.Object);
+            issuesPriorityLogic.GetManagementIssuesList();
+
+            //Assert
+            mockIssuePriorityEngine.Verify(x => x.GetManagementIssuesList(), Times.Once);
         }
     }
 }
