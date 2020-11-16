@@ -30,5 +30,18 @@ namespace UnitTest.Logic
             //Assert
             mockIssuePriorityEngine.Verify(x => x.GetDataForBurnDownChart(), Times.Once);
         }
+        [Fact]
+        public void GetIssuesCountByTypes_Returns_CountOfIssuesByType()
+        {
+            //Arrange
+            mockIssuePriorityEngine.Setup(x => x.GetIssuesByType());
+
+            //Act
+            IssuePriorityLogic issuesPriorityLogic = new IssuePriorityLogic(mockIssuePriorityEngine.Object);
+            issuesPriorityLogic.GetIssuesCountByTypes();
+
+            //Assert
+            mockIssuePriorityEngine.Verify(x => x.GetIssuesByType(), Times.Once);
+        }
     }
 }
