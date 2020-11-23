@@ -86,7 +86,8 @@ namespace BussinessLogic
             }
 
             issues.Add(issue);
-            return _issuePriorityEngine.UpdateIssuePriorities(issues);
+            _issuePriorityEngine.UpdateIssuePriorities(issues); 
+            return issues; 
 
         }
 
