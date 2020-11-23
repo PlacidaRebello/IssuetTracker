@@ -23,7 +23,7 @@ namespace BussinessLogic
         {
             return _issuePriorityEngine.GetManagementIssuesList();
         }
-        public bool UpdateIssuePrirority(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueId)
+        public List<IssuePriority> UpdateIssuePrirority(bool previtem, int prevItemId, int nextItemId, int currentItemIndex, int issueId)
         {
             var issue = _issuePriorityEngine.GetIssuePriorityById(issueId);
             var issues = _issuePriorityEngine.GetIssueListByPriority();
