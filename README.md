@@ -11,7 +11,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[! IssueTracker[product-screenshot]](https://example.com)
+[ IssueTracker[product-screenshot]](https://example.com)
 
 Issue Tracker is an api for project management for agile developer team by tracking sprint health. Intended for small startups to manage their projects completely free of cost.
 
